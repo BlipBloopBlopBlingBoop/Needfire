@@ -1,6 +1,6 @@
 {
   "name": "Needfire \u2014 Seed Corpus",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "license": "CC0-1.0",
   "description": "Original starter reference documents bundled with Needfire so the system works end-to-end offline out of the box. This is a small demonstration set, NOT a substitute for the full downloadable corpus. Written for Needfire and released into the public domain (CC0).",
   "disclaimer": "General reference only. Not professional medical, legal, chemical, or engineering advice. For anything affecting health or safety, read the primary source and use trained judgement.",
@@ -138,8 +138,8 @@
       "title": "Food Safety and Preservation",
       "domain": "food",
       "tier": "C1",
-      "bytes": 1556,
-      "sha256": "51665c6d05ceb665fc9e4b2a166a8e8bbc97b16d13732b8994939f98470660b8"
+      "bytes": 1919,
+      "sha256": "a89f13d7bd6050c357e3c3395f7febbb55fbb9379791a2e28b40e8f9a51b75d1"
     },
     {
       "file": "foraging-safety.md",
@@ -154,8 +154,8 @@
       "title": "Fractures and Splinting",
       "domain": "medicine",
       "tier": "C1",
-      "bytes": 2051,
-      "sha256": "9cb12fb2656161af24acdcaf5073eeca149c9d8f8805a60849dd7a424d3821e8"
+      "bytes": 2556,
+      "sha256": "e0c35e29e3937b0d1b23e8aa445c06d9c844eb0e91707b43760bb5613cd4b0b5"
     },
     {
       "file": "frostbite-cold-injuries.md",
@@ -202,8 +202,8 @@
       "title": "Oral Rehydration Solution (ORS)",
       "domain": "medicine",
       "tier": "C1",
-      "bytes": 1411,
-      "sha256": "25ffc35d931cff8083ce79b3485d91c55bd45886458fb4f7f9b066112f88ba31"
+      "bytes": 1760,
+      "sha256": "e59dc57b8dc05663c1c3a7930d391b97a3e875f48d9dc8ec5a1c5fed6f4c085e"
     },
     {
       "file": "poisoning-first-aid.md",
@@ -218,8 +218,8 @@
       "title": "Preparing Wild Game",
       "domain": "food",
       "tier": "C3",
-      "bytes": 1931,
-      "sha256": "3f0ee80744f95d9e58103f40e07f6cf59fe4377ad0ee71fea6565f5084256c7b"
+      "bytes": 2188,
+      "sha256": "149890ab6af8c66e2b43f13030e999ed49cb942c28405d06ebe86158a2ce6866"
     },
     {
       "file": "radiation-shielding.md",
