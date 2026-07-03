@@ -38,6 +38,14 @@ Do not try to realign a limb **unless it has no pulse and help is many hours
 away** — then apply gentle steady pull along its length to restore blood flow,
 and splint.
 
+## Thigh and pelvis — treat as serious
+A broken **thigh bone (femur)** or **pelvis** can bleed a litre or more of blood
+internally, with little to see outside. Treat these as potentially
+life-threatening: keep the person still and flat, keep them warm, watch for
+shock (pale, cold, fast heartbeat, confusion), and evacuate urgently. For a
+mid-thigh femur fracture, steady traction — gentle, firm pull along the leg's
+length — eases pain and bleeding if you are trained to apply it and help is far.
+
 ## Spine
 If the injury could involve the neck or back (fall, blow to the head), **do not
 move the person unless they are in immediate danger.** Hold the head still and

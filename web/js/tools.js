@@ -225,7 +225,7 @@ const Tools = (function () {
 
   // ---- signal reference card ----
   function signals() {
-    const morse = [['S O S', '··· ––– ···'], ['OK / understood', '–·–'], ['Repeat', '··–··']];
+    const morse = [['S O S', '··· ––– ···'], ['OK / understood', '–·–'], ['Repeat / say again', '··––··']];
     const ground = [['V', 'Need assistance'], ['X', 'Need MEDICAL help'], ['→ (arrow)', 'Traveling this way'], ['Y', 'Yes'], ['N', 'No']];
     return panel('Signal reference', 'Rule of threes: three fires, three blasts, three flashes = distress. Make ground symbols 3+ metres, high-contrast.', [
       el('table', { class: 'ref-table' }, [

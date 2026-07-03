@@ -632,8 +632,8 @@
           "text": "**Flush the eyes for 15–20 minutes** with lukewarm clean water, eyelids held open, water flowing from the nose side outward.",
           "timer": {
             "kind": "countdown",
-            "label": "Flush the eyes",
-            "seconds": 900
+            "label": "Flush the eyes (aim for 20 min)",
+            "seconds": 1200
           },
           "next": "identify"
         },
@@ -933,7 +933,7 @@
         {
           "id": "hypothermia",
           "type": "action",
-          "text": "**Handle gently — cold water victims are often hypothermic too.** Remove wet clothing, insulate from the ground, and warm gradually. Do not give up resuscitation early on a cold victim — **\"not dead until warm and dead.\"**",
+          "text": "**Handle gently — cold water victims are often hypothermic too.** If they are breathing but not fully awake, put them in the **recovery position** (on their side) and keep checking breathing. Remove wet clothing, insulate from the ground, and warm gradually. Do not give up resuscitation early on a cold victim — **\"not dead until warm and dead.\"**",
           "next": "watch"
         },
         {
@@ -994,7 +994,7 @@
         {
           "id": "stroke-stop",
           "type": "action",
-          "text": "**Stop active cooling once they become alert.** Give nothing by mouth while confused.",
+          "text": "**Stop active cooling once they become alert.** Give nothing by mouth while confused. Then get them to advanced medical care even if they seem recovered — heat stroke injures organs after the crisis passes.",
           "warning": "Shivering alone is NOT a reason to stop — heat stroke victims often shiver while still dangerously hot.",
           "next": "END"
         },
@@ -1083,6 +1083,10 @@
               "label": "Skin numb and white but still SOFT (frostnip)",
               "goto": "frostnip",
               "tone": "ok"
+            },
+            {
+              "label": "Wet, cold feet: numb, pale, swollen — but not frozen (trench foot)",
+              "goto": "trench"
             }
           ]
         },
@@ -1160,6 +1164,13 @@
           "id": "after-rewarm",
           "type": "info",
           "text": "**Leave blisters intact.** Place dry gauze between fingers and toes, bandage loosely, and elevate. **Do not let the part refreeze** — do not walk on thawed feet.",
+          "next": "END"
+        },
+        {
+          "id": "trench",
+          "type": "action",
+          "text": "**Trench foot — wet and cold above freezing for hours to days.** Get the feet dry: remove wet boots and socks, air and gently dry the feet, and keep them clean. **Rewarm gradually** — body warmth or a warm room, not hot water. Elevate the feet and avoid walking on them where possible. Change into dry socks daily to prevent it coming back.",
+          "warning": "Do not rub the feet, and do not use hot water or direct dry heat — the tissue is fragile.",
           "next": "END"
         }
       ]

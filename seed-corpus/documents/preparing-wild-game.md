@@ -27,6 +27,10 @@ dirt off the meat.
   kill. Do not eat obviously diseased animals.**
 - **Wear gloves or bag-covered hands when dressing game**, especially rabbits
   and rodents — tularemia and other diseases pass through cuts in skin.
+- Deer, elk, and moose can carry **chronic wasting disease (CWD)**. Do not eat
+  an animal that looks emaciated or behaves strangely; avoid cutting into the
+  brain or spinal cord, and use testing where it exists. Normal cooking does
+  **not** destroy CWD.
 
 ## Cook it well-done
 Cook all wild meat thoroughly, with no pink remaining. Bear, wild boar, and

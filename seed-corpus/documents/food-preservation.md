@@ -27,6 +27,12 @@ nutrition and health.
 - **Botulism** is a deadly risk in improperly preserved low-acid foods and in
   bulging cans — do not taste-test suspect canned goods. Boiling suspect food for
   10 minutes can destroy the toxin but not all spores; prevention is better.
+- If you can foods: **low-acid foods (vegetables, meat, fish) need a pressure
+  canner.** A boiling-water bath is only safe for high-acid foods (most fruit,
+  pickles, jams) — it never gets hot enough to kill botulism spores in low-acid
+  food.
+- **Never give honey to a baby under 1 year** — it can carry botulism spores an
+  infant's gut cannot yet handle.
 - Cook meat thoroughly. Keep raw and cooked foods separate. Wash hands and tools.
 
 ## Foraging caution

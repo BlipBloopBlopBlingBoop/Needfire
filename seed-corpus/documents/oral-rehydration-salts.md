@@ -27,6 +27,13 @@ for small children.
 - Keep offering it even if the person vomits; wait 10 minutes and resume slowly.
 - Continue normal feeding/breastfeeding alongside ORS where possible.
 
+## Zinc for children
+For a child with diarrhoea, the WHO also recommends **zinc** alongside ORS: it
+shortens the illness and makes the next episode less likely. Give **20 mg of
+zinc once a day for 10–14 days** (10 mg a day for infants under 6 months), if
+zinc tablets or syrup are available. Zinc is an add-on — the ORS is what saves
+the life.
+
 ## Seek more help if
 There is blood in the stool, a high fever, sunken eyes with no tears, no urine
 for many hours, severe lethargy, or the person cannot keep any fluid down. These

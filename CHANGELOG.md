@@ -16,6 +16,22 @@ The artifacts in this repository version independently, on purpose:
 
 Launch-hardening release.
 
+### Content accuracy
+- Full fact-check pass over all 40 seed documents, the 12 emergency protocols,
+  and the toolkit's embedded constants against current guidelines (AHA/ERC,
+  WHO, Stop the Bleed, CDC/EPA, ICAO, NEC). The corpus was already highly
+  accurate; verified corrections and completeness additions:
+  - Fixed the toolkit signal card's Morse "repeat" code (`··––··`, the IMI /
+    "?" prosign; was the letter É).
+  - ORS: added WHO zinc-for-children guidance. Fractures: added the
+    femur/pelvis internal-hemorrhage red flag. Food preservation: added
+    "low-acid foods need a pressure canner" and the no-honey-under-1-year
+    infant-botulism note. Wild game: added a chronic-wasting-disease caveat.
+  - Protocols: eye-flush timer now anchors 20 min; drowning breathing-branch
+    names the recovery position; heat-stroke branch ends with an explicit
+    evacuation step; cold protocol adds a trench-foot triage branch and step.
+  (Seed corpus manifest → 2.2.0.)
+
 ### Legal & safety
 - New top-level **`DISCLAIMER.md`** (not professional advice, use at your own
   risk, not a substitute for emergency services, AI/hardware/medication
