@@ -1,6 +1,6 @@
 {
   "name": "Needfire \u2014 Seed Corpus",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "license": "CC0-1.0",
   "description": "Original starter reference documents bundled with Needfire so the system works end-to-end offline out of the box. This is a small demonstration set, NOT a substitute for the full downloadable corpus. Written for Needfire and released into the public domain (CC0).",
   "disclaimer": "General reference only. Not professional medical, legal, chemical, or engineering advice. For anything affecting health or safety, read the primary source and use trained judgement.",
@@ -26,8 +26,8 @@
       "title": "Antibiotics \u2014 Principles and Penicillin",
       "domain": "pharma",
       "tier": "C3",
-      "bytes": 2004,
-      "sha256": "4690984fbc00464609d9afa5dc89d20f9380e10ca813b6e0c9cc54a91552eeff"
+      "bytes": 2087,
+      "sha256": "872452dae81d0fbc907e643c8e381a15b4cdbbd64f2a9d4503e57a3bc680d7a0"
     },
     {
       "file": "burn-treatment.md",
@@ -42,8 +42,8 @@
       "title": "Chemical Safety Basics",
       "domain": "chemistry",
       "tier": "C3",
-      "bytes": 2071,
-      "sha256": "b8b42adf2b7bd3e4672155d1b8224f2b6032ec824a0b75b8e318145e30c8b08d"
+      "bytes": 2103,
+      "sha256": "3751b64b8f42993d43d2439ee775d68df522ad949d5df37af0e1ec73bf969205"
     },
     {
       "file": "choking-airway.md",
@@ -226,16 +226,16 @@
       "title": "Radiation Basics and Shielding",
       "domain": "physics",
       "tier": "C3",
-      "bytes": 1969,
-      "sha256": "3893181f5d21e668629d3152c41cc575f2a096d6bdd7f48ffc05a27fe839b94a"
+      "bytes": 2123,
+      "sha256": "28c54a1eadc4fc1326ef8d866ba9d59edb61b263cc4b94298256ec8c2eb46e35"
     },
     {
       "file": "safe-medication-use.md",
       "title": "Safe Medication Use",
       "domain": "pharma",
       "tier": "C3",
-      "bytes": 2026,
-      "sha256": "30f49554d4d4acf86a937b6ebb8600f3800805e48880ced231b28d8586250ba5"
+      "bytes": 2189,
+      "sha256": "2d415f3055c5a0463f5a7de97f80b83e4124d6509ad619d31215ea98cbb4bb95"
     },
     {
       "file": "sanitation-latrines.md",

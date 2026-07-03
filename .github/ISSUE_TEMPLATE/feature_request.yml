@@ -1,0 +1,28 @@
+name: Feature request
+description: Propose an improvement or new capability
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What can't you do today, or what is harder than it should be?
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: How would you solve it? Rough ideas welcome.
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: Fits the project constraints
+      description: >
+        Needfire is deliberately minimal — these constraints are the point of
+        the project, not obstacles (see CONTRIBUTING.md).
+      options:
+        - label: Works with the Python standard library only (no pip packages)
+        - label: Needs no build step for the web UI (vanilla JS/CSS)
+        - label: Works fully offline
+        - label: Degrades gracefully when optional pieces (Ollama, models) are absent

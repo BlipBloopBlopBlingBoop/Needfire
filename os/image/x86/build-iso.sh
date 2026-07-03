@@ -33,7 +33,7 @@ EOF
   mkdir -p "$work/mkosi.extra/opt/needfire"
   cp -a "$REPO/needfire" "$REPO/web" "$REPO/seed-corpus" "$REPO/catalog" "$REPO/os" \
     "$REPO/PROJECT.md" "$REPO/README.md" "$REPO/QUICKSTART.md" "$REPO/SECURITY.md" \
-    "$REPO/LICENSE" "$work/mkosi.extra/opt/needfire/"
+    "$REPO/DISCLAIMER.md" "$REPO/LICENSE" "$work/mkosi.extra/opt/needfire/"
   # first-boot install unit
   mkdir -p "$work/mkosi.extra/etc/systemd/system/multi-user.target.wants"
   cat > "$work/mkosi.extra/etc/systemd/system/needfire-firstboot.service" <<'EOF'

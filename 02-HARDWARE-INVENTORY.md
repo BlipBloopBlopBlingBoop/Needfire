@@ -4,6 +4,10 @@ Component-by-component rationale. Specific parts are **representative examples**
 you the selection criteria so you can substitute whatever is available, repairable, and cheap when you
 buy. Itemized lists with quantities and costs are in [`bom/`](bom/).
 
+> ⚠️ Batteries, solar, and DC wiring carry real shock and fire risk — read the safety blocks in
+> [`05-POWER-AND-HARDENING.md`](05-POWER-AND-HARDENING.md) and [`06-BUILD-RUNBOOK.md`](06-BUILD-RUNBOOK.md)
+> before buying or building. Reference design, no warranty: [DISCLAIMER.md](DISCLAIMER.md).
+
 > **Selection criteria, in priority order:**
 > 1. **Availability** — buyable today, ideally on the used market too.
 > 2. **Repairability** — standard sockets, replaceable parts, no glued-shut units where avoidable.

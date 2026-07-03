@@ -109,6 +109,10 @@ const Views = (function () {
           answerEl.classList.add('md');
           answerEl.appendChild(MD.render(answer));
         }
+        if (d.mode === 'model') {
+          answerCard.appendChild(el('div', { class: 'answer-note' },
+            ['AI answers can be wrong. Verify against the cited sources below before acting on anything that matters.']));
+        }
         modeEl.innerHTML = '';
         const label = d.mode === 'model' ? 'Answered by ' + (d.model || 'local model')
           : d.mode === 'sources-only' ? 'Sources only — no model loaded'

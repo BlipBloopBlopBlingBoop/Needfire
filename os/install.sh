@@ -56,7 +56,7 @@ rsync -a --delete \
   --exclude '.needfire-home' --exclude '__pycache__' --exclude '.git' \
   "$SRC_DIR/needfire" "$SRC_DIR/web" "$SRC_DIR/seed-corpus" "$SRC_DIR/catalog" \
   "$SRC_DIR/PROJECT.md" "$SRC_DIR/README.md" "$SRC_DIR/QUICKSTART.md" \
-  "$SRC_DIR/SECURITY.md" "$SRC_DIR/LICENSE" \
+  "$SRC_DIR/SECURITY.md" "$SRC_DIR/DISCLAIMER.md" "$SRC_DIR/LICENSE" \
   "$APP_DIR/"
 chown -R root:root "$APP_DIR"
 

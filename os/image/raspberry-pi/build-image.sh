@@ -68,7 +68,7 @@ mount "${loop}p2" "$mnt"                       # root partition
 mkdir -p "$mnt/opt/needfire"
 cp -a "$REPO/needfire" "$REPO/web" "$REPO/seed-corpus" "$REPO/catalog" "$REPO/os" \
   "$REPO/PROJECT.md" "$REPO/README.md" "$REPO/QUICKSTART.md" "$REPO/SECURITY.md" \
-  "$REPO/LICENSE" "$mnt/opt/needfire/"
+  "$REPO/DISCLAIMER.md" "$REPO/LICENSE" "$mnt/opt/needfire/"
 
 echo "==> First-boot install service"
 cat > "$mnt/etc/systemd/system/needfire-firstboot.service" <<'EOF'

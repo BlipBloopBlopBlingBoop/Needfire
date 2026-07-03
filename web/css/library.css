@@ -117,6 +117,7 @@ a.card:hover::before { opacity: 0.9; }
 .answer-text.md ul, .answer-text.md ol { padding-left: 1.5rem; margin: 0.5rem 0; }
 .cursor-blink::after { content: "▍"; color: var(--accent); animation: blink 1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
+.answer-note { color: var(--ink-mute); font-size: 0.72rem; margin-top: 0.7rem; }
 
 .safety {
   display: flex; gap: 0.75rem; align-items: flex-start;

@@ -4,6 +4,12 @@ Two jobs: keep it **fed** (power) and keep it **alive** (hardening against EMP, 
 theft, and operator error). Honest framing throughout — this reduces risk; it does not make the box
 invincible.
 
+> ⚠️ **This chapter involves things that burn, arc, and kill.** Lithium batteries vent and catch
+> fire when overcharged, crushed, or shorted. Miswired DC arcs hard enough to start fires. Mains
+> voltage is lethal — any mains-side work goes to a **licensed electrician**, done to your local
+> electrical code. **Fuse every source line.** No exceptions, no warranty:
+> [DISCLAIMER.md](DISCLAIMER.md).
+
 ---
 
 ## 1. Power budget

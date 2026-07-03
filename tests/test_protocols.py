@@ -19,9 +19,10 @@ ICONS_JS = REPO / "web" / "assets" / "icons.js"
 SW_JS = REPO / "web" / "sw.js"
 WEB = REPO / "web"
 
-DISCLAIMER = ("General reference only, not a substitute for trained medical "
-              "care. If you can reach professional help or a trained "
-              "responder, do so.")
+DISCLAIMER = ("If you can call your local emergency number (911 / 112), do it "
+              "now. General reference only, not a substitute for trained "
+              "medical care — hand over to a trained responder as soon as "
+              "one is available.")
 
 
 def load():
@@ -149,7 +150,8 @@ class TestProtocolsServed(unittest.TestCase):
         import urllib.request
         os.environ.setdefault("NEEDFIRE_HOME", tempfile.mkdtemp(prefix="needfire-test-"))
         from http.server import ThreadingHTTPServer
-        from needfire import db, server
+        from needfire import config, db, server
+        config.ensure_dirs()  # standalone runs start from an empty home
         conn = db.connect(); db.init_schema(conn); conn.close()
         httpd = ThreadingHTTPServer(("127.0.0.1", 0), server.NeedfireHandler)
         port = httpd.server_address[1]

@@ -16,6 +16,23 @@ The artifacts in this repository version independently, on purpose:
 
 Launch-hardening release.
 
+### Legal & safety
+- New top-level **`DISCLAIMER.md`** (not professional advice, use at your own
+  risk, not a substitute for emergency services, AI/hardware/medication
+  caveats, corpus licensing) — linked from README, START-HERE, QUICKSTART,
+  PROJECT, LICENSE, and shipped in the dist/appliance/image packages.
+- Every emergency protocol now leads with **"call your local emergency number
+  first"** — in the always-visible player footer and as a banner on the
+  emergency grid. (Protocol text only; the data format is unchanged, so
+  `protocols.json` stays format version 1.)
+- Every model-generated answer now carries an **"AI answers can be wrong"**
+  note (the stronger safety-critical banner is unchanged).
+- Explicit **battery/electrical/fire hazard warnings** in the hardware docs
+  (02, 05, 06): lithium venting, DC arc fires, mains work → licensed
+  electrician.
+- Strengthened footers on the medication, antibiotics, radiation, and
+  chemical-safety seed docs (seed manifest → 2.1.0).
+
 ### Security
 - Owner password minimum raised from 4 to **8 characters** (it gates Studio,
   which is code execution by design).
@@ -45,9 +62,14 @@ Launch-hardening release.
   gated). Content UI now surfaces server-side errors instead of swallowing
   them.
 
-### Documentation
+### Documentation & community
 - New: `SECURITY.md` (threat model, reporting), `CONTRIBUTING.md`,
-  `CHANGELOG.md`.
+  `CHANGELOG.md`, `CODE_OF_CONDUCT.md`, and `DISCLAIMER.md`.
+- **CI workflow** (`.github/workflows/ci.yml`): test matrix incl. the
+  Python 3.8 floor, byte-compile, shell-syntax, and JSON checks.
+- Issue forms, a PR template, UI screenshots (`docs/screenshots/`), a social
+  preview image, and a reworked README (quick start above the fold, badges,
+  comparison table, screenshot gallery).
 - Scrubbed stale references to the project's pre-rename directory name and
   reworded the image-builder status caveat.
 

@@ -1,0 +1,58 @@
+name: Bug report
+description: Something broke or behaved wrong
+labels: [bug]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Start the server with …
+        2. Open …
+        3. Click …
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows
+        - macOS
+        - Linux
+        - Docker
+        - Raspberry Pi / installed appliance
+    validations:
+      required: true
+  - type: dropdown
+    id: launch
+    attributes:
+      label: How did you launch Needfire?
+      options:
+        - Double-click launcher (Start-Needfire-*)
+        - python3 -m needfire serve
+        - Docker / docker compose
+        - Installed appliance (os/install.sh)
+  - type: input
+    id: python
+    attributes:
+      label: Python version
+      description: Output of `python3 --version`
+      placeholder: Python 3.11.x
+  - type: textarea
+    id: output
+    attributes:
+      label: Console output
+      description: Anything the terminal printed — paste it as-is.
+      render: text
+  - type: checkboxes
+    id: tests
+    attributes:
+      label: Test suite
+      options:
+        - label: I ran `python3 -m unittest discover -s tests` and it passes on my machine

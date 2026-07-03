@@ -39,5 +39,6 @@ Preserve pharmaceutical knowledge and stockpile professionally made antibiotics
 where lawful. Treat unsupervised production as a last-resort topic requiring real
 microbiology, not a casual recipe.
 
-> Educational reference only. Not medical advice. Antibiotic misuse is dangerous
-> to the individual and to the community.
+> Educational reference only. Not medical advice. Antibiotic choice and dosing
+> belong with a licensed clinician whenever one is reachable — misuse is
+> dangerous to the individual and to the community.
