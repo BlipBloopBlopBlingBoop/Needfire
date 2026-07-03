@@ -63,8 +63,8 @@ def _hash(password, salt):
 def set_password(password):
     """Set the owner password. Refuses to overwrite an existing one (call only
     when needs_setup() is true — the server enforces this)."""
-    if not password or len(password) < 4:
-        raise ValueError("password too short")
+    if not password or len(password) < 8:
+        raise ValueError("password must be at least 8 characters")
     if not needs_setup():
         raise PermissionError("password already set")
     salt = os.urandom(16)

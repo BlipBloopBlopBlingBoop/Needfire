@@ -7,20 +7,26 @@
 # corpus download, then re-apply.
 #
 # Apply:   sudo nft -f os/firewall/needfire-airplane.nft   (installed as 'needfire-airplane')
-# Review the LAN range to match your network/AP subnet.
+# Review the LAN range to match your network/AP subnet, and NF_PORT if you
+# serve on a non-default port.
 # =============================================================================
 
 flush ruleset
 
 define LAN = { 10.42.0.0/24, 192.168.0.0/16, 127.0.0.0/8 }
+# NF_PORT is rewritten by os/install.sh --port; 8848 is the default.
+define NF_PORT = 8848
 
 table inet needfire {
   chain input {
     type filter hook input priority 0; policy drop;
     iif "lo" accept
     ct state established,related accept
-    # Allow LAN clients to reach Needfire web UI/API and basic services.
-    ip saddr $LAN tcp dport { 8848, 8080, 22 } accept
+    # Allow LAN clients to reach the Needfire web UI/API, plus SSH for
+    # appliance administration (remove 22 if you administer at the console).
+    # Running kiwix-serve side-by-side (see 08-ALTERNATIVE-STACK.md)? Add its
+    # port (default 8080) here.
+    ip saddr $LAN tcp dport { $NF_PORT, 22 } accept
     # DHCP DISCOVER/REQUEST arrive from 0.0.0.0 (the client has no lease yet),
     # so port 67 must be open regardless of source address.
     udp dport 67 accept

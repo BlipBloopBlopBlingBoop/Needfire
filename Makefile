@@ -4,6 +4,7 @@
 PY ?= python3
 PORT ?= 8848
 TARGET ?= pi
+VERSION = $(shell $(PY) -c "import needfire; print(needfire.__version__)")
 
 .PHONY: help index serve ask status test seed-manifest icons dist docker docker-run image-pi image-x86 image-docker clean
 
@@ -49,7 +50,7 @@ icons:
 	$(PY) scripts/make-icons.py
 
 docker:
-	docker build -t needfire:latest .
+	docker build -t needfire:$(VERSION) -t needfire:latest .
 
 docker-run:
 	docker run --rm -p $(PORT):8848 -v needfire-data:/data needfire:latest

@@ -18,8 +18,11 @@ from . import (__version__, auth, config, corpus, db, embed, index, models,
 # phones on the Wi-Fi keep working.
 PROTECTED_PREFIXES = (
     "/api/fs", "/api/run", "/api/models/pull", "/api/models/delete",
-    "/api/models/roles", "/api/content", "/api/reindex", "/api/studio",
+    "/api/models/roles", "/api/content", "/api/reindex",
 )
+
+# Read-only status endpoints that would otherwise match a protected prefix.
+OPEN_EXCEPTIONS = ("/api/reindex/status",)
 
 
 # ---- shared helpers --------------------------------------------------------
@@ -141,6 +144,8 @@ class NeedfireHandler(BaseHTTPRequestHandler):
     def _require_auth(self, path):
         """Return True (and send 401) if this path is protected and no valid
         session cookie is present. Call first in do_GET/do_POST."""
+        if path in OPEN_EXCEPTIONS:
+            return False
         if any(path.startswith(p) for p in PROTECTED_PREFIXES):
             if not auth.check_session(self._session()):
                 self._json({"error": "password required", "code": "unauthorized"},
@@ -164,18 +169,23 @@ class NeedfireHandler(BaseHTTPRequestHandler):
 
     def _sse_stream(self, events, done=None):
         """Drive an SSE response from an iterator of (event, data) tuples.
-        Emits a final `done` event; tolerates client disconnects; turns a
-        pre-stream error into a JSON 500 and a mid-stream error into an
-        `error` event (mirrors the /api/ask contract)."""
+        Emits a final `done` event unless the iterator already emitted one;
+        tolerates client disconnects; turns a pre-stream error into a JSON 500
+        and a mid-stream error into an `error` event (mirrors the /api/ask
+        contract)."""
         streaming = False
         try:
             self._sse_start()
             streaming = True
             last = {}
+            sent_done = False
             for event, data in events:
                 self._sse_send(event, data)
+                if event == "done":
+                    sent_done = True
                 last = data
-            self._sse_send("done", done if done is not None else last)
+            if not sent_done:
+                self._sse_send("done", done if done is not None else last)
         except (BrokenPipeError, ConnectionResetError):
             pass
         except Exception as exc:  # noqa: BLE001
@@ -415,7 +425,7 @@ class NeedfireHandler(BaseHTTPRequestHandler):
         if path == "/api/content/url":
             body = self._body_json()
             try:
-                corpus.set_source_url(body["id"], body["url"])
+                corpus.set_source_url(body["id"], body["url"], body.get("sha256"))
             except (KeyError, ValueError) as exc:
                 return self._json({"error": str(exc)}, status=400)
             if body.get("download"):

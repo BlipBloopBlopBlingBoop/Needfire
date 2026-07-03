@@ -46,14 +46,20 @@ const Content = (function () {
       const pct = j.total ? Math.round(100 * j.bytes / j.total) : 0;
       action = el('div', { style: 'min-width:120px' }, [el('div', { class: 'meter' }, [el('span', { style: 'width:' + pct + '%' })]), el('div', { class: 'stat-sub', style: 'margin-top:4px' }, [pct + '%'])]);
     } else if (placeholder) {
-      // needs a real URL — inline field
+      // needs a real URL — inline fields (the hash is optional but enforced when set)
       const inp = el('input', { class: 'mini-input', placeholder: 'paste download URL', 'aria-label': 'Download URL for ' + s.title });
+      const hash = el('input', { class: 'mini-input', placeholder: 'sha256 (optional)', 'aria-label': 'Expected SHA-256 for ' + s.title });
+      const msg = el('div', { class: 'muted-note' }, []);
       const savedl = async () => {
         if (!inp.value.trim()) return;
-        try { await Api.content.setUrl(s.id, inp.value.trim(), true); poll(); }
-        catch (e) { gate(); }
+        msg.textContent = '';
+        try {
+          const r = await Api.content.setUrl(s.id, inp.value.trim(), true, hash.value.trim() || undefined);
+          if (r && r.error) { msg.textContent = r.error; return; }
+          poll();
+        } catch (e) { if (e.auth) return gate(); msg.textContent = (e.message || 'failed'); }
       };
-      action = el('div', { class: 'url-set' }, [inp, el('button', { class: 'btn primary', onclick: savedl }, ['Save & download'])]);
+      action = el('div', { class: 'url-set' }, [inp, hash, el('button', { class: 'btn primary', onclick: savedl }, ['Save & download']), msg]);
     } else {
       action = el('button', { class: 'btn primary', onclick: async () => { try { await Api.download([s.id]); poll(); } catch (e) { gate(); } } }, [icon('download'), ' Download']);
     }
@@ -72,8 +78,11 @@ const Content = (function () {
     const add = async () => {
       if (!url.value.trim() || !title.value.trim()) { msg.textContent = 'Title and URL needed.'; return; }
       const id = title.value.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40) || ('src-' + Date.now());
-      try { await Api.content.add({ id, title: title.value.trim(), url: url.value.trim() }); msg.textContent = 'Added — downloading.'; title.value = url.value = ''; }
-      catch (e) { if (e.auth) return gate(); msg.textContent = (e.message || 'failed'); }
+      try {
+        const r = await Api.content.add({ id, title: title.value.trim(), url: url.value.trim() });
+        if (r && r.error) { msg.textContent = r.error; return; }
+        msg.textContent = 'Added — downloading.'; title.value = url.value = '';
+      } catch (e) { if (e.auth) return gate(); msg.textContent = (e.message || 'failed'); }
     };
     return el('div', { class: 'content-card' }, [
       el('h3', {}, [icon('plus'), ' Add any download URL']),

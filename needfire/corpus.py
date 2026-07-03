@@ -6,14 +6,44 @@ openly-licensed sources listed in catalog/catalog.json. Network use is confined
 to this module — everything else in the app is fully offline.
 """
 import hashlib
+import ipaddress
 import json
 import os
 import re
 import threading
 import time
+import urllib.parse
 import urllib.request
 
 from . import config
+
+
+def _is_lan_host(host):
+    """Loopback/private addresses, localhost, and mDNS .local names — places a
+    local mirror can live, where plain http is acceptable."""
+    if not host:
+        return False
+    if host == "localhost" or host.endswith(".local"):
+        return True
+    try:
+        ip = ipaddress.ip_address(host)
+    except ValueError:
+        return False
+    return ip.is_loopback or ip.is_private
+
+
+def _check_url_policy(url, pinned_sha=None):
+    """Download-source URL policy: https always OK; plain http only for LAN
+    hosts (a local mirror) or when a sha256 is pinned so tampering is caught."""
+    parts = urllib.parse.urlsplit(url)
+    if parts.scheme == "https":
+        return
+    if parts.scheme == "http":
+        if pinned_sha or _is_lan_host(parts.hostname):
+            return
+        raise ValueError("plain http:// is only allowed for LAN mirrors or "
+                         "with a pinned sha256 — use https://")
+    raise ValueError("URL must start with http:// or https://")
 
 
 def _overrides_path():
@@ -34,18 +64,21 @@ def _save_overrides(data):
 
 def load_catalog():
     """Repo catalog merged with the user's NEEDFIRE_HOME overrides: per-source
-    URL replacements (fills the shipped <placeholder> URLs) plus custom sources
-    the user added. The repo catalog stays read-only."""
+    URL replacements (fills the shipped <placeholder> URLs), sha256 pins, plus
+    custom sources the user added. The repo catalog stays read-only."""
     base = []
     if config.CATALOG_PATH.exists():
         base = json.loads(config.CATALOG_PATH.read_text(encoding="utf-8")).get("sources", [])
     ov = _load_overrides()
     urls = ov.get("urls", {})
+    pins = ov.get("sha256", {})
     out = []
     for s in base:
         s = dict(s)
         if s["id"] in urls:
             s["url"] = urls[s["id"]]
+        if pins.get(s["id"]):
+            s["sha256"] = pins[s["id"]]
         out.append(s)
     have = {s["id"] for s in out}
     for extra in ov.get("sources", []):
@@ -54,23 +87,28 @@ def load_catalog():
     return out
 
 
-def set_source_url(source_id, url):
-    """Replace a catalog source's URL (fills a shipped placeholder)."""
-    if not (url.startswith("http://") or url.startswith("https://")):
-        raise ValueError("URL must start with http:// or https://")
+def set_source_url(source_id, url, sha256=None):
+    """Replace a catalog source's URL (fills a shipped placeholder), optionally
+    pinning the publisher's SHA-256 (enforced at download time)."""
+    sha256 = (sha256 or "").strip().lower() or None
+    _check_url_policy(url, pinned_sha=sha256)
     ov = _load_overrides()
     ov.setdefault("urls", {})[source_id] = url
+    if sha256:
+        ov.setdefault("sha256", {})[source_id] = sha256
+    else:
+        ov.get("sha256", {}).pop(source_id, None)
     _save_overrides(ov)
     return load_catalog()
 
 
 def add_custom_source(source):
-    """Add a user-defined download source. Requires id,title,url,filename."""
+    """Add a user-defined download source. Requires id,title,url,filename.
+    An optional `sha256` key pins the expected hash."""
     for key in ("id", "title", "url"):
         if not source.get(key):
             raise ValueError(f"missing {key}")
-    if not (source["url"].startswith("http://") or source["url"].startswith("https://")):
-        raise ValueError("URL must start with http:// or https://")
+    _check_url_policy(source["url"], pinned_sha=source.get("sha256"))
     source.setdefault("domain", "reference")
     source.setdefault("tier", "C2")
     source.setdefault("dest", "docs")
@@ -150,6 +188,9 @@ def installed_status():
         # placeholder: the shipped catalog uses <angle-bracket> stand-ins for the
         # dated Kiwix filenames; those need a real URL before they can download
         entry["placeholder"] = "<" in (s.get("url") or "")
+        # pinned: an expected hash ships with the source and is enforced at
+        # download time (vs. sha256_recorded, which is trust-on-first-use)
+        entry["pinned"] = bool(s.get("sha256"))
         m = manifest.get(s["id"], {})
         entry["sha256_recorded"] = bool(m.get("sha256"))
         verified_at = m.get("verified_at") or 0
@@ -210,6 +251,7 @@ class DownloadJob:
             self.active = False
 
     def _download_one(self, sid, source):
+        _check_url_policy(source["url"], pinned_sha=source.get("sha256"))
         dest = _dest_for(source)
         tmp = dest.with_suffix(dest.suffix + ".part")
         resume_from = tmp.stat().st_size if tmp.exists() else 0
@@ -248,8 +290,14 @@ class DownloadJob:
                     sha.update(block)
                     written += len(block)
                     self._set(sid, bytes=written)
-        os.replace(tmp, dest)
         digest = sha.hexdigest()
+        expected = (source.get("sha256") or "").strip().lower()
+        if expected and digest != expected:
+            # a corrupt .part would poison every resume attempt — discard it
+            tmp.unlink(missing_ok=True)
+            raise ValueError(f"sha256 mismatch: expected {expected[:12]}…, "
+                             f"got {digest[:12]}… — download discarded")
+        os.replace(tmp, dest)
         return {
             "id": source["id"],
             "title": source.get("title", source["id"]),

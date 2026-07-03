@@ -161,8 +161,9 @@ for it; Library, Emergency, and Toolkit stay open to everyone on the Wi-Fi.
 
 > **Please read:** anyone who has the password can run any code on the
 > computer. That's on purpose — it's a single-owner appliance. Choose a real
-> password, and remember the tools are only as private as your Wi-Fi and that
-> password.
+> password (at least 8 characters; longer is better), and remember the tools
+> are only as private as your Wi-Fi and that password. The full threat model
+> is in [SECURITY.md](SECURITY.md).
 
 ## 11. Troubleshooting
 
@@ -178,6 +179,7 @@ for it; Library, Emergency, and Toolkit stay open to everyone on the Wi-Fi.
 | It's slow on the first start | Normal — it's building the search index once. Later starts are instant. |
 | I deleted something / it's broken | Delete the hidden `.needfire-home` folder and start again — it rebuilds itself. Your zip/folder is the only thing you must keep. |
 | Studio asks for a password | The first person to open it sets the owner password. Set one — it protects code execution on the machine. Then keep it safe. |
+| Password refused as too short | Use at least 8 characters — it guards code execution on the machine, so longer is better. |
 | A model won't install | Is Ollama running? **System → AI Models** shows the per-OS download link if it isn't; install it, then try **Install** again. |
 
 ---

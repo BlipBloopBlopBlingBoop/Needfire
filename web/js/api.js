@@ -66,7 +66,7 @@ const Api = (function () {
 
     // ---- content ----
     content: {
-      setUrl: (id, url, download) => postJSON('/api/content/url', { id, url, download }),
+      setUrl: (id, url, download, sha256) => postJSON('/api/content/url', { id, url, download, sha256 }),
       add: (source) => postJSON('/api/content/add', source),
       import: (path, title, domain) => postJSON('/api/content/import', { path, title, domain }),
       reindex: () => postJSON('/api/reindex', {}),

@@ -7,7 +7,7 @@ requirement is Python 3.8+.
 import os
 from pathlib import Path
 
-# Repository root (this file is offline-survival-computer/needfire/config.py).
+# Repository root (this file is Needfire/needfire/config.py).
 PKG_DIR = Path(__file__).resolve().parent
 REPO_DIR = PKG_DIR.parent
 
@@ -82,7 +82,6 @@ EMBED_MODEL = _roles.get("embed", EMBED_MODEL)
 EMBED_DIMS = int(os.environ.get("NEEDFIRE_EMBED_DIMS", "512"))  # hashing-fallback dims
 TOP_K = int(os.environ.get("NEEDFIRE_TOP_K", "6"))
 CHUNK_TOKENS = int(os.environ.get("NEEDFIRE_CHUNK_TOKENS", "1000"))
-CHUNK_OVERLAP = float(os.environ.get("NEEDFIRE_CHUNK_OVERLAP", "0.15"))
 # Added to a chunk's similarity score when it matches the router's domain hint.
 # A soft boost, not a filter: a wrong hint can never zero out recall.
 DOMAIN_BOOST = float(os.environ.get("NEEDFIRE_DOMAIN_BOOST", "0.10"))
