@@ -18,7 +18,7 @@
       ],
       "source_doc": "cpr-adult-child.md",
       "entry_warning": "Send someone for help and an AED NOW.",
-      "disclaimer": "General reference only, not a substitute for trained medical care. If you can reach professional help or a trained responder, do so.",
+      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
       "start": "check",
       "steps": [
         {
@@ -175,7 +175,7 @@
       ],
       "source_doc": "control-bleeding.md",
       "entry_warning": "Severe bleeding can be fatal in minutes. Act immediately.",
-      "disclaimer": "General reference only, not a substitute for trained medical care. If you can reach professional help or a trained responder, do so.",
+      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
       "start": "pressure",
       "steps": [
         {
@@ -261,7 +261,7 @@
         "something stuck"
       ],
       "source_doc": "choking-airway.md",
-      "disclaimer": "General reference only, not a substitute for trained medical care. If you can reach professional help or a trained responder, do so.",
+      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
       "start": "assess",
       "steps": [
         {
@@ -368,7 +368,7 @@
       ],
       "source_doc": "burn-treatment.md",
       "entry_warning": "Stop the burning first — get them away from the source.",
-      "disclaimer": "General reference only, not a substitute for trained medical care. If you can reach professional help or a trained responder, do so.",
+      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
       "start": "stop",
       "steps": [
         {
@@ -487,7 +487,7 @@
       ],
       "source_doc": "anaphylaxis-allergy.md",
       "entry_warning": "Epinephrine first and fast — the dangerous mistake is giving it late.",
-      "disclaimer": "General reference only, not a substitute for trained medical care. If you can reach professional help or a trained responder, do so.",
+      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
       "start": "epi",
       "steps": [
         {
@@ -581,7 +581,7 @@
       ],
       "source_doc": "poisoning-first-aid.md",
       "entry_warning": "Do NOT induce vomiting — for any poison.",
-      "disclaimer": "General reference only, not a substitute for trained medical care. If you can reach professional help or a trained responder, do so.",
+      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
       "start": "route",
       "steps": [
         {
@@ -708,7 +708,7 @@
       ],
       "source_doc": "snakebite-treatment.md",
       "entry_warning": "Move away from the snake. Treat every bite as venomous.",
-      "disclaimer": "General reference only, not a substitute for trained medical care. If you can reach professional help or a trained responder, do so.",
+      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
       "start": "calm",
       "steps": [
         {
@@ -792,7 +792,7 @@
         "foaming mouth"
       ],
       "source_doc": "seizure-response.md",
-      "disclaimer": "General reference only, not a substitute for trained medical care. If you can reach professional help or a trained responder, do so.",
+      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
       "start": "clear",
       "steps": [
         {
@@ -872,7 +872,7 @@
       ],
       "source_doc": "drowning-response.md",
       "entry_warning": "Rescue from shore — do not become the second victim.",
-      "disclaimer": "General reference only, not a substitute for trained medical care. If you can reach professional help or a trained responder, do so.",
+      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
       "start": "rescue",
       "steps": [
         {
@@ -960,7 +960,7 @@
       ],
       "source_doc": "heat-illness.md",
       "entry_warning": "The dividing line is the brain: confusion means heat stroke.",
-      "disclaimer": "General reference only, not a substitute for trained medical care. If you can reach professional help or a trained responder, do so.",
+      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
       "start": "triage",
       "steps": [
         {
@@ -1061,7 +1061,7 @@
         "white skin cold"
       ],
       "source_doc": "frostbite-cold-injuries.md",
-      "disclaimer": "General reference only, not a substitute for trained medical care. If you can reach professional help or a trained responder, do so.",
+      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
       "start": "which",
       "steps": [
         {
@@ -1179,7 +1179,7 @@
         "bleeding after birth"
       ],
       "source_doc": "emergency-childbirth.md",
-      "disclaimer": "General reference only, not a substitute for trained medical care. If you can reach professional help or a trained responder, do so.",
+      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
       "start": "prepare",
       "steps": [
         {

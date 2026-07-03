@@ -45,5 +45,6 @@ Keep a small spill kit: absorbent (sand, dry soil, cat litter), soda ash or
 baking soda for acid spills on floors, gloves, and a scoop. Absorb, neutralize
 the surface if acid, collect, and dispose away from water sources.
 
-> General reference only, not a substitute for trained professional care. If you
-> can reach professional help or a trained responder, do so.
+> General chemical-safety reference only, not industrial-hygiene or medical
+> advice. For any exposure, if you can reach poison control or emergency
+> services, do it first.

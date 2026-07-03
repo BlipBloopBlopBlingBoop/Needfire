@@ -7,6 +7,10 @@ AI — all served from your own machine, no internet required.
 **What you need:** any computer made in the last ~15 years, about 200 MB of
 free disk space, and 10 minutes. Everything below is free.
 
+> **Use at your own risk.** Needfire is reference material, not professional
+> advice — and not a substitute for calling your local emergency number when
+> one works. The plain-language details: [DISCLAIMER.md](DISCLAIMER.md).
+
 ---
 
 ## 1. Windows (10 or 11)

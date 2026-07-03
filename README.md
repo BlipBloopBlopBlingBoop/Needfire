@@ -1,12 +1,62 @@
-# Needfire — Offline Survival Computer
+# Needfire — the offline survival knowledge computer
 
-> A buildable reference design for a **hardened, off-grid, offline-first computer** that runs local AI
-> models with no internet and stores a deep, citable knowledge corpus — from first aid and water
-> purification up to chemistry, pharmaceuticals, metallurgy, electronics, and nuclear physics. Enough
-> to survive *and* to help rebuild.
+> A citable survival library with guided emergency protocols and optional local AI —
+> pure-stdlib Python, zero dependencies, runs on anything from a laptop to a Raspberry Pi.
 
-**The names.** In old European folk practice, when disaster struck, a village extinguished every
-hearth and kindled one new flame by friction — the ***needfire*** — from which every fire was relit.
+[![CI](https://github.com/BlipBloopBlopBlingBoop/Needfire/actions/workflows/ci.yml/badge.svg)](https://github.com/BlipBloopBlopBlingBoop/Needfire/actions/workflows/ci.yml)
+![Python 3.8+](https://img.shields.io/badge/python-3.8%2B-3776AB?logo=python&logoColor=white)
+![License: MIT + CC0](https://img.shields.io/badge/license-MIT%20code%20%2B%20CC0%20corpus-green)
+![Dependencies: zero](https://img.shields.io/badge/dependencies-zero-brightgreen)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-f5a623)](CONTRIBUTING.md)
+
+![The Needfire field console — library home](docs/screenshots/library.png)
+
+## Run it in 30 seconds
+
+```bash
+git clone https://github.com/BlipBloopBlopBlingBoop/Needfire.git
+cd Needfire
+python3 -m needfire serve     # then open http://localhost:8848
+```
+
+**No pip. No Node. No model. No internet.** Python 3.8+ is the only requirement — or use
+`docker compose up`, or just double-click a launcher (see [`START-HERE.txt`](START-HERE.txt)).
+
+## What it is
+
+- **A citable offline library** — 40 bundled CC0 reference docs (first aid, water, food, fire,
+  chemistry, radiation, navigation…), extensible to full offline Wikipedia/WikiMed/iFixit archives.
+- **RAG with citations** — ask in plain language; every answer points at the source document.
+  Works *sources-only* with no AI at all, or plugs into local models via [Ollama](https://ollama.com).
+- **12 guided emergency protocols** — CPR (with a compression metronome), bleeding, choking, burns,
+  poisoning, and more: step-by-step, offline, phone-friendly.
+- **An offline field toolkit** — water disinfection doses, ORS mixer, field timers, SOS strobe,
+  solar sizing, Ohm's-law helpers.
+- **A buildable appliance** — BOMs, build runbook, systemd/firewall provisioning, and Pi/x86 image
+  builders to turn a spare machine into a hardened, off-grid "Bothy."
+- **Degrades gracefully** — reasoning model → tiny model → sources-only; vector search → keyword →
+  LIKE scan. Every layer works when the one above it fails.
+
+## Who are you?
+
+- 🚀 **Non-technical? Start here** → open [`START-HERE.txt`](START-HERE.txt) and double-click the
+  launcher for your system (`Start-Needfire-Windows.bat`, `Start-Needfire-Mac.command`, or
+  `Start-Needfire-Linux.sh`). Full plain-English guide incl. phones and appliances:
+  [`QUICKSTART.md`](QUICKSTART.md). To produce the shareable one-folder package: `make dist`.
+- 🖥️ **Developer / self-hoster?** → [`PROJECT.md`](PROJECT.md). Pure-stdlib app + no-build field
+  console. A **System** hub adds in-UI **AI model management** (install/manage local Ollama models),
+  **content download** (grow the library from URLs or local files, then reindex), and a
+  password-gated **Studio** workspace (web playground, file editor, terminal, and Python — a real
+  standalone computer).
+- 📐 **Want to build the Bothy (the hardware appliance)?** → keep reading. This document and the
+  numbered docs tell you what to buy, how to assemble it, what to load onto it, and how to harden
+  it. Everything uses **off-the-shelf hardware** and **open-source software** so it can be sourced,
+  repaired, and reproduced by one person.
+
+## The names
+
+In old European folk practice, when disaster struck, a village extinguished every hearth and
+kindled one new flame by friction — the ***needfire*** — from which every fire was relit.
 **Needfire** is that reserve flame for knowledge: the software you fall back on to relight
 everything else. The hardware it runs on is the **Bothy** — named for the unlocked Scottish mountain
 shelters kept stocked for whoever stumbles in from the storm. Its mascot is the pika, the small
@@ -15,26 +65,14 @@ alpine haymaker that spends all summer stockpiling and drying plants so it can o
 This repo is **both** the design package **and** the real, running software: **Needfire** (the
 knowledge system) and **the Bothy** (the appliance you build to carry it).
 
-- 🚀 **Non-technical? Start here** → open [`START-HERE.txt`](START-HERE.txt) and double-click the
-  launcher for your system (`Start-Needfire-Windows.bat`, `Start-Needfire-Mac.command`, or
-  `Start-Needfire-Linux.sh`). Full plain-English guide incl. phones and appliances:
-  [`QUICKSTART.md`](QUICKSTART.md). To produce the shareable one-folder package: `make dist`.
-- 🖥️ **Want to run it now?** → [`PROJECT.md`](PROJECT.md). Pure-stdlib app + no-build field console:
-  `python3 -m needfire serve`, then open `http://localhost:8848`. Works fully offline with the bundled
-  **40-document seed library**, 12 guided emergency protocols, and an offline toolkit — no pip, no
-  Node, no model required. A **System** hub adds in-UI **AI model management** (install/manage local
-  Ollama models), **content download** (grow the library from URLs or local files, then reindex), and
-  a password-gated **Studio** workspace (web playground, file editor, terminal, and Python — a real
-  standalone computer).
-- 📐 **Want to build the Bothy (the hardware appliance)?** → keep reading. This document and the numbered docs tell
-  you what to buy, how to assemble it, what to load onto it, and how to harden it. Everything uses
-  **off-the-shelf hardware** and **open-source software** so it can be sourced, repaired, and
-  reproduced by one person.
-
 ---
 
 ## ⚠️ Read this first (hard truths)
 
+- **Use at your own risk.** Everything here is reference material — not professional medical,
+  legal, electrical, or engineering advice, and never a substitute for **calling your local
+  emergency number** when one is reachable. No warranty, no liability. The plain-language version
+  is in [**DISCLAIMER.md**](DISCLAIMER.md) — read it once before you rely on any of this.
 - **Local AI models hallucinate.** Every answer in this system is paired with the **primary source
   document** it came from (RAG with citations). For anything life-critical — medicine, dosing, water,
   chemistry, electrical — **read the source, not the chatbot's paraphrase.** The model is an index and
@@ -74,6 +112,30 @@ models — nothing is throwaway.
 
 ---
 
+## How Needfire differs
+
+| | **Needfire** | Kiwix / Internet-in-a-Box | PrivateGPT-class RAG apps | Prepper PDF dumps |
+|---|---|---|---|---|
+| Runs with zero dependencies | ✅ Python stdlib only | ❌ packaged server | ❌ pip + models required | ✅ but it's just files |
+| Cited AI answers | ✅ optional — degrades to sources-only | ❌ search only | ✅ needs model/GPU | ❌ |
+| Guided emergency protocols | ✅ 12, offline PWA | ❌ | ❌ | ❌ |
+| Offline field toolkit | ✅ timers, dosing, solar math | ❌ | ❌ | ❌ |
+| Hardened-appliance build docs | ✅ BOM → runbook → image | partial | ❌ | ❌ |
+| Useful with no model and no index | ✅ by design | ✅ | ❌ | ✅ |
+
+Kiwix is a great *ingredient* — Needfire's catalog downloads Kiwix ZIM archives to grow the
+library. The difference is what's wrapped around the content: guided protocols, cited synthesis,
+field tools, and an appliance you can actually build.
+
+## Screenshots
+
+| | |
+|---|---|
+| ![Emergency protocols](docs/screenshots/emergency.png) | ![CPR player with compression metronome](docs/screenshots/cpr.png) |
+| ![Ask with cited sources](docs/screenshots/ask.png) | ![Offline field toolkit](docs/screenshots/toolkit.png) |
+
+---
+
 ## Package map
 
 | File | What's in it |
@@ -89,8 +151,10 @@ models — nothing is throwaway.
 | **[`START-HERE.txt`](START-HERE.txt)** / [`QUICKSTART.md`](QUICKSTART.md) | **Non-technical launch guide** + the three double-click launchers |
 | **[`PROJECT.md`](PROJECT.md)** | **How to run the real application** (start here to use the software) |
 | [`LICENSE`](LICENSE) | MIT (code) + CC0 (seed corpus) |
+| [`DISCLAIMER.md`](DISCLAIMER.md) | Plain-language liability + safety disclaimer — read it once |
 | [`SECURITY.md`](SECURITY.md) | Threat model, password/download integrity controls, how to report vulnerabilities |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | How to run/test, the stdlib-only + no-build constraints, doc conventions |
+| [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) | Contributor Covenant 2.1 |
 | [`CHANGELOG.md`](CHANGELOG.md) | Release notes + what each version number in the repo means |
 | [`needfire/`](needfire/) | The application — pure Python stdlib backend, CLI, RAG, server |
 | [`needfire/auth.py`](needfire/auth.py) | Owner-password gate for the powerful tools (Studio, model pulls, content downloads) |
@@ -113,7 +177,7 @@ models — nothing is throwaway.
 > provisioning all live in [`needfire/`](needfire/) and [`os/install.sh`](os/install.sh). The
 > remaining shell scripts are stable wrappers over `python3 -m needfire`.
 
-## Start here
+## Build the appliance
 
 1. Read [`01-ARCHITECTURE.md`](01-ARCHITECTURE.md) to understand the system.
 2. Pick a tier and open its BOM in [`bom/`](bom/). Source the parts.
@@ -133,3 +197,12 @@ models — nothing is throwaway.
 4. **Low-power.** It must run on what a solar panel can make on a bad day.
 5. **Repairable & reproducible.** Off-the-shelf parts, open software, documented, cloneable to a spare.
 6. **The tools that make tools.** The corpus is curated to bootstrap capability, not just to inform.
+
+---
+
+**If Needfire is the kind of thing you'd want to exist when it matters — ⭐ star the repo.**
+It's how other people find it.
+
+Contribute: [`CONTRIBUTING.md`](CONTRIBUTING.md) · Security: [`SECURITY.md`](SECURITY.md) ·
+Disclaimer: [`DISCLAIMER.md`](DISCLAIMER.md) · Conduct: [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) ·
+Changes: [`CHANGELOG.md`](CHANGELOG.md)

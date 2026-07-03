@@ -1,0 +1,59 @@
+# Needfire CI — the whole suite is stdlib-only and needs no network,
+# so every job here is checkout + python + unittest. Nothing to cache.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.9', '3.11', '3.13']
+    name: tests (py${{ matrix.python }})
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m unittest discover -s tests -v
+
+  # Python 3.8 is the documented floor but is no longer on current runner
+  # images, so it runs in a container instead of the matrix above.
+  floor-py38:
+    runs-on: ubuntu-latest
+    container: python:3.8-slim
+    name: tests (py3.8 floor)
+    steps:
+      - uses: actions/checkout@v4
+      - run: python -m unittest discover -s tests -v
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Byte-compile all Python
+        run: python -m compileall -q needfire scripts tests
+      - name: Shell syntax
+        run: |
+          bash -n os/install.sh os/uninstall.sh Start-Needfire-Linux.sh \
+            scripts/download-corpus.sh scripts/verify-integrity.sh \
+            os/image/raspberry-pi/build-image.sh os/image/x86/build-iso.sh
+      - name: JSON validity
+        run: |
+          python - <<'EOF'
+          import json
+          for p in ("web/data/protocols.json", "catalog/catalog.json",
+                    "seed-corpus/seed-manifest.json", "web/manifest.webmanifest"):
+              json.load(open(p))
+              print("ok", p)
+          EOF
+      - name: Dist packaging works
+        run: python scripts/make-dist.py

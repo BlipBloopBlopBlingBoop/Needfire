@@ -8,6 +8,12 @@ Step-by-step, in order, from a pile of parts to a serving, validated Bothy runni
 > configuration in `/etc/needfire/needfire.env`. The shell scripts referenced live in [`scripts/`](scripts/)
 > and are thin wrappers over `python3 -m needfire`.
 
+> ⚠️ **Before you pick up a tool:** lithium batteries vent and catch fire when overcharged,
+> crushed, or shorted; miswired DC arcs hard enough to start fires; mains voltage is lethal.
+> **Fuse every source line.** Do not work on a live battery bank — disconnect and lock out first.
+> Mains-side work goes to a **licensed electrician**, done to your local electrical code. This is
+> a reference design, not a permit: [DISCLAIMER.md](DISCLAIMER.md).
+
 ---
 
 ## 0. Pre-flight (before you buy/build)

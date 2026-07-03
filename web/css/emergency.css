@@ -21,6 +21,11 @@
 .emergency-head { text-align: center; margin: 0.3rem 0 1.1rem; }
 .emergency-head h1 { font-size: 1.35rem; margin: 0 0 0.2rem; letter-spacing: 0.05em; }
 .emergency-head p { color: var(--ink-dim); margin: 0; font-size: 0.85rem; }
+.emergency-head .call-first {
+  display: inline-block; margin-top: 0.55rem; padding: 0.45rem 0.8rem;
+  border: 1px solid var(--danger); border-radius: var(--radius-sm);
+  color: var(--danger-hi); font-size: 0.85rem; font-weight: 700;
+}
 
 /* ---- protocol player ---- */
 body.player-mode .strip, body.player-mode .tabbar, body.player-mode .footer { display: none; }

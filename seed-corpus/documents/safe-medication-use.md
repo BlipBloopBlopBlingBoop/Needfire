@@ -44,5 +44,7 @@ inadequate, and use the lowest dose that works.
 Document what was given, to whom, how much, when, and any reaction. Memory
 fails under stress; records prevent double-dosing and reveal allergies.
 
-> General reference only, not a substitute for trained medical care. If you can
-> reach professional help or a trained responder, do so.
+> Educational reference only — how medications work, preserved for when
+> clinicians are unreachable. Not medical advice. Diagnosis, drug choice, and
+> dosing belong with a licensed clinician whenever you can reach one. If you
+> can call your local emergency number or poison control, do it first.

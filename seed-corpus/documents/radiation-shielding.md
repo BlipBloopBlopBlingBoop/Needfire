@@ -40,4 +40,6 @@ dust, and wait. Radiation from fresh fallout drops quickly over hours and days
 time). Avoid tracking contaminated dust inside; remove outer clothing before
 entering the shelter space.
 
-> Physics and radiological-safety reference only.
+> Radiological-safety reference only, not health-physics advice. In a real
+> radiological event, follow official instructions when any authority is
+> broadcasting — this document is for when nobody is.

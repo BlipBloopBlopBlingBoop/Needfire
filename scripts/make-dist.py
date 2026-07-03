@@ -26,6 +26,7 @@ ROOT_FILES = [
     "README.md",
     "PROJECT.md",
     "LICENSE",
+    "DISCLAIMER.md",
     "SECURITY.md",
     "CONTRIBUTING.md",
     "CHANGELOG.md",

@@ -28,5 +28,6 @@ The reference documents under seed-corpus/ were written for Needfire and are
 released into the public domain under CC0-1.0 (see
 seed-corpus/seed-manifest.json). The download catalog (catalog/catalog.json)
 lists third-party sources that carry their own licenses, shown per source in
-the catalog and in the app. The safety disclaimers in README.md apply to all
-content: this is general reference material, not professional advice.
+the catalog and in the app. The safety and liability disclaimers in
+DISCLAIMER.md (summarized in README.md) apply to all code and content: this is
+general reference material, not professional advice.

@@ -28,6 +28,8 @@ const Emergency = (function () {
       el('div', { class: 'emergency-head' }, [
         el('h1', {}, ['EMERGENCY']),
         el('p', {}, ['Pick the situation. Steps are guided — read each one fully before acting.']),
+        el('p', { class: 'call-first' },
+          ['If a phone or radio works, call your local emergency number (911 / 112) first.']),
       ]),
       el('div', { class: 'grid tiles' }, tiles),
       el('p', { style: 'color:var(--ink-mute);font-size:0.78rem;text-align:center;margin-top:1.2rem' },

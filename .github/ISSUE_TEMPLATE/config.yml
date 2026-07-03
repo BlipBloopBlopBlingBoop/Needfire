@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/BlipBloopBlopBlingBoop/Needfire/security/advisories/new
+    about: Please report exploitable bugs privately — see SECURITY.md.

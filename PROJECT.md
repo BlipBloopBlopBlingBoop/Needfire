@@ -8,6 +8,10 @@ entry point for actually running it.
 > **no-build vanilla web UI**. The only hard requirement is `python3` (3.8+).
 > No pip, no Node, no internet — except the optional corpus download.
 
+> **Use at your own risk.** Reference material, not professional advice — and
+> not a substitute for calling your local emergency number when one works.
+> Full plain-language disclaimer: [DISCLAIMER.md](DISCLAIMER.md).
+
 ## Run it in 30 seconds
 
 ```bash

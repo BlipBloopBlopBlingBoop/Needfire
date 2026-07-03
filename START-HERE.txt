@@ -3,6 +3,13 @@ NEEDFIRE - offline survival computer
 Everything runs on THIS computer. No internet is needed after you
 have this folder. No account, no installation wizard, no cost.
 
+IMPORTANT
+  * Needfire is a reference library - not a doctor and not an
+    emergency service. If a phone works, call your local emergency
+    number (911 / 112) FIRST.
+  * Use at your own risk. The plain-language details are in
+    DISCLAIMER.md (in this folder - any text editor opens it).
+
 WINDOWS (10 or 11)
   1. Double-click:  Start-Needfire-Windows.bat
   2. If it says Python is missing, it opens the download page for you.
