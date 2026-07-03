@@ -124,6 +124,10 @@ understand surge protection helps with induced currents on long lines, not a dir
   link lives on **separate** hardware so the knowledge box stays dark by default.
 - **Access control:** if multiple users (Community), separate the admin interface from the read-only
   query interface; clients get query access only.
+- **Network exposure:** Needfire serves plain HTTP and is designed for a trusted LAN behind the
+  airplane-mode firewall — never port-forward it to the internet. If you must reach it across an
+  untrusted network, bind it to localhost and front it with a TLS reverse proxy or a VPN/SSH
+  tunnel — see [SECURITY.md](SECURITY.md).
 
 ---
 

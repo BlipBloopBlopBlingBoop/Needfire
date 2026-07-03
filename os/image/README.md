@@ -3,11 +3,11 @@
 These scripts bake a **flashable image** with Needfire pre-installed and set to start
 on first boot — a true "burn-and-boot" survival appliance.
 
-> **Status: verified-by-inspection.** Image baking needs root, loop devices, ~10+ GB
-> of scratch space, and qemu/binfmt for cross-architecture builds. It cannot be
-> exercised inside the restricted build environment this repo was generated in, so
-> these scripts are provided as a reviewed starting point. Run them on a real Linux
-> host. They are deliberately simple and lean on standard, well-documented tools
+> **Status: untested on real hardware.** Image baking needs root, loop devices,
+> ~10+ GB of scratch space, and qemu/binfmt for cross-architecture builds. These
+> scripts are reviewed but have not been validated end-to-end on physical
+> devices — build on a real Linux host and verify the image boots before relying
+> on it. They are deliberately simple and lean on standard, well-documented tools
 > (`pi-gen`-style customization for the Pi; `mkosi`/`debootstrap` for x86).
 
 ## Raspberry Pi 5 / ARM — `raspberry-pi/build-image.sh`
@@ -18,6 +18,11 @@ that runs `os/install.sh`. Output: a `.img` you flash with Raspberry Pi Imager o
 ```
 sudo bash os/image/raspberry-pi/build-image.sh
 ```
+
+The base Raspberry Pi OS image is checksum-verified before use: pass
+`--sha256 <hex>` (or set `BASE_SHA256`) to pin the publisher's hash
+out-of-band, or the script fetches the `.sha256` file published next to the
+image over HTTPS and checks against that.
 
 ## x86 mini-PC — `x86/build-iso.sh`
 Uses `mkosi` (or `debootstrap` + `grub`) to build a bootable Debian image/ISO with

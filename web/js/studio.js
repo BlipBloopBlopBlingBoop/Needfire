@@ -16,11 +16,12 @@ const Studio = (function () {
 
     const setup = status.needs_setup;
     const input = el('input', { type: 'password', 'aria-label': 'Password',
-      placeholder: setup ? 'Choose a password' : 'Password' });
+      placeholder: setup ? 'Choose a password (8+ characters)' : 'Password' });
     const msg = el('div', { class: 'gate-msg' }, []);
     const submit = async () => {
       const pw = input.value;
       if (!pw) return;
+      if (setup && pw.length < 8) { msg.textContent = 'Use at least 8 characters.'; return; }
       msg.textContent = '';
       try {
         const r = setup ? await Api.auth.setup(pw) : await Api.auth.login(pw);

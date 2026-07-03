@@ -42,7 +42,7 @@ def normalize_text(text):
     return t.strip()
 
 
-def chunk_text(text, chunk_tokens=None, overlap=None):
+def chunk_text(text, chunk_tokens=None):
     """Pack whole paragraphs into chunks of ~chunk_tokens (0.75 words/token).
 
     Overlap = the last paragraph of the previous chunk is carried into the

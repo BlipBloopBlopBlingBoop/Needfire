@@ -46,7 +46,7 @@ Step-by-step, in order, from a pile of parts to a serving, validated Bothy runni
 1. Get the repo onto the machine — `git clone`, or copy it over USB (this is an offline-capable
    install; nothing is fetched from the internet except optional apt packages):
    ```
-   git clone <this-repo> && cd offline-survival-computer
+   git clone <this-repo> && cd Needfire
    ```
 2. Run the installer (read it first — it's short and idempotent):
    ```

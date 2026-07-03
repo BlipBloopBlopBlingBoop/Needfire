@@ -16,7 +16,7 @@ set -euo pipefail
 AP=0
 FIREWALL=1
 PORT=8848
-SRC_DIR="$(cd "$(dirname "$0")/.." && pwd)"     # repo root (offline-survival-computer)
+SRC_DIR="$(cd "$(dirname "$0")/.." && pwd)"     # repo root (Needfire)
 APP_DIR=/opt/needfire
 NEEDFIRE_USER=needfire
 NEEDFIRE_HOME=/var/lib/needfire
@@ -50,10 +50,14 @@ chown -R "$NEEDFIRE_USER:$NEEDFIRE_USER" "$NEEDFIRE_HOME"
 
 echo "==> 3/6  Install application to $APP_DIR"
 mkdir -p "$APP_DIR"
-# copy the app, web UI, seed corpus, and catalog (everything the runtime needs)
+# copy the app, web UI, seed corpus, and catalog (everything the runtime needs),
+# plus the docs the systemd unit and on-box users reference
 rsync -a --delete \
   --exclude '.needfire-home' --exclude '__pycache__' --exclude '.git' \
-  "$SRC_DIR/needfire" "$SRC_DIR/web" "$SRC_DIR/seed-corpus" "$SRC_DIR/catalog" "$APP_DIR/"
+  "$SRC_DIR/needfire" "$SRC_DIR/web" "$SRC_DIR/seed-corpus" "$SRC_DIR/catalog" \
+  "$SRC_DIR/PROJECT.md" "$SRC_DIR/README.md" "$SRC_DIR/QUICKSTART.md" \
+  "$SRC_DIR/SECURITY.md" "$SRC_DIR/LICENSE" \
+  "$APP_DIR/"
 chown -R root:root "$APP_DIR"
 
 echo "==> 4/6  Environment file"
@@ -97,7 +101,10 @@ fi
 
 if [[ "$FIREWALL" -eq 1 ]]; then
   echo "==> 6/6  Airplane-mode firewall"
-  install -m 0755 "$SRC_DIR/os/firewall/needfire-airplane.nft" /usr/local/sbin/needfire-airplane
+  # Template the server port into the ruleset so --port and the firewall agree.
+  sed -E "s/^define NF_PORT = .*/define NF_PORT = $PORT/" \
+    "$SRC_DIR/os/firewall/needfire-airplane.nft" > /usr/local/sbin/needfire-airplane
+  chmod 0755 /usr/local/sbin/needfire-airplane
   /usr/local/sbin/needfire-airplane || echo "  (firewall apply skipped — review the script)"
 else
   echo "==> 6/6  Firewall skipped (--no-firewall)"

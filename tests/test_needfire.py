@@ -41,7 +41,7 @@ class TestEmbedding(unittest.TestCase):
 class TestChunking(unittest.TestCase):
     def test_chunks_cover_text_with_overlap(self):
         words = " ".join(f"w{i}" for i in range(2000))
-        chunks = index.chunk_text(words, chunk_tokens=200, overlap=0.2)
+        chunks = index.chunk_text(words, chunk_tokens=200)
         self.assertGreater(len(chunks), 1)
         self.assertTrue(all(c[1] for c in chunks))
 
@@ -270,6 +270,108 @@ class TestDownloadResume(unittest.TestCase):
             httpd.shutdown()
 
 
+class TestAuthPolicy(unittest.TestCase):
+    def test_short_password_rejected(self):
+        from needfire import auth
+        # the length check runs before the already-set check, so this is safe
+        # regardless of whether another test has set a password
+        self.assertRaises(ValueError, auth.set_password, "short")
+        self.assertRaises(ValueError, auth.set_password, "")
+
+
+class TestUrlPolicy(unittest.TestCase):
+    """https always OK; plain http only for LAN mirrors or with a pinned hash."""
+
+    def test_https_allowed(self):
+        corpus._check_url_policy("https://download.kiwix.org/zim/x.zim")
+
+    def test_public_http_rejected_without_pin(self):
+        self.assertRaises(ValueError, corpus._check_url_policy,
+                          "http://example.com/x.zim")
+
+    def test_public_http_allowed_with_pin(self):
+        corpus._check_url_policy("http://example.com/x.zim", pinned_sha="ab" * 32)
+
+    def test_lan_http_allowed(self):
+        for url in ("http://127.0.0.1:8000/x.zim", "http://localhost/x.zim",
+                    "http://192.168.1.10/x.zim", "http://10.0.0.5/x.zim",
+                    "http://bothy.local/x.zim"):
+            corpus._check_url_policy(url)
+
+    def test_other_schemes_rejected(self):
+        for url in ("file:///etc/passwd", "ftp://example.com/x"):
+            self.assertRaises(ValueError, corpus._check_url_policy, url)
+
+    def test_set_source_url_enforces_policy(self):
+        self.assertRaises(ValueError, corpus.set_source_url,
+                          "wikimed-en", "http://example.com/x.zim")
+        cat = corpus.set_source_url("wikimed-en", "https://example.com/x.zim",
+                                    sha256="AB" * 32)
+        entry = next(s for s in cat if s["id"] == "wikimed-en")
+        self.assertEqual(entry["url"], "https://example.com/x.zim")
+        self.assertEqual(entry["sha256"], "ab" * 32)  # normalized lowercase
+        # clearing the pin removes it from the merged catalog
+        cat = corpus.set_source_url("wikimed-en", "https://example.com/x.zim")
+        entry = next(s for s in cat if s["id"] == "wikimed-en")
+        self.assertIsNone(entry.get("sha256"))
+
+
+class TestDownloadPinned(unittest.TestCase):
+    """A pinned sha256 is enforced before the file lands in the library."""
+
+    @classmethod
+    def setUpClass(cls):
+        from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+        cls.payload = b"needfire" * 512
+
+        class Server(BaseHTTPRequestHandler):
+            def do_GET(self):
+                self.send_response(200)
+                self.send_header("Content-Length", str(len(cls.payload)))
+                self.end_headers()
+                self.wfile.write(cls.payload)
+
+            def log_message(self, *a):
+                pass
+
+        cls.httpd = ThreadingHTTPServer(("127.0.0.1", 0), Server)
+        threading.Thread(target=cls.httpd.serve_forever, daemon=True).start()
+        cls.url = f"http://127.0.0.1:{cls.httpd.server_address[1]}/file.bin"
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.httpd.shutdown()
+
+    def _source(self, sid, sha256):
+        return {"id": sid, "title": "t", "tier": "C1", "domain": "reference",
+                "license": "CC0", "filename": f"{sid}.bin", "dest": "docs",
+                "url": self.url, "sha256": sha256}
+
+    def _job(self, sid):
+        job = corpus.DownloadJob()
+        job.items = {sid: {"state": "queued", "bytes": 0, "total": 0, "error": None}}
+        return job
+
+    def test_correct_pin_succeeds(self):
+        good = hashlib.sha256(self.payload).hexdigest()
+        source = self._source("pin-good", good)
+        entry = self._job("pin-good")._download_one("pin-good", source)
+        dest = corpus._dest_for(source)
+        self.assertEqual(entry["sha256"], good)
+        self.assertTrue(dest.exists())
+        dest.unlink()
+
+    def test_wrong_pin_discards_download(self):
+        source = self._source("pin-bad", "0" * 64)
+        dest = corpus._dest_for(source)
+        with self.assertRaises(ValueError):
+            self._job("pin-bad")._download_one("pin-bad", source)
+        self.assertFalse(dest.exists(), "mismatched download must not land")
+        self.assertFalse(dest.with_suffix(dest.suffix + ".part").exists(),
+                         "corrupt .part must be discarded, not resumed")
+
+
 class TestPower(unittest.TestCase):
     def test_cpu_percent_thread_safe_smoke(self):
         errors = []
@@ -351,8 +453,9 @@ class TestHTTPSmoke(unittest.TestCase):
         ) as r:
             text = r.read().decode()
         self.assertIn("event: meta", text)
-        self.assertIn("event: done", text)
         self.assertIn("sources-only", text)
+        self.assertEqual(text.count("event: done"), 1,
+                         "exactly one done event per ask stream")
 
     def _get_status(self, path):
         try:
@@ -376,6 +479,10 @@ class TestHTTPSmoke(unittest.TestCase):
 
     def test_unknown_api_path_is_404_not_spa(self):
         self.assertEqual(self._get_status("/api/does-not-exist"), 404)
+
+    def test_reindex_status_is_open_read_only(self):
+        # the status poll is read-only and stays anonymous, like /api/status
+        self.assertEqual(self._get_status("/api/reindex/status"), 200)
 
     def test_source_missing_is_404(self):
         self.assertEqual(self._get_status("/api/source?doc=nope.md"), 404)
@@ -464,8 +571,10 @@ class TestStandaloneComputer(unittest.TestCase):
     def test_01_gate_before_setup(self):
         st, body = self._req("/api/auth/status")
         self.assertTrue(body["needs_setup"])
-        # protected endpoint refused before auth
+        # protected endpoints refused before auth
         st, _ = self._req("/api/fs/list?root=workspace", anon=True)
+        self.assertEqual(st, 401)
+        st, _ = self._req("/api/reindex", "POST", {}, anon=True)
         self.assertEqual(st, 401)
 
     def test_02_setup_then_authed(self):
@@ -511,7 +620,8 @@ class TestStandaloneComputer(unittest.TestCase):
         with self.opener.open(req, timeout=10) as r:
             text = r.read().decode()
         self.assertIn("needfire-run-ok", text)
-        self.assertIn("event: done", text)
+        self.assertEqual(text.count("event: done"), 1,
+                         "exactly one done event per run stream")
 
     def test_08_run_timeout_kills(self):
         import time

@@ -42,7 +42,7 @@ def docker_install_help():
     else:
         eprint("  Linux: install Docker Engine, e.g.")
         eprint("    sudo apt-get install docker.io      # Debian/Ubuntu")
-        eprint("    curl -fsSL https://get.docker.com | sh   # any distro")
+        eprint("    or follow the official instructions: https://docs.docker.com/engine/install/")
     eprint("\nInstall Docker, start it, then re-run this command.")
 
 

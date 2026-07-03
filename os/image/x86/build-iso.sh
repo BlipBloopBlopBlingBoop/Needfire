@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Needfire — x86 appliance image builder (verified-by-inspection).
+# Needfire — x86 appliance image builder.
+# Untested on real hardware — validate the image boots before relying on it.
 # Builds a bootable Debian image with Needfire preinstalled using mkosi (preferred)
 # or a debootstrap fallback. Run on a Linux host with root and ~10 GB free.
 #
@@ -30,7 +31,9 @@ Packages=python3,systemd,systemd-boot,nftables,rsync,ca-certificates
 Bootable=yes
 EOF
   mkdir -p "$work/mkosi.extra/opt/needfire"
-  cp -a "$REPO/needfire" "$REPO/web" "$REPO/seed-corpus" "$REPO/catalog" "$REPO/os" "$work/mkosi.extra/opt/needfire/"
+  cp -a "$REPO/needfire" "$REPO/web" "$REPO/seed-corpus" "$REPO/catalog" "$REPO/os" \
+    "$REPO/PROJECT.md" "$REPO/README.md" "$REPO/QUICKSTART.md" "$REPO/SECURITY.md" \
+    "$REPO/LICENSE" "$work/mkosi.extra/opt/needfire/"
   # first-boot install unit
   mkdir -p "$work/mkosi.extra/etc/systemd/system/multi-user.target.wants"
   cat > "$work/mkosi.extra/etc/systemd/system/needfire-firstboot.service" <<'EOF'

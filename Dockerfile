@@ -1,5 +1,6 @@
 # Needfire — run-anywhere container. Pure stdlib app, so the image is tiny.
-FROM python:3.12-slim
+# Pinned patch tag for reproducible builds; bump deliberately on release.
+FROM python:3.12.13-slim
 
 # No pip dependencies — the app uses only the Python standard library.
 WORKDIR /opt/needfire
@@ -16,11 +17,20 @@ ENV NEEDFIRE_HOME=/data \
     NEEDFIRE_PORT=8848 \
     NEEDFIRE_OLLAMA_URL=http://host.docker.internal:11434
 
+# Run as a dedicated non-root user. /data must be owned by it BEFORE the
+# VOLUME declaration: a fresh named volume copy-populates from the image,
+# ownership included. web/ stays writable so Studio's documented "edit the UI"
+# feature works in Docker — Studio is already owner-authenticated, so this
+# grants no extra privilege.
+RUN useradd --system --uid 10001 --home /data needfire
+
 # Build the seed index at image build so the container answers immediately.
 # This must happen BEFORE the VOLUME declaration: writes to a declared volume
 # path in later layers are discarded by Docker.
-RUN python3 -m needfire index
+RUN python3 -m needfire index \
+ && chown -R needfire:needfire /data /opt/needfire/web
 
+USER needfire
 VOLUME /data
 EXPOSE 8848
 

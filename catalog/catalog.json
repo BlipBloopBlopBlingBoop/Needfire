@@ -1,7 +1,7 @@
 {
   "name": "Needfire — Corpus Catalog",
   "version": "1.0.0",
-  "note": "Curated openly-licensed knowledge sources. Sizes are approximate and drift over time; verify against the live Kiwix library (https://library.kiwix.org) before large downloads. URLs marked with a <...> placeholder must be set to a current download link (the Kiwix filenames are dated). Only download what you are licensed to use in your jurisdiction.",
+  "note": "Curated openly-licensed knowledge sources. Sizes are approximate and drift over time; verify against the live Kiwix library (https://library.kiwix.org) before large downloads. URLs marked with a <...> placeholder must be set to a current download link (the Kiwix filenames are dated). When you fill in a real URL, also set `sha256` to the publisher's hash if available (Kiwix publishes a .sha256 file next to each ZIM) — pinned hashes are enforced at download time; unpinned downloads are hashed on arrival and re-checkable with `python3 -m needfire verify`. Only download what you are licensed to use in your jurisdiction.",
   "sources": [
     {
       "id": "wikimed-en",
@@ -11,7 +11,8 @@
       "filename": "wikimed_en_all_maxi.zim",
       "dest": "zim/C1",
       "approx_bytes": 1900000000,
-      "url": "https://download.kiwix.org/zim/other/<wikimed_en_all_maxi_DATE.zim>"
+      "url": "https://download.kiwix.org/zim/other/<wikimed_en_all_maxi_DATE.zim>",
+      "sha256": null
     },
     {
       "id": "ifixit-en",
@@ -21,7 +22,8 @@
       "filename": "ifixit_en_all.zim",
       "dest": "zim/C1",
       "approx_bytes": 2500000000,
-      "url": "https://download.kiwix.org/zim/ifixit/<ifixit_en_all_DATE.zim>"
+      "url": "https://download.kiwix.org/zim/ifixit/<ifixit_en_all_DATE.zim>",
+      "sha256": null
     },
     {
       "id": "wikipedia-en-maxi",
@@ -31,7 +33,8 @@
       "filename": "wikipedia_en_all_maxi.zim",
       "dest": "zim/C2",
       "approx_bytes": 100000000000,
-      "url": "https://download.kiwix.org/zim/wikipedia/<wikipedia_en_all_maxi_DATE.zim>"
+      "url": "https://download.kiwix.org/zim/wikipedia/<wikipedia_en_all_maxi_DATE.zim>",
+      "sha256": null
     },
     {
       "id": "wikipedia-en-mini",
@@ -41,7 +44,8 @@
       "filename": "wikipedia_en_all_mini.zim",
       "dest": "zim/C2",
       "approx_bytes": 12000000000,
-      "url": "https://download.kiwix.org/zim/wikipedia/<wikipedia_en_all_mini_DATE.zim>"
+      "url": "https://download.kiwix.org/zim/wikipedia/<wikipedia_en_all_mini_DATE.zim>",
+      "sha256": null
     },
     {
       "id": "gutenberg-en",
@@ -51,7 +55,8 @@
       "filename": "gutenberg_en_all.zim",
       "dest": "zim/C2",
       "approx_bytes": 65000000000,
-      "url": "https://download.kiwix.org/zim/gutenberg/<gutenberg_en_all_DATE.zim>"
+      "url": "https://download.kiwix.org/zim/gutenberg/<gutenberg_en_all_DATE.zim>",
+      "sha256": null
     },
     {
       "id": "wikibooks-en",
@@ -61,7 +66,8 @@
       "filename": "wikibooks_en_all_maxi.zim",
       "dest": "zim/C3",
       "approx_bytes": 4500000000,
-      "url": "https://download.kiwix.org/zim/wikibooks/<wikibooks_en_all_maxi_DATE.zim>"
+      "url": "https://download.kiwix.org/zim/wikibooks/<wikibooks_en_all_maxi_DATE.zim>",
+      "sha256": null
     },
     {
       "id": "stackexchange-chemistry",
@@ -71,7 +77,8 @@
       "filename": "chemistry.stackexchange.com_en_all.zim",
       "dest": "zim/C3",
       "approx_bytes": 700000000,
-      "url": "https://download.kiwix.org/zim/stack_exchange/<chemistry.stackexchange.com_en_all_DATE.zim>"
+      "url": "https://download.kiwix.org/zim/stack_exchange/<chemistry.stackexchange.com_en_all_DATE.zim>",
+      "sha256": null
     },
     {
       "id": "stackexchange-physics",
@@ -81,7 +88,8 @@
       "filename": "physics.stackexchange.com_en_all.zim",
       "dest": "zim/C3",
       "approx_bytes": 1200000000,
-      "url": "https://download.kiwix.org/zim/stack_exchange/<physics.stackexchange.com_en_all_DATE.zim>"
+      "url": "https://download.kiwix.org/zim/stack_exchange/<physics.stackexchange.com_en_all_DATE.zim>",
+      "sha256": null
     },
     {
       "id": "stackexchange-electronics",
@@ -91,7 +99,8 @@
       "filename": "electronics.stackexchange.com_en_all.zim",
       "dest": "zim/C3",
       "approx_bytes": 1500000000,
-      "url": "https://download.kiwix.org/zim/stack_exchange/<electronics.stackexchange.com_en_all_DATE.zim>"
+      "url": "https://download.kiwix.org/zim/stack_exchange/<electronics.stackexchange.com_en_all_DATE.zim>",
+      "sha256": null
     },
     {
       "id": "zimgit-medicine",
@@ -101,7 +110,8 @@
       "filename": "zimgit-medicine_en.zim",
       "dest": "zim/C1",
       "approx_bytes": 300000000,
-      "url": "https://download.kiwix.org/zim/zimgit/<zimgit-medicine_en_DATE.zim>"
+      "url": "https://download.kiwix.org/zim/zimgit/<zimgit-medicine_en_DATE.zim>",
+      "sha256": null
     },
     {
       "id": "zimgit-water",
@@ -111,7 +121,8 @@
       "filename": "zimgit-water_en.zim",
       "dest": "zim/C1",
       "approx_bytes": 30000000,
-      "url": "https://download.kiwix.org/zim/zimgit/<zimgit-water_en_DATE.zim>"
+      "url": "https://download.kiwix.org/zim/zimgit/<zimgit-water_en_DATE.zim>",
+      "sha256": null
     },
     {
       "id": "zimgit-post-disaster",
@@ -121,7 +132,8 @@
       "filename": "zimgit-post-disaster_en.zim",
       "dest": "zim/C1",
       "approx_bytes": 600000000,
-      "url": "https://download.kiwix.org/zim/zimgit/<zimgit-post-disaster_en_DATE.zim>"
+      "url": "https://download.kiwix.org/zim/zimgit/<zimgit-post-disaster_en_DATE.zim>",
+      "sha256": null
     },
     {
       "id": "wikiversity-en",
@@ -131,7 +143,8 @@
       "filename": "wikiversity_en_all_maxi.zim",
       "dest": "zim/C4",
       "approx_bytes": 2000000000,
-      "url": "https://download.kiwix.org/zim/wikiversity/<wikiversity_en_all_maxi_DATE.zim>"
+      "url": "https://download.kiwix.org/zim/wikiversity/<wikiversity_en_all_maxi_DATE.zim>",
+      "sha256": null
     },
     {
       "id": "osm-region",
@@ -141,7 +154,8 @@
       "filename": "region-latest.osm.pbf",
       "dest": "maps",
       "approx_bytes": 1000000000,
-      "url": "https://download.geofabrik.de/<your-region-latest.osm.pbf>"
+      "url": "https://download.geofabrik.de/<your-region-latest.osm.pbf>",
+      "sha256": null
     }
   ]
 }

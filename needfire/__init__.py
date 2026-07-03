@@ -9,5 +9,5 @@ detected at runtime and used when present, but the app is fully functional
 without any of them.
 """
 
-__version__ = "2.1.1"
+__version__ = "2.2.0"
 __all__ = ["__version__"]

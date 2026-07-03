@@ -11,7 +11,7 @@ entry point for actually running it.
 ## Run it in 30 seconds
 
 ```bash
-cd offline-survival-computer
+cd Needfire
 python3 -m needfire serve      # first run auto-builds the seed index, then serves
 # open http://localhost:8848
 ```
@@ -57,8 +57,9 @@ The web UI is built for the situations the Bothy is actually used in:
   content) they set an **owner password**; after that these powerful tools need
   it, while Library/Emergency/Toolkit stay open to everyone on the Wi-Fi.
   **Honest warning:** anyone with the password can run any code on the computer
-  — that's intentional for a single-owner appliance. Pick a real password; the
-  tools are only as private as your Wi-Fi and that password.
+  — that's intentional for a single-owner appliance. Pick a real password (at
+  least 8 characters); the tools are only as private as your Wi-Fi and that
+  password. See [SECURITY.md](SECURITY.md) for the full threat model.
 - **Display modes** — dark (default), **NIGHT** (red-on-black, night-vision
   safe), and **DAY** (high-contrast for sunlight), plus 4 text sizes; both
   persist per device. Layouts adapt to phones over the Bothy's Wi-Fi AP

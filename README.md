@@ -89,6 +89,9 @@ models — nothing is throwaway.
 | **[`START-HERE.txt`](START-HERE.txt)** / [`QUICKSTART.md`](QUICKSTART.md) | **Non-technical launch guide** + the three double-click launchers |
 | **[`PROJECT.md`](PROJECT.md)** | **How to run the real application** (start here to use the software) |
 | [`LICENSE`](LICENSE) | MIT (code) + CC0 (seed corpus) |
+| [`SECURITY.md`](SECURITY.md) | Threat model, password/download integrity controls, how to report vulnerabilities |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | How to run/test, the stdlib-only + no-build constraints, doc conventions |
+| [`CHANGELOG.md`](CHANGELOG.md) | Release notes + what each version number in the repo means |
 | [`needfire/`](needfire/) | The application — pure Python stdlib backend, CLI, RAG, server |
 | [`needfire/auth.py`](needfire/auth.py) | Owner-password gate for the powerful tools (Studio, model pulls, content downloads) |
 | [`needfire/studio.py`](needfire/studio.py) | Studio backend: workspace files, terminal command runner, Python scratchpad |

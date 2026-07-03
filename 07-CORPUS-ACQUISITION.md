@@ -127,18 +127,24 @@ you can run C1 → C2 → C3 → C4 and resume safely at any point.
 
 ## 5. Integrity & verification
 
-1. As it downloads, Needfire records each artifact's **SHA-256**, size, license, and tier in
+1. **Pin the publisher's hash when you can.** Each catalog source has an optional `sha256`
+   field (Kiwix publishes a `.sha256` file next to every ZIM); when set, the download is
+   verified against it before landing in the library and a mismatch is discarded. The Content
+   UI's URL field accepts the hash too. Unpinned downloads are trust-on-first-use: hashed on
+   arrival. Plain `http://` sources are only accepted for LAN mirrors or when a hash is
+   pinned — public hosts must use `https://`.
+2. As it downloads, Needfire records each artifact's **SHA-256**, size, license, and tier in
    `NEEDFIRE_HOME/manifest.json`.
-2. Optionally **sign** the manifest once the corpus is complete (detached GPG signature →
+3. Optionally **sign** the manifest once the corpus is complete (detached GPG signature →
    `manifest.json.sig`). `scripts/verify-integrity.sh` checks the signature first and treats a
    failure as fatal.
-3. Run `scripts/verify-integrity.sh` (wrapping `python3 -m needfire verify`) after the initial download,
+4. Run `scripts/verify-integrity.sh` (wrapping `python3 -m needfire verify`) after the initial download,
    after any transport, and on the monthly schedule. It re-hashes every artifact and flags
    **missing, changed, or corrupt** files — catching bad transfers, tampering, and silent bit-rot
    **before** you depend on the data.
-4. Verify the **bundled seed library** too: `python3 -m needfire verify --seed` checks all 40 documents
+5. Verify the **bundled seed library** too: `python3 -m needfire verify --seed` checks all 40 documents
    against `seed-corpus/seed-manifest.json`.
-5. Verify **every clone** the same way (`--home /mnt/backup/needfire`). A backup you haven't verified is
+6. Verify **every clone** the same way (`--home /mnt/backup/needfire`). A backup you haven't verified is
    not a backup.
 
 ---
