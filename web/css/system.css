@@ -1,0 +1,46 @@
+/* System hub, Models, and Content pages. */
+
+.muted-note { color: var(--ink-dim); font-size: 0.85rem; margin: 0 0 1rem; max-width: 44rem; line-height: 1.5; }
+
+.panel-note {
+  background: var(--surface); border: 1px solid var(--border-2); border-radius: var(--radius);
+  padding: 1rem 1.2rem; margin: 0.6rem 0; max-width: 44rem;
+}
+.panel-note h3 { margin: 0 0 0.4rem; font-size: 1rem; }
+.panel-note p { color: var(--ink-dim); font-size: 0.88rem; line-height: 1.55; margin: 0.4rem 0; }
+.panel-note pre {
+  background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 0.7rem 0.9rem; overflow-x: auto; font-family: var(--mono); font-size: 0.82rem;
+}
+
+.install-links { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0.6rem 0; }
+
+/* models */
+.model-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.rec-status { min-width: 6rem; font-family: var(--mono); font-size: 0.75rem; color: var(--ink-mute); }
+.rec-status .meter { width: 6rem; margin: 0; }
+.btn.danger { color: var(--danger-hi); border-color: var(--danger); }
+.role-row { display: flex; align-items: center; gap: 0.7rem; margin: 0.4rem 0; }
+.role-row label { width: 4.5rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-mute); }
+.role-row select, .content-card select {
+  flex: 1; min-height: 2.4rem; background: var(--bg-2); border: 1px solid var(--border-2);
+  border-radius: 8px; color: var(--ink); padding: 0.3rem 0.6rem; font-size: 0.9rem;
+}
+
+/* content */
+.content-tools { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: 0.85rem; margin-bottom: 0.5rem; }
+.content-card {
+  background: var(--surface); border: 1px solid var(--border-2); border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+}
+.content-card h3 { margin: 0 0 0.3rem; font-size: 0.95rem; display: flex; align-items: center; gap: 0.4rem; }
+.content-card h3 svg { width: 1.1rem; height: 1.1rem; stroke: var(--accent-hi); fill: none; }
+.content-card p { margin: 0 0 0.7rem; }
+.mini-input {
+  width: 100%; min-height: 2.4rem; margin-bottom: 0.5rem;
+  background: var(--bg-2); border: 1px solid var(--border-2); border-radius: 8px;
+  color: var(--ink); padding: 0.3rem 0.7rem; font-size: 0.9rem;
+}
+.mini-input:focus { border-color: var(--accent); outline: none; }
+.url-set { display: flex; gap: 0.4rem; flex-direction: column; min-width: 12rem; }
+.url-set .mini-input { margin: 0; }

@@ -1,0 +1,18 @@
+category,item,spec,qty,unit_cost_usd,ext_cost_usd,source,hardened_role,notes
+Compute,Mini-PC or SBC,"x86 mini-PC 32GB RAM low-power CPU, or ARM SBC 16GB w/ NPU",1,350,350,"used mini-PC market / SBC vendor",compute,Pick mini-PC for bigger models or SBC for lowest power/weight
+Storage,NVMe SSD (hot),2TB-4TB M.2 NVMe,1,150,150,"electronics retailer",hot-storage,Holds models + index + curated corpus
+Storage,Cold backup SSD,2TB-4TB (clone of corpus),1,140,140,"electronics retailer",cold-spare,Disconnected backup; Faraday-stored
+Power,USB-C PD power bank,~25000mAh / ~90Wh PD,1,90,90,"electronics retailer",power,Primary portable power
+Power,Foldable solar panel,100W USB-C PD,1,150,150,"solar vendor",power,Recharge in field
+Power,USB-C PD cables,100W rated,2,12,24,"electronics retailer",power,Carry spares
+Enclosure,Rugged case,Pelican-style IP67 w/ foam,1,90,90,"case vendor",ruggedization,Operating enclosure
+Enclosure,Faraday bag/can,EMP-shield bag or small steel can,1,30,30,"prep/mil-surplus",emp-shield,For cold spare + drive
+Enclosure,Desiccant packs,rechargeable silica,1,12,12,"general",humidity,Recharge periodically
+Networking,USB Wi-Fi adapter,WPA3 capable (also onboard),1,20,20,"electronics retailer",network,Local AP + spare radio
+Display,Portable monitor,"small USB-C monitor (optional; phone works)",1,100,100,"electronics retailer",interface,Optional - use phone over hotspot
+Input,Folding keyboard,BT/USB compact,1,30,30,"electronics retailer",interface,Keep one wired fallback
+Spares,Spare boot SSD,pre-flashed OS image,1,60,60,"electronics retailer",recovery,Swap-in recovery drive
+Spares,Spare compute node,"used SBC/thin-client able to boot the OS image + read the corpus",1,80,80,"used market",emp-shield,Faraday-stored cold spare — data without a reader is useless after an EMP
+Spares,Multimeter + fuses,basic DMM + assorted fuses,1,30,30,"hardware store",maintenance,Power troubleshooting
+Consumables,Paper quick-start kit,printed runbook + corpus index,1,5,5,"local print",recovery,Recoverable without the computer
+TOTAL,,,,,1361,,,Representative prices — revalidate before purchase

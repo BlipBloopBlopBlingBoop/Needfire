@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0d1117" />
+  <title>Needfire — Offline Survival Computer</title>
+  <script>
+    /* pre-paint prefs: apply theme + text scale before CSS loads (no flash) */
+    (function () {
+      try {
+        var t = JSON.parse(localStorage.getItem('nf.theme') || '"dark"');
+        var s = JSON.parse(localStorage.getItem('nf.scale') || '1');
+        document.documentElement.setAttribute('data-theme', t);
+        document.documentElement.setAttribute('data-scale', String(s));
+        var colors = { night: '#000000', day: '#f5f3ee', dark: '#0d1117' };
+        document.querySelector('meta[name="theme-color"]')
+          .setAttribute('content', colors[t] || colors.dark);
+      } catch (e) { /* first run / private mode */ }
+    })();
+  </script>
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/assets/icon-192.png" />
+  <link rel="stylesheet" href="/css/tokens.css" />
+  <link rel="stylesheet" href="/css/shell.css" />
+  <link rel="stylesheet" href="/css/library.css" />
+  <link rel="stylesheet" href="/css/emergency.css" />
+  <link rel="stylesheet" href="/css/toolkit.css" />
+  <link rel="stylesheet" href="/css/system.css" />
+  <link rel="stylesheet" href="/css/studio.css" />
+</head>
+<body>
+  <!-- SVG icon sprite (inline so it works fully offline) -->
+  <div id="sprite-host" hidden></div>
+
+  <header class="strip" role="banner">
+    <a class="brand" href="#/" aria-label="Needfire home">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-needfire"/></svg>
+      <span class="brand-name">NEEDFIRE</span>
+      <span class="brand-sub">the bothy · field console</span>
+    </a>
+    <div class="strip-instruments" aria-label="System status">
+      <span class="seg" id="seg-clock">--:--</span>
+      <span class="seg" id="seg-batt" hidden></span>
+      <span class="seg" id="seg-link" role="status"><span class="led"></span><span id="net-label">LINK…</span></span>
+      <span class="seg" id="seg-docs" hidden></span>
+      <button class="seg alert" id="seg-stamp" hidden aria-live="polite"></button>
+    </div>
+    <nav class="topnav" aria-label="Main">
+      <a href="#/" data-nav="home" aria-label="Library"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-book"/></svg><span>Library</span></a>
+      <a href="#/emergency" data-nav="emergency" class="nav-sos" aria-label="Emergency"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-emergency"/></svg><span>Emergency</span></a>
+      <a href="#/toolkit" data-nav="toolkit" aria-label="Toolkit"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-tools"/></svg><span>Toolkit</span></a>
+      <a href="#/studio" data-nav="studio" aria-label="Studio"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-code"/></svg><span>Studio</span></a>
+      <a href="#/system" data-nav="system" aria-label="System"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-system"/></svg><span>System</span></a>
+    </nav>
+    <div class="strip-ctl">
+      <button id="btn-theme" aria-label="Display mode (dark / night / day)" title="Display mode"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-moon"/></svg></button>
+      <button id="btn-text" aria-label="Text size" title="Text size">A±</button>
+    </div>
+  </header>
+
+  <main id="view" class="view"></main>
+
+  <footer class="footer">
+    <span id="foot-status">Needfire</span>
+    <span class="foot-note">Knowledge is in the sources — always read the cited document for anything critical.</span>
+  </footer>
+
+  <nav class="tabbar" aria-label="Main">
+    <a href="#/" data-nav="home" aria-label="Library"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-book"/></svg><span>Library</span></a>
+    <a href="#/emergency" data-nav="emergency" class="tab-sos" aria-label="Emergency"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-emergency"/></svg><span>SOS</span></a>
+    <a href="#/toolkit" data-nav="toolkit" aria-label="Toolkit"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-tools"/></svg><span>Toolkit</span></a>
+    <a href="#/system" data-nav="system" aria-label="System"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-system"/></svg><span>System</span></a>
+  </nav>
+
+  <script src="/assets/icons.js"></script>
+  <script src="/js/prefs.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/components.js"></script>
+  <script src="/js/markdown.js"></script>
+  <script src="/js/instruments.js"></script>
+  <script src="/js/views.js"></script>
+  <script src="/js/emergency.js"></script>
+  <script src="/js/tools.js"></script>
+  <script src="/js/system.js"></script>
+  <script src="/js/models.js"></script>
+  <script src="/js/content.js"></script>
+  <script src="/js/studio.js"></script>
+  <script src="/js/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      // If a worker was already controlling this page at load, a later
+      // controllerchange means a NEW worker took over — i.e. the app was
+      // upgraded (e.g. 2.0 → 2.1 added the System/Studio routes). The JS now
+      // running is the old cached shell, so reload once to pick up the new one.
+      // Without this the nav shows new links (index.html is fetched fresh) but
+      // the stale app.js has no matching route → "Page not found".
+      var nfHadController = !!navigator.serviceWorker.controller;
+      var nfReloading = false;
+      navigator.serviceWorker.addEventListener('controllerchange', function () {
+        if (nfReloading || !nfHadController) return;   // skip first-ever install
+        nfReloading = true;
+        window.location.reload();
+      });
+      window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
+    }
+  </script>
+</body>
+</html>

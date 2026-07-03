@@ -1,0 +1,31 @@
+# Needfire — run-anywhere. `docker compose up` then open http://localhost:8848
+#
+# The 'ollama' service is OPTIONAL. Needfire works without it (sources-only mode +
+# stdlib hashing retrieval). Uncomment it to get real local LLM answers and
+# semantic embeddings. Pull models once with:
+#   docker compose exec ollama ollama pull llama3.2:1b
+#   docker compose exec ollama ollama pull nomic-embed-text
+services:
+  needfire:
+    build: .
+    image: needfire:latest
+    ports:
+      - "8848:8848"
+    volumes:
+      - needfire-data:/data
+    # environment:
+    #   NEEDFIRE_OLLAMA_URL: http://ollama:11434   # uncomment with the ollama service
+    restart: unless-stopped
+    # depends_on: [ollama]   # uncomment if enabling ollama below
+
+  # ollama:
+  #   image: ollama/ollama:latest
+  #   volumes:
+  #     - ollama:/root/.ollama
+  #   ports:
+  #     - "11434:11434"
+  #   restart: unless-stopped
+
+volumes:
+  needfire-data:
+  # ollama:

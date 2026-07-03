@@ -1,0 +1,143 @@
+/* Emergency mode: scenario tile grid + full-screen protocol player. */
+
+/* ---- tile grid ---- */
+.grid.tiles { grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: 0.7rem; }
+.tile {
+  position: relative; display: flex; flex-direction: column; align-items: flex-start;
+  justify-content: space-between; gap: 0.5rem;
+  min-height: 6.5rem; padding: 0.8rem 0.8rem 0.7rem 1rem;
+  background: linear-gradient(180deg, var(--surface), var(--bg-2));
+  border: 1px solid var(--border-2); border-radius: var(--radius);
+  color: var(--ink); text-decoration: none; overflow: hidden;
+}
+.tile::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; }
+.tile.sev-life-threat::before { background: var(--danger); }
+.tile.sev-urgent::before { background: var(--accent); }
+.tile.sev-serious::before { background: var(--info); }
+.tile svg { width: 1.7rem; height: 1.7rem; stroke: var(--ink-dim); fill: none; }
+.tile:hover { border-color: var(--danger); }
+.tile:hover svg { stroke: var(--danger-hi); }
+.tile .tile-label { font-weight: 800; letter-spacing: 0.06em; font-size: 0.85rem; }
+.emergency-head { text-align: center; margin: 0.3rem 0 1.1rem; }
+.emergency-head h1 { font-size: 1.35rem; margin: 0 0 0.2rem; letter-spacing: 0.05em; }
+.emergency-head p { color: var(--ink-dim); margin: 0; font-size: 0.85rem; }
+
+/* ---- protocol player ---- */
+body.player-mode .strip, body.player-mode .tabbar, body.player-mode .footer { display: none; }
+body.player-mode .view { padding: 0; max-width: none; }
+
+.player { display: flex; flex-direction: column; min-height: 100vh; min-height: 100dvh; }
+.player-head {
+  display: flex; align-items: center; gap: 0.7rem;
+  padding: 0.5rem 0.9rem calc(0.5rem);
+  background: var(--bg-2); border-bottom: 1px solid var(--border-2);
+  position: sticky; top: 0; z-index: 5;
+}
+.player-head .p-title { font-weight: 800; letter-spacing: 0.04em; font-size: 0.9rem; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.player-head .p-pos { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-mute); flex: none; }
+.player-head .p-exit {
+  flex: none; border: 1px solid var(--border-2); background: var(--surface);
+  color: var(--ink-dim); border-radius: 8px; padding: 0.4rem 0.8rem;
+  font-size: 0.75rem; font-weight: 700; cursor: pointer; min-height: 2.2rem;
+}
+.player-head .p-exit:hover { color: var(--danger); border-color: var(--danger); }
+
+.player-body { flex: 1; width: 100%; max-width: 46rem; margin: 0 auto; padding: 1.1rem 1.1rem 0.5rem; display: flex; flex-direction: column; }
+.step-text { font-size: 1.15rem; line-height: 1.6; }
+.step-text p { margin: 0.5rem 0; }
+.step-text ul, .step-text ol { padding-left: 1.5rem; margin: 0.5rem 0; }
+.step-text li { margin: 0.35rem 0; }
+.step-warning {
+  display: flex; gap: 0.6rem; align-items: flex-start;
+  border: 2px solid var(--danger); border-radius: var(--radius-sm);
+  padding: 0.7rem 0.9rem; margin: 0.9rem 0 0;
+  color: var(--danger-hi); font-weight: 600; font-size: 0.95rem;
+}
+.step-warning svg { width: 1.3rem; height: 1.3rem; stroke: var(--danger); fill: none; flex: none; margin-top: 2px; }
+.entry-warning {
+  border: 2px solid var(--danger); background: var(--danger); color: var(--on-danger);
+  border-radius: var(--radius-sm); padding: 0.8rem 1rem; margin-bottom: 1rem;
+  font-weight: 800; font-size: 1rem; text-align: center;
+}
+.step-detail { margin-top: 0.9rem; }
+.step-detail summary { color: var(--ink-dim); font-size: 0.85rem; cursor: pointer; min-height: 2rem; display: flex; align-items: center; }
+.step-detail div { color: var(--ink-dim); font-size: 0.92rem; line-height: 1.6; padding: 0.4rem 0 0 0.9rem; border-left: 2px solid var(--border-2); margin-top: 0.3rem; }
+
+/* controls */
+.player-controls { margin-top: auto; padding: 1rem 0 1.2rem; display: flex; flex-direction: column; gap: 0.6rem; }
+.big-btn {
+  display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+  width: 100%; min-height: max(var(--tap), 3.6rem);
+  border: 1px solid var(--border-2); border-radius: var(--radius);
+  background: var(--surface-2); color: var(--ink);
+  font-size: 1.05rem; font-weight: 800; letter-spacing: 0.04em;
+  cursor: pointer; text-decoration: none; text-align: center;
+}
+.big-btn:hover { border-color: var(--accent); }
+.big-btn.primary { background: linear-gradient(180deg, var(--accent-hi), var(--accent)); color: var(--on-accent); border: 0; }
+.big-btn.danger { background: var(--danger); color: var(--on-danger); border: 0; }
+.big-btn.danger:hover { background: var(--danger-hi); }
+.big-btn.ok { border-color: var(--ok); color: var(--ok); }
+.big-btn.ghost { background: transparent; font-weight: 600; font-size: 0.9rem; min-height: 2.6rem; }
+.player-foot {
+  display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;
+  padding: 0.6rem 1.1rem calc(0.8rem + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--border); font-size: 0.78rem; color: var(--ink-mute);
+  justify-content: center;
+}
+.player-foot a { color: var(--accent-hi); font-weight: 700; text-decoration: none; }
+
+/* loop step */
+.loop-until {
+  border: 1px dashed var(--border-2); border-radius: var(--radius-sm);
+  padding: 0.7rem 0.9rem; margin-top: 0.9rem;
+  color: var(--ink-dim); font-size: 0.9rem;
+}
+.loop-until b { color: var(--ink); }
+
+/* ---- timers ---- */
+.timer-box {
+  margin-top: 1rem; padding: 0.9rem;
+  border: 1px solid var(--border-2); border-radius: var(--radius);
+  background: var(--bg-2); text-align: center;
+}
+.timer-box .t-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-mute); margin-bottom: 0.4rem; }
+.timer-box .t-value { font-family: var(--mono); font-size: 2.4rem; font-weight: 800; line-height: 1.1; }
+.timer-box .t-value.t-done { color: var(--ok); }
+.timer-box .t-sub { font-family: var(--mono); font-size: 0.78rem; color: var(--ink-dim); margin-top: 0.2rem; }
+.timer-box .t-controls { display: flex; gap: 0.5rem; justify-content: center; margin-top: 0.7rem; }
+.timer-box button {
+  border: 1px solid var(--border-2); background: var(--surface-2); color: var(--ink);
+  border-radius: 9px; padding: 0.55rem 1.3rem; font-size: 0.85rem; font-weight: 800;
+  cursor: pointer; min-height: var(--tap); letter-spacing: 0.05em;
+}
+.timer-box button:hover { border-color: var(--accent); }
+.timer-box button.running { border-color: var(--danger); color: var(--danger-hi); }
+
+/* metronome pulse */
+.pulse-ring {
+  width: 5.5rem; height: 5.5rem; margin: 0.5rem auto 0; border-radius: 50%;
+  border: 4px solid var(--border-2); display: grid; place-items: center;
+  font-family: var(--mono); font-size: 1.6rem; font-weight: 800;
+  transition: transform 60ms ease-out, border-color 60ms ease-out;
+}
+.pulse-ring.beat { transform: scale(1.12); border-color: var(--accent); }
+.pulse-ring.beat-accent { transform: scale(1.2); border-color: var(--danger); }
+@media (prefers-reduced-motion: reduce) {
+  .pulse-ring, .pulse-ring.beat, .pulse-ring.beat-accent { transform: none; transition: none; }
+}
+
+/* stamp display on completion / step */
+.stamp-live { font-family: var(--mono); color: var(--danger-hi); font-weight: 800; }
+
+/* kiosk: the whole grid must be visible at once on the Bothy's 800×480 panel */
+@media (pointer: coarse) and (max-height: 640px) and (orientation: landscape) {
+  .grid.tiles { grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
+  .tile { min-height: 4.6rem; padding: 0.55rem 0.6rem 0.5rem 0.8rem; }
+  .tile svg { width: 1.3rem; height: 1.3rem; }
+  .emergency-head { margin: 0 0 0.6rem; }
+  .emergency-head h1 { font-size: 1.05rem; }
+  .emergency-head p, .grid.tiles ~ p { display: none; }
+  .step-text { font-size: 1.05rem; }
+  .player-body { padding-top: 0.6rem; }
+}

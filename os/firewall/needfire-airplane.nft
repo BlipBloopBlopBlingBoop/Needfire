@@ -1,0 +1,45 @@
+#!/usr/sbin/nft -f
+# =============================================================================
+# Needfire — airplane-mode firewall (nftables).
+# Default posture: serve the LOCAL network, block all outbound to the internet.
+# Needfire needs no internet to function; this enforces that by default and makes
+# accidental "phone-home" traffic impossible. Lift it deliberately only to run a
+# corpus download, then re-apply.
+#
+# Apply:   sudo nft -f os/firewall/needfire-airplane.nft   (installed as 'needfire-airplane')
+# Review the LAN range to match your network/AP subnet.
+# =============================================================================
+
+flush ruleset
+
+define LAN = { 10.42.0.0/24, 192.168.0.0/16, 127.0.0.0/8 }
+
+table inet needfire {
+  chain input {
+    type filter hook input priority 0; policy drop;
+    iif "lo" accept
+    ct state established,related accept
+    # Allow LAN clients to reach Needfire web UI/API and basic services.
+    ip saddr $LAN tcp dport { 8848, 8080, 22 } accept
+    # DHCP DISCOVER/REQUEST arrive from 0.0.0.0 (the client has no lease yet),
+    # so port 67 must be open regardless of source address.
+    udp dport 67 accept
+    ip saddr $LAN udp dport 53 accept                  # DNS for the AP
+    ip saddr $LAN icmp type echo-request accept
+  }
+
+  chain forward {
+    type filter hook forward priority 0; policy drop;  # never route to an uplink
+  }
+
+  chain output {
+    type filter hook output priority 0; policy drop;
+    oif "lo" accept
+    ct state established,related accept
+    # Permit replies + traffic to the local network only.
+    ip daddr $LAN accept
+    # NOTE: outbound to the internet is intentionally DROPPED.
+    # To download corpus, temporarily run:  nft flush ruleset
+    # then re-apply this file when finished.
+  }
+}

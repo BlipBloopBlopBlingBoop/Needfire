@@ -1,0 +1,29 @@
+[Unit]
+Description=Needfire — offline survival knowledge server
+Documentation=file:/opt/needfire/PROJECT.md
+After=network.target local-fs.target
+
+[Service]
+Type=simple
+User=needfire
+Group=needfire
+WorkingDirectory=/opt/needfire
+EnvironmentFile=/etc/needfire/needfire.env
+# Rebuild the index on start if it is missing, then serve.
+ExecStartPre=/bin/sh -c '[ -f "$NEEDFIRE_HOME/index/chunks.sqlite" ] || /usr/bin/python3 -m needfire index'
+ExecStart=/usr/bin/python3 -m needfire serve
+Restart=on-failure
+RestartSec=3
+
+# Hardening — the app needs no special privileges.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/needfire
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+
+[Install]
+WantedBy=multi-user.target

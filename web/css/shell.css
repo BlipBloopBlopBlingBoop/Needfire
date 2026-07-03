@@ -1,0 +1,164 @@
+/* Needfire app chrome: instrument strip, navigation, layout, breakpoints.
+   All sizes in rem so <html data-scale> scales type and controls together. */
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: var(--sans);
+  font-weight: var(--body-weight);
+  color: var(--ink);
+  background: var(--bg-decor), var(--bg);
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ---- instrument strip (top) ---- */
+.strip {
+  display: flex; align-items: center; gap: 0.9rem;
+  padding: 0.5rem 1.1rem;
+  background: linear-gradient(180deg, var(--surface), var(--bg-2));
+  border-bottom: 1px solid var(--border-2);
+  position: sticky; top: 0; z-index: 20;
+}
+.brand { display: flex; align-items: center; gap: 0.55rem; text-decoration: none; color: var(--ink); flex: none; }
+.brand svg { width: 1.7rem; height: 1.7rem; stroke: var(--accent); fill: none; }
+.brand-name { font-weight: 800; letter-spacing: 0.15em; font-size: 1.05rem; }
+.brand-sub { color: var(--ink-mute); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; }
+
+.strip-instruments {
+  display: flex; align-items: center; gap: 0.45rem;
+  font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em;
+  color: var(--ink-dim); flex: none;
+}
+.seg {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 0.22rem 0.5rem; background: var(--bg-2);
+  white-space: nowrap;
+}
+.seg .led { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--ok); box-shadow: var(--glow-ok); flex: none; }
+.seg.down { color: var(--danger); }
+.seg.down .led { background: var(--danger); box-shadow: var(--glow-danger); }
+.seg.alert {
+  color: var(--on-danger); background: var(--danger); border-color: var(--danger);
+  font-weight: 700; cursor: pointer;
+}
+.seg.stale { opacity: 0.55; }
+
+/* ---- top navigation (hidden on phones) ---- */
+.topnav { display: flex; gap: 0.25rem; margin-left: auto; }
+.topnav a {
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.5rem 0.85rem; border-radius: 10px;
+  color: var(--ink-dim); text-decoration: none; font-size: 0.85rem; font-weight: 600;
+  border: 1px solid transparent;
+  min-height: 2.4rem;
+}
+.topnav a svg { width: 1.05rem; height: 1.05rem; stroke: currentColor; fill: none; }
+.topnav a:hover { color: var(--ink); background: var(--surface); }
+.topnav a.active { color: var(--accent-hi); background: var(--surface-2); border-color: var(--border-2); }
+.topnav a.nav-sos {
+  color: var(--on-danger); background: var(--danger); border-color: var(--danger);
+  font-weight: 800; letter-spacing: 0.05em;
+}
+.topnav a.nav-sos:hover { background: var(--danger-hi); color: var(--on-danger); }
+.topnav a.nav-sos.active { outline: 2px solid var(--danger-hi); }
+
+.strip-ctl { display: flex; gap: 0.3rem; flex: none; }
+.strip-ctl button {
+  display: grid; place-items: center;
+  width: 2.4rem; height: 2.4rem;
+  border: 1px solid var(--border-2); border-radius: 8px;
+  background: var(--surface); color: var(--ink-dim); cursor: pointer;
+  font-family: var(--mono); font-size: 0.8rem; font-weight: 700;
+}
+.strip-ctl button:hover { color: var(--ink); border-color: var(--accent); }
+.strip-ctl button svg { width: 1.1rem; height: 1.1rem; stroke: currentColor; fill: none; }
+
+/* ---- main view + footer ---- */
+.view { flex: 1; width: 100%; max-width: 1180px; margin: 0 auto; padding: 1.6rem 1.25rem 3.5rem; }
+.footer {
+  display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
+  padding: 0.7rem 1.25rem; border-top: 1px solid var(--border);
+  color: var(--ink-mute); font-size: 0.75rem; background: var(--bg-2);
+}
+.footer .foot-note { margin-left: auto; }
+
+/* ---- bottom tab bar (phones) ---- */
+.tabbar {
+  display: none;
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+  background: linear-gradient(0deg, var(--bg-2), var(--surface));
+  border-top: 1px solid var(--border-2);
+  padding: 0.3rem 0.4rem calc(0.3rem + env(safe-area-inset-bottom));
+}
+.tabbar a {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.15rem;
+  padding: 0.35rem 0.2rem; border-radius: 10px;
+  color: var(--ink-dim); text-decoration: none;
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  min-height: var(--tap);
+  justify-content: center;
+}
+.tabbar a svg { width: 1.35rem; height: 1.35rem; stroke: currentColor; fill: none; }
+.tabbar a.active { color: var(--accent-hi); background: var(--surface-2); }
+.tabbar a.tab-sos {
+  color: var(--on-danger); background: var(--danger);
+  margin: -0.9rem 0.3rem 0; border-radius: 14px;
+  border: 2px solid var(--bg-2);
+  font-size: 0.68rem;
+}
+.tabbar a.tab-sos svg { width: 1.6rem; height: 1.6rem; }
+.tabbar a.tab-sos.active { background: var(--danger-hi); color: var(--on-danger); }
+
+/* ---- generic bits shared across views ---- */
+.empty { text-align: center; color: var(--ink-mute); padding: 3.5rem 1.25rem; }
+.empty svg { width: 2.75rem; height: 2.75rem; stroke: var(--border-2); fill: none; margin-bottom: 0.75rem; }
+.spinner {
+  width: 1.1rem; height: 1.1rem; border: 2px solid var(--border-2);
+  border-top-color: var(--accent); border-radius: 50%;
+  display: inline-block; animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.kbd {
+  font-family: var(--mono); font-size: 0.68rem; color: var(--ink-mute);
+  border: 1px solid var(--border-2); border-bottom-width: 2px; border-radius: 5px;
+  padding: 0.05rem 0.35rem; margin-left: 0.4rem;
+}
+
+/* ---- breakpoints ---- */
+@media (max-width: 640px) {
+  .topnav { display: none; }
+  .tabbar { display: flex; }
+  .brand-sub, .footer .foot-note { display: none; }
+  .view { padding: 1rem 0.9rem calc(4.8rem + env(safe-area-inset-bottom)); }
+  .strip { gap: 0.5rem; }
+  .strip-instruments { overflow-x: auto; scrollbar-width: none; }
+  .footer { display: none; }
+}
+
+/* Bothy built-in touchscreen: coarse pointer, short landscape viewport */
+@media (pointer: coarse) and (max-height: 640px) and (orientation: landscape) {
+  :root { --tap: 56px; }
+  .strip { padding: 0.25rem 0.8rem; }
+  .hero { display: none; }
+  .view { padding-top: 0.8rem; }
+  .footer { display: none; }
+  .kbd { display: none; }
+}
+
+@media (max-width: 900px) { .kbd { display: none; } }
+
+@media print {
+  .strip, .tabbar, .footer, .searchbar, .suggest { display: none !important; }
+  body { background: #fff; color: #000; }
+}

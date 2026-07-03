@@ -1,0 +1,20 @@
+[Unit]
+Description=Needfire — local Wi-Fi access point (hostapd; dnsmasq provides DHCP/DNS)
+After=network.target dnsmasq.service
+Wants=dnsmasq.service
+# Review /etc/hostapd/hostapd.conf before enabling. Serves a LOCAL network only.
+# Set the wireless interface in /etc/needfire/ap.env (NEEDFIRE_AP_IF, default wlan0).
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/needfire/ap.env
+Environment=NEEDFIRE_AP_IF=wlan0
+# `ip addr replace` is idempotent — a restart must not fail on "File exists".
+ExecStartPre=/sbin/ip addr replace 10.42.0.1/24 dev ${NEEDFIRE_AP_IF}
+ExecStart=/usr/sbin/hostapd /etc/hostapd/hostapd.conf
+ExecStopPost=-/sbin/ip addr flush dev ${NEEDFIRE_AP_IF}
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

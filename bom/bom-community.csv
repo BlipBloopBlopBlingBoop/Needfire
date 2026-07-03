@@ -1,0 +1,21 @@
+category,item,spec,qty,unit_cost_usd,ext_cost_usd,source,hardened_role,notes
+Compute,Compute nodes,"x86 mini-PC, 64GB RAM each",3,650,1950,"used enterprise / mini-PC market",compute,"Roles: always-on, retrieval, services"
+Compute,GPU node,"x86 host + used 24GB-class GPU",1,1400,1400,"used market",accel,Runs 14-34B reasoning model interactively
+Networking,Gigabit switch,low-power unmanaged 8-port,1,40,40,"electronics retailer",network,Wires the cluster
+Networking,Wi-Fi mesh kit,"3-node mesh, WPA3",1,250,250,"electronics retailer",network,Coverage across a settlement
+Storage,NVMe SSD (hot),2TB per node,4,150,600,"electronics retailer",hot-storage,Per-node models + index + hot ZIMs
+Storage,HDD array (cold),"24TB+ usable, redundant (RAID/mirror)",1,900,900,"electronics retailer",cold-storage,Full archive with redundancy
+Storage,Replica clones,full-archive clone drives,2,300,600,"electronics retailer",cold-spare,"One Faraday-stored, one off-site"
+Power,LiFePO4 battery,5 kWh+ LiFePO4 bank,1,2200,2200,"solar/battery vendor",power,Cluster autonomy
+Power,Solar array,1-2 kW panels,1,1400,1400,"solar vendor",power,Sized for 2000-5000 Wh/day
+Power,MPPT charge controller,60A+ MPPT,1,250,250,"solar vendor",power,High-current harvest
+Power,DC distribution + inverter,"24V bus, fuses, pure-sine inverter",1,400,400,"solar vendor",power,Mixed DC/AC loads
+Power,Watt-meters,inline meters per rail,2,20,40,"electronics retailer",maintenance,Monitor per-node draw
+Enclosure,Rackable rugged cases,distributed rugged enclosures,3,120,360,"case vendor",ruggedization,Distributed nodes survive localized damage
+Enclosure,Faraday container (large),galvanized bin / large EMP enclosure,1,120,120,"hardware / prep",emp-shield,Cold spare node + replica drive
+Enclosure,Cooling + filters,passive heatsinks + filtered intakes,1,120,120,"electronics retailer",thermal,Low-RPM where unavoidable
+Spares,Cold spare node,pre-flashed node + verified clone,1,650,650,"used market",emp-recovery,"Disconnected, Faraday-stored"
+Spares,Spares kit,"boot SSDs, NICs, converters, cables, fuses",1,200,200,"electronics retailer",maintenance,Cluster-wide MTTR
+Display,Shared console,monitor + KVM,1,180,180,"electronics retailer",interface,Admin; clients use own devices
+Consumables,Paper quick-start kit,printed runbook + corpus index + recovery,2,10,20,"local print",recovery,On-site + off-site copies
+TOTAL,,,,,11680,,,Representative prices — revalidate before purchase

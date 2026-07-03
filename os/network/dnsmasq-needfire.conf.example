@@ -1,0 +1,16 @@
+# Needfire — dnsmasq for the local AP (EXAMPLE — edit before use).
+# Hands out addresses to clients on Needfire's Wi-Fi and points them at the box.
+# Deliberately does NOT provide an upstream/internet route — Needfire is offline.
+
+interface=wlan0
+bind-interfaces
+dhcp-range=10.42.0.50,10.42.0.200,255.255.255.0,12h
+dhcp-option=option:router,10.42.0.1
+dhcp-option=option:dns-server,10.42.0.1
+
+# Captive-portal style convenience: resolve a friendly name to Needfire.
+address=/bothy.local/10.42.0.1
+address=/bothy/10.42.0.1
+
+# No upstream DNS — we are offline by design. Comment in only if you intend it.
+no-resolv

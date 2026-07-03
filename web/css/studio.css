@@ -1,0 +1,83 @@
+/* Studio: login gate, playground, files/editor, terminal, python. */
+
+/* ---- login gate ---- */
+.gate {
+  max-width: 30rem; margin: 2rem auto; text-align: center;
+  background: var(--surface); border: 1px solid var(--border-2); border-radius: var(--radius);
+  padding: 1.6rem 1.5rem;
+}
+.gate svg { width: 2.2rem; height: 2.2rem; stroke: var(--accent-hi); fill: none; margin-bottom: 0.6rem; }
+.gate h2 { margin: 0 0 0.5rem; font-size: 1.15rem; }
+.gate p { color: var(--ink-dim); font-size: 0.85rem; line-height: 1.5; margin: 0 0 1rem; }
+.gate input {
+  width: 100%; min-height: var(--tap); margin-bottom: 0.7rem;
+  background: var(--bg-2); border: 1px solid var(--border-2); border-radius: 10px;
+  color: var(--ink); font-size: 1.05rem; padding: 0.4rem 0.8rem; text-align: center;
+}
+.gate input:focus { border-color: var(--accent); outline: none; }
+.gate .gate-msg { color: var(--danger-hi); font-size: 0.82rem; min-height: 1.1rem; margin-top: 0.5rem; }
+
+.studio-foot { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1.4rem; }
+.studio-foot .btn svg { width: 1rem; height: 1rem; stroke: currentColor; fill: none; }
+
+/* shared code textarea */
+textarea.code {
+  width: 100%; background: var(--bg-2); border: 1px solid var(--border-2); border-radius: 8px;
+  color: var(--ink); font-family: var(--mono); font-size: 0.85rem; line-height: 1.5;
+  padding: 0.6rem 0.7rem; resize: vertical; tab-size: 2;
+}
+textarea.code:focus { border-color: var(--accent); outline: none; }
+
+/* ---- playground ---- */
+.pg { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+.pg-editors { display: flex; flex-direction: column; gap: 0.4rem; }
+.pg-editors label, .py label, .fs-main label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-mute); }
+.pg-editors textarea { height: 8rem; }
+.pg-out { display: flex; flex-direction: column; gap: 0.4rem; }
+.pg-preview { width: 100%; height: 27rem; background: #fff; border: 1px solid var(--border-2); border-radius: 8px; }
+@media (max-width: 720px) { .pg { grid-template-columns: 1fr; } .pg-preview { height: 18rem; } }
+
+/* ---- files / editor ---- */
+.fs { display: grid; grid-template-columns: 16rem 1fr; gap: 0.8rem; min-height: 60vh; }
+.fs-side { border: 1px solid var(--border-2); border-radius: var(--radius); background: var(--surface); overflow: hidden; display: flex; flex-direction: column; }
+.fs-bar { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.6rem; border-bottom: 1px solid var(--border); }
+.fs-bar select { flex: 1; min-height: 2rem; background: var(--bg-2); border: 1px solid var(--border-2); border-radius: 6px; color: var(--ink); font-size: 0.8rem; }
+.fs-bar .btn { padding: 0.3rem 0.6rem; min-height: 2rem; }
+.fs-path { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-mute); padding: 0.35rem 0.6rem; border-bottom: 1px solid var(--border); }
+.fs-tree { overflow-y: auto; flex: 1; }
+.fs-item { display: flex; align-items: center; gap: 0.45rem; padding: 0.4rem 0.6rem; cursor: pointer; font-size: 0.85rem; }
+.fs-item:hover { background: var(--surface-2); }
+.fs-item svg { width: 1rem; height: 1rem; stroke: currentColor; fill: none; flex: none; }
+.fs-item.dir { color: var(--accent-hi); }
+.fs-main { display: flex; flex-direction: column; border: 1px solid var(--border-2); border-radius: var(--radius); background: var(--surface); overflow: hidden; }
+.fs-file { flex: 1; font-family: var(--mono); font-size: 0.78rem; color: var(--ink-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fs-warn { background: var(--danger); color: var(--on-danger); font-size: 0.78rem; padding: 0.4rem 0.7rem; }
+.editor-wrap { flex: 1; display: flex; overflow: hidden; }
+.editor-wrap .gutter {
+  padding: 0.6rem 0.5rem; text-align: right; font-family: var(--mono); font-size: 0.85rem; line-height: 1.5;
+  color: var(--ink-mute); background: var(--bg-2); border-right: 1px solid var(--border);
+  white-space: pre; overflow: hidden; user-select: none; min-width: 2.6rem;
+}
+textarea.editor { flex: 1; border: 0; border-radius: 0; resize: none; height: 100%; min-height: 24rem; }
+@media (max-width: 720px) { .fs { grid-template-columns: 1fr; } .fs-side { max-height: 40vh; } }
+
+/* ---- terminal / python output ---- */
+.term-note, .term-input { font-size: 0.8rem; }
+.term-note { color: var(--ink-mute); margin-bottom: 0.5rem; line-height: 1.4; }
+.term-log {
+  background: #05070a; border: 1px solid var(--border-2); border-radius: 8px;
+  padding: 0.7rem 0.8rem; font-family: var(--mono); font-size: 0.82rem; line-height: 1.45;
+  min-height: 22rem; max-height: 55vh; overflow-y: auto; color: #cfe3d0; white-space: pre-wrap; word-break: break-word;
+}
+[data-theme="day"] .term-log { background: #14120d; color: #d7f0d8; }
+.term-line.cmd { color: var(--accent-hi); }
+.term-line.err { color: var(--danger-hi); }
+.term-input { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.5rem; font-family: var(--mono); }
+.term-cwd { color: var(--ink-mute); }
+.term-in {
+  flex: 1; background: var(--bg-2); border: 1px solid var(--border-2); border-radius: 8px;
+  color: var(--ink); font-family: var(--mono); font-size: 0.85rem; padding: 0.5rem 0.7rem; min-height: var(--tap);
+}
+.term-in:focus { border-color: var(--accent); outline: none; }
+.py .editor-wrap { border: 1px solid var(--border-2); border-radius: 8px; margin: 0.4rem 0; }
+.py textarea.editor { min-height: 12rem; }

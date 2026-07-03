@@ -1,0 +1,39 @@
+NEEDFIRE - offline survival computer
+=====================================
+Everything runs on THIS computer. No internet is needed after you
+have this folder. No account, no installation wizard, no cost.
+
+WINDOWS (10 or 11)
+  1. Double-click:  Start-Needfire-Windows.bat
+  2. If it says Python is missing, it opens the download page for you.
+     Install Python (click "Install Now"), then double-click the
+     .bat file again.
+  3. Your browser opens the app by itself.
+
+MAC
+  1. RIGHT-CLICK:  Start-Needfire-Mac.command  and choose "Open",
+     then click "Open" in the warning. (Only needed the first time.)
+  2. If macOS offers to install "command line developer tools",
+     click Install, wait a few minutes, then open the file again.
+  3. Your browser opens the app by itself.
+
+LINUX
+  1. Open a terminal in this folder (or double-click the file and
+     pick "Run in Terminal").
+  2. Run:  bash Start-Needfire-Linux.sh
+  3. Your browser opens the app by itself.
+
+EVERY SYSTEM
+  * The app lives at:  http://localhost:8848
+  * The FIRST start takes about a minute (it builds its library index).
+  * TO STOP: close the black window, or press Ctrl+C inside it.
+  * If your firewall asks, click "Allow" - nothing leaves your machine.
+  * Your data (downloads, index) lives in the hidden folder
+    ".needfire-home" inside this folder. Copy this whole folder to
+    back everything up.
+
+PHONES, OLD COMPUTERS, RASPBERRY PI, TROUBLESHOOTING
+  Open QUICKSTART.md (double-click it - any text editor can show it).
+  It covers: using Needfire from phones on your Wi-Fi, turning a spare
+  computer into a dedicated always-on "Bothy" appliance, building a
+  bootable Raspberry Pi image, and fixes for common problems.

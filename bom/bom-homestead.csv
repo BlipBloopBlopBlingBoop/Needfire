@@ -1,0 +1,24 @@
+category,item,spec,qty,unit_cost_usd,ext_cost_usd,source,hardened_role,notes
+Compute,Mini-PC / SFF,"x86, 8+ cores, 64GB RAM, good memory bandwidth",1,650,650,"used enterprise / mini-PC market",compute,Runs 8-14B reasoning model in RAM
+Compute,GPU (optional),used 16GB-class GPU,1,400,400,"used GPU market",accel,Optional - 5-10x faster reasoning model
+Compute,eGPU enclosure (optional),"Thunderbolt/OCuLink eGPU box (if no slot)",1,200,200,"electronics retailer",accel,Only if mini-PC lacks a GPU slot
+Storage,NVMe SSD (hot),2TB M.2 NVMe,1,150,150,"electronics retailer",hot-storage,Models + index + hot ZIMs
+Storage,HDD/SSD (cold),8TB-16TB 3.5in HDD,1,180,180,"electronics retailer",cold-storage,Full C2-C4 archive
+Storage,Cold clone drive,8TB-16TB (mirror),1,180,180,"electronics retailer",cold-spare,Faraday-stored verified clone
+Power,LiFePO4 battery,1-2 kWh LiFePO4 bank,1,600,600,"solar/battery vendor",power,Cycle life + cold/heat tolerance
+Power,Solar panels,400-800W rigid,1,500,500,"solar vendor",power,Sized for ~600-900 Wh/day
+Power,MPPT charge controller,20-40A MPPT,1,120,120,"solar vendor",power,~15-30% more harvest than PWM
+Power,DC distribution + buck converters,12V bus + USB-C PD outputs + fuses,1,80,80,"electronics retailer",power,"Run compute from DC, skip inverter losses"
+Power,Pure-sine inverter (optional),small AC for AC-only gear,1,120,120,"solar vendor",power,Only if a component needs AC
+Power,Watt-meter,inline DC/AC power meter,1,20,20,"electronics retailer",maintenance,Size system from real numbers
+Enclosure,Rugged enclosure,ammo-can / rugged box w/ glands,1,80,80,"mil-surplus / case vendor",ruggedization,Operating enclosure
+Enclosure,Faraday container,steel ammo can / galvanized bin lined,1,60,60,"mil-surplus / hardware",emp-shield,Holds disconnected cold spare
+Enclosure,Desiccant + conformal coat,silica packs + board coating,1,30,30,"general",humidity,Marine/humid protection
+Networking,Wi-Fi AP / travel router,"WPA3, hidden SSID capable",1,60,60,"electronics retailer",network,Serves a few devices
+Display,Portable monitor,USB-C monitor,1,120,120,"electronics retailer",interface,Admin console
+Input,Keyboard + mouse,wired + wireless set,1,40,40,"electronics retailer",interface,Wired fallback included
+Spares,Spare boot SSD,pre-flashed OS,1,80,80,"electronics retailer",recovery,Fast recovery
+Spares,Cold spare node,second mini-PC/SBC pre-flashed,1,300,300,"used market",emp-recovery,Stored in Faraday container
+Spares,Spares kit,"Wi-Fi adapter, buck converter, cables, fuses, thermal paste",1,80,80,"electronics retailer",maintenance,MTTR in minutes
+Consumables,Paper quick-start kit,printed runbook + corpus index + recovery,1,10,10,"local print",recovery,Recoverable without the computer
+TOTAL,,,,,4060,,,Representative prices — revalidate before purchase

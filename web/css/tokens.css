@@ -1,0 +1,112 @@
+/* Needfire design tokens. The ONLY file with raw color values.
+   Themes are attribute-driven (<html data-theme>), set pre-paint by the boot
+   snippet in index.html and cycled from the status strip.
+   - dark  : default field console (amber on gunmetal)
+   - night : red-on-black, night-vision safe — NO non-red hue anywhere;
+             state is conveyed by brightness + text, never hue alone
+   - day   : high-contrast for direct sunlight
+   Text scale: <html data-scale="1..4"> — everything is rem, so this scales
+   type AND tap targets together. */
+
+:root {
+  /* surfaces */
+  --bg:        #0a0e14;
+  --bg-2:      #0d1117;
+  --surface:   #131a24;
+  --surface-2: #18212e;
+  --border:    #243044;
+  --border-2:  #2f3e57;
+  /* ink */
+  --ink:       #e6edf3;
+  --ink-dim:   #9aa7b5;
+  --ink-mute:  #8b96a8;
+  /* brand + state */
+  --accent:    #f5a623;
+  --accent-hi: #ffce6b;
+  --on-accent: #1a1205;
+  --ok:        #3fb950;
+  --danger:    #f85149;
+  --danger-hi: #ff6b61;
+  --info:      #58a6ff;
+  --on-danger: #fff;
+  /* effects */
+  --glow-ok:     0 0 8px var(--ok);
+  --glow-danger: 0 0 8px var(--danger);
+  --shadow: 0 1px 0 rgba(255,255,255,.03) inset, 0 8px 24px rgba(0,0,0,.35);
+  --bg-decor:
+    radial-gradient(1200px 600px at 80% -10%, rgba(245,166,35,.07), transparent 60%),
+    radial-gradient(900px 500px at -10% 10%, rgba(88,166,255,.06), transparent 55%);
+  --img-filter: none;
+  /* geometry */
+  --radius:    14px;
+  --radius-sm: 9px;
+  --tap:       48px;   /* min touch target; kiosk media query raises it */
+  /* type */
+  --mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, Consolas, monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --body-weight: 400;
+}
+
+/* NIGHT — preserve night vision. Everything is a shade of red on black.
+   Status differences use brightness only; glows and decoration are killed. */
+[data-theme="night"] {
+  --bg:        #000000;
+  --bg-2:      #060101;
+  --surface:   #0d0303;
+  --surface-2: #150505;
+  --border:    #3a0e0e;
+  --border-2:  #571414;
+  --ink:       #ff6257;
+  --ink-dim:   #c24138;
+  --ink-mute:  #a53931;
+  --accent:    #ff3b30;
+  --accent-hi: #ff8a80;
+  --on-accent: #000000;
+  --ok:        #ff9a8d;   /* brighter = good */
+  --danger:    #ff2419;   /* saturated = danger */
+  --danger-hi: #ff5a4d;
+  --info:      #d94a40;
+  --on-danger: #000000;
+  --glow-ok:     none;
+  --glow-danger: none;
+  --shadow:      none;
+  --bg-decor:    none;
+  --img-filter: grayscale(1) sepia(1) saturate(8) hue-rotate(-55deg) brightness(.65);
+  --body-weight: 450;   /* red-on-black needs a touch more weight */
+}
+
+/* DAY — direct-sunlight legibility: near-black on paper, hard borders. */
+[data-theme="day"] {
+  --bg:        #f5f3ee;
+  --bg-2:      #efede6;
+  --surface:   #ffffff;
+  --surface-2: #e7e4db;
+  --border:    #8a8578;
+  --border-2:  #4a463c;
+  --ink:       #14120d;
+  --ink-dim:   #3d3a30;
+  --ink-mute:  #565243;
+  --accent:    #8a5200;
+  --accent-hi: #6b3f00;
+  --on-accent: #ffffff;
+  --ok:        #0a6b2d;
+  --danger:    #a3140b;
+  --danger-hi: #7e0f08;
+  --info:      #0b4f9e;
+  --on-danger: #ffffff;
+  --glow-ok:     none;
+  --glow-danger: none;
+  --shadow:      0 1px 3px rgba(0,0,0,.18);
+  --bg-decor:    none;
+  --img-filter:  none;
+}
+
+/* text scale — root font size drives every rem in the app */
+html, html[data-scale="1"] { font-size: 16px; }
+html[data-scale="2"]       { font-size: 18px; }
+html[data-scale="3"]       { font-size: 20px; }
+html[data-scale="4"]       { font-size: 23px; }
+
+/* night-mode raster treatment (PWA icons, any future images) */
+[data-theme="night"] img { filter: var(--img-filter); }
+[data-theme="night"] ::selection { background: #571414; color: #ff8a80; }

@@ -1,0 +1,26 @@
+# Needfire — hostapd access point (EXAMPLE — edit before use).
+# A hidden, WPA3-capable local network so phones/laptops can reach Needfire UI.
+# Set `interface`, `country_code`, `ssid`, and the passphrase for your hardware.
+
+interface=wlan0
+driver=nl80211
+country_code=US                 # set your regulatory domain (affects channels/power)
+ssid=BOTHY
+ignore_broadcast_ssid=1         # hidden SSID (operational security)
+hw_mode=g
+channel=6
+wmm_enabled=1
+
+# --- WPA3-SAE (preferred). For older clients, see the WPA2 block below. ---
+auth_algs=1
+wpa=2
+wpa_key_mgmt=SAE
+rsn_pairwise=CCMP
+ieee80211w=2                     # management-frame protection (required for SAE)
+# sae_password=CHANGE-ME-LONG-PASSPHRASE
+
+# --- WPA2 fallback (uncomment instead of the SAE block for old devices) ---
+# wpa=2
+# wpa_key_mgmt=WPA-PSK
+# rsn_pairwise=CCMP
+# wpa_passphrase=CHANGE-ME-LONG-PASSPHRASE
