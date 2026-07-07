@@ -29,8 +29,8 @@ reference, not weapons information.
 Effectiveness scales with material density and thickness. Lead is excellent per
 centimetre; but thick **concrete, packed earth, or water** also work and are far
 more available. A common fallout-shelter guideline is that each "halving
-thickness" of a material cuts gamma dose in half — for dense earth this is on the
-order of tens of centimetres. Stack enough mass (earth, sandbags, concrete,
+thickness" of a material cuts gamma dose in half — for packed earth this is
+roughly 9 cm (about 6 cm of concrete, 1 cm of lead). Stack enough mass (earth, sandbags, concrete,
 water containers, books) between you and fallout, and stay low and central.
 
 ## Fallout practicality

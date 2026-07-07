@@ -1,6 +1,6 @@
 {
   "name": "Needfire \u2014 Seed Corpus",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "license": "CC0-1.0",
   "description": "Original starter reference documents bundled with Needfire so the system works end-to-end offline out of the box. This is a small demonstration set, NOT a substitute for the full downloadable corpus. Written for Needfire and released into the public domain (CC0).",
   "disclaimer": "General reference only. Not professional medical, legal, chemical, or engineering advice. For anything affecting health or safety, read the primary source and use trained judgement.",
@@ -98,8 +98,8 @@
       "title": "Navigation with Map and Compass",
       "domain": "navigation",
       "tier": "C1",
-      "bytes": 2268,
-      "sha256": "4d8fcada54d8979963a77a93069ebd7274e2d9ca5d2a2c751997f2266d210dac"
+      "bytes": 2387,
+      "sha256": "b31749d86cccef2f65a0f03d4b18dcb5883750c9c0affb23398ec928d6c5149d"
     },
     {
       "file": "composting-and-soil.md",
@@ -194,8 +194,8 @@
       "title": "Finding Water in the Field",
       "domain": "water",
       "tier": "C1",
-      "bytes": 1335,
-      "sha256": "b93aad7c1b9fb43de5890c9eb21be66f303c60111cf8bc31791bf27835ddc3f9"
+      "bytes": 1473,
+      "sha256": "81536e41279721e807e0061dbf4dbffa1c27c60999ea462633419418a4702c12"
     },
     {
       "file": "fire-starting.md",
@@ -218,8 +218,8 @@
       "title": "Food Safety and Preservation",
       "domain": "food",
       "tier": "C1",
-      "bytes": 1919,
-      "sha256": "a89f13d7bd6050c357e3c3395f7febbb55fbb9379791a2e28b40e8f9a51b75d1"
+      "bytes": 2057,
+      "sha256": "eff02d186adb50b92e394fb777372536fd82b3889a15bfefc9af66cdd5f0f20a"
     },
     {
       "file": "foraging-safety.md",
@@ -290,8 +290,8 @@
       "title": "Shelter and Hypothermia",
       "domain": "shelter",
       "tier": "C1",
-      "bytes": 1384,
-      "sha256": "d80b55dfabec5a6989f78653a45c42fecca38ec9d60f50342b1acb415c33ed31"
+      "bytes": 1522,
+      "sha256": "9fc6219134d85979029a8ddcb9c975414590238c78fcb604d5853b68f59f65c2"
     },
     {
       "file": "improvised-repairs-adhesives.md",
@@ -346,8 +346,8 @@
       "title": "Making and Using Disinfectants",
       "domain": "chemistry",
       "tier": "C2",
-      "bytes": 2793,
-      "sha256": "fca2998606d5a68be3fea5dba2d20e0c5e8538f60e0ccd878d6395e7371ceb92"
+      "bytes": 2799,
+      "sha256": "aa4e22342dcef02c23cd74e0cd1c8baae12f331fe1820141bc46dd0d5b6e410d"
     },
     {
       "file": "measuring-without-instruments.md",
@@ -362,8 +362,8 @@
       "title": "Levers, Pulleys, and Mechanical Advantage",
       "domain": "physics",
       "tier": "C2",
-      "bytes": 2807,
-      "sha256": "9e8ede570eba446355323396eb8ac88821ce700991b274804c474554c650b9a7"
+      "bytes": 3209,
+      "sha256": "0a37f46c12f5141cfd56b93b489a9dfe370d901f96f000ec42131a9b140a406d"
     },
     {
       "file": "medicine-storage-shelf-life.md",
@@ -458,8 +458,8 @@
       "title": "Radiation Basics and Shielding",
       "domain": "physics",
       "tier": "C3",
-      "bytes": 2123,
-      "sha256": "28c54a1eadc4fc1326ef8d866ba9d59edb61b263cc4b94298256ec8c2eb46e35"
+      "bytes": 2140,
+      "sha256": "343afbc33873f2d8385f7dc8ab6caa4771ddebd6a236214877b2706c950bb44f"
     },
     {
       "file": "radio-communications.md",
@@ -522,8 +522,8 @@
       "title": "Sewing and Mending",
       "domain": "repair",
       "tier": "C1",
-      "bytes": 2408,
-      "sha256": "9a97b8439173db199231c7a70964228902fd602444609f41b65744efd27903ae"
+      "bytes": 2530,
+      "sha256": "85471ec33f369cda207f5aff5dc649cecbfa2c81f06ebe00edde06b01c5168b4"
     },
     {
       "file": "shock-treatment.md",
@@ -570,8 +570,8 @@
       "title": "Off-Grid Solar Power Basics",
       "domain": "energy",
       "tier": "C3",
-      "bytes": 1679,
-      "sha256": "280e7a8e05713637ed2a24c84fea36d7b5f7d2c67bc4269e915379c685c0b6a5"
+      "bytes": 1825,
+      "sha256": "a26531ee22ceb0a112c5cdb6c2be5aed49bcae83ff4ff22a9b16dc4f594f9d71"
     },
     {
       "file": "sprains-strains.md",

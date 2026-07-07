@@ -6,11 +6,38 @@ The artifacts in this repository version independently, on purpose:
 
 | Number | Where | Meaning |
 |---|---|---|
-| App version (`2.5.0`) | `needfire/__init__.py` `__version__` | **The release number** — the only user-facing version. SemVer. The `docker-compose.yml` image tag tracks it; bump both together. |
+| App version (`2.6.0`) | `needfire/__init__.py` `__version__` | **The release number** — the only user-facing version. SemVer. The `docker-compose.yml` image tag tracks it; bump both together. |
 | Index schema (`2`) | `needfire/db.py` `SCHEMA_VERSION` | Integer. A mismatch with an existing index triggers the rebuild warning in the server; bump when the SQLite layout changes. |
-| Seed manifest (`2.5.0`) | `seed-corpus/seed-manifest.json` | Bumped when the bundled seed documents change (regenerate with `make seed-manifest`). |
-| Catalog (`1.0.0`) | `catalog/catalog.json` | Bumped when the download-source list changes. |
+| Seed manifest (`2.6.0`) | `seed-corpus/seed-manifest.json` | Bumped when the bundled seed documents change (regenerate with `make seed-manifest`). |
+| Catalog (`1.1.0`) | `catalog/catalog.json` | Bumped when the download-source list changes. |
 | Protocols (`1`) | `web/data/protocols.json` | The emergency-protocol data format. |
+
+## 2.6.0 — 2026-07-07
+
+One-click corpus downloads, plus a quality pass over the whole library.
+
+### One-click downloads (no more pasting links)
+The shipped catalog used `<placeholder>` URLs because Kiwix ZIM filenames are
+dated and change over time, which forced the user to paste a real link for every
+source. Now each Kiwix source ships a stable **directory + base name**, and
+Needfire **resolves the current dated build at download time** — so every catalog
+source is a genuine one-click **Download** (13 of the 14 sources; only the
+region-specific map still needs a link). It also **auto-pins the publisher's
+SHA-256** from the `.sha256` sidecar next to each ZIM, so one-click downloads are
+still integrity-checked. Added a one-click **Download all C1** button for the
+survival-critical set. Manual URL override is preserved as a fallback (a local
+mirror, a specific build, or if a lookup fails). Both the Content UI and the
+`needfire download` CLI use the resolver. (`catalog.json` → 1.1.0.)
+
+### Corpus quality pass
+- Fact-checked all 81 bundled documents (medical against AHA/ERC/Red Cross/WHO/
+  Stop the Bleed; survival, technical, and tool formulas against their sources).
+  No factual or safety errors were found — the values (CPR rate/depth, ORS recipe,
+  bleach dosing, boil times, wind-chill/heat-index, radiation half-values, the
+  7-10 rule, mechanical advantage, battery math) all check out.
+- Consistency: added the standard closing disclaimer to six documents that were
+  missing one (`finding-water`, `food-preservation`, `hypothermia-shelter`,
+  `compass-navigation`, `solar-power-basics`, `sewing-and-mending`).
 
 ## 2.5.0 — 2026-07-07
 

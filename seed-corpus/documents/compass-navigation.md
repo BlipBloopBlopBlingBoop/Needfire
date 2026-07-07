@@ -46,3 +46,6 @@ accounted for when relating compass bearings to a map.
 Note landmarks and your back-trail. Pick a distant feature on your bearing, walk
 to it, then sight the next — this keeps you straight over rough ground. Travel
 deliberately; do not wander when disoriented.
+
+> General reference only. Practise these skills before you rely on them, and
+> carry a map and compass where you can.

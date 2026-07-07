@@ -50,3 +50,6 @@ sewing kit in every pack.
   stitching.
 - Sew before a small tear becomes a big one — a stitch in time genuinely saves
   nine.
+
+> General reference only. Take care with needles and sharp tools, and keep
+> your kit tidy and out of reach of children.

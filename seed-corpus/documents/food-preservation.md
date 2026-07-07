@@ -38,3 +38,6 @@ nutrition and health.
 ## Foraging caution
 Never eat a wild plant or mushroom unless you can positively identify it as safe.
 Many edible species have toxic look-alikes. Misidentification can be fatal.
+
+> General reference only, not professional advice. Improperly preserved food
+> can be deadly (botulism) — when in doubt, throw it out.

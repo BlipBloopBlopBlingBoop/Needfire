@@ -42,9 +42,14 @@ shock. Use a **safety factor**:
 - **Life-loaded systems** (a person's weight, rescue): keep the load at **1/10 or
   less** of the rope/hardware breaking strength.
 - **Gear only**, no one under or near it: **1/5** is a common minimum.
-- **Mechanical advantage multiplies the force on the anchor and rope**, so a 4:1
-  hauling 100 kg can put ~400 kg-plus into the anchor — build anchors for the
-  multiplied load, not the load you see.
+- **Build the anchor for the full LOAD, not your reduced pull.** Mechanical
+  advantage divides the force among the rope parts (each carries about load ÷ MA),
+  so it does *not* multiply the load — the anchor holding the load still bears
+  roughly the whole load (a 4:1 hauling 100 kg puts on the order of 100 kg, up to
+  ~125 kg with your haul added, into the anchor — not 400 kg). The trap is sizing
+  an anchor for the light pull you feel instead of the full load it must hold. A
+  single change-of-direction (redirect) pulley is the exception: it can see up to
+  about twice a strand's tension.
 
 ## Practical hauling
 - Combine methods: a lever to break a load free, then a tackle to move it.

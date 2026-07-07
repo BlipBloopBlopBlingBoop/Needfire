@@ -146,7 +146,9 @@ models and pick which one fills the tiny / reason / embed role.
 ## 9. Download more of the library
 
 The bundled 81-document library is a starter set. Open **System → Content** to
-grow it: paste the real URL for a shipped catalog source, **add any download
+grow it: press **Download** on any shipped catalog source (Needfire finds the
+current Kiwix build for you — nothing to paste — and there's a one-click
+**Download all C1** button for the survival-critical set), **add any download
 URL** (ZIM/PDF/text), or **import a file already on the machine** (`.md`,
 `.txt`, or `.zim`, by full path). Then hit **Reindex** so the new content
 becomes searchable.
