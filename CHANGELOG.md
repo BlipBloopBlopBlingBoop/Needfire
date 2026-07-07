@@ -51,6 +51,13 @@ evacuate), and expands the underlying documents to match.
   and days-long aftercare/infection watch.
 - **anaphylaxis-allergy.md** expanded with an off-grid "no adrenaline available"
   section, fuller recognition, and position/biphasic detail.
+- **snakebite-treatment.md** expanded: the two venom families and their signs,
+  and off-grid management without antivenom (breathe for the paralysed, no
+  aspirin/NSAIDs, limb/shock/infection watch) — most bites are survivable on
+  supportive care.
+- **burn-treatment.md** expanded: depth assessment, the fluid-loss that kills
+  large burns and oral-ORS resuscitation (keep urine pale), circumferential-burn
+  warning, and days-to-weeks wound care incl. honey dressings and infection watch.
 
 ## 2.6.0 — 2026-07-07
 

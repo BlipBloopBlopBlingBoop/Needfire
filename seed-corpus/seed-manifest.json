@@ -58,8 +58,8 @@
       "title": "Burn Treatment",
       "domain": "medicine",
       "tier": "C1",
-      "bytes": 2082,
-      "sha256": "6a03dee483bae308cd5a4b4ad9841d777e66890218d3675dc40fa9a4a6d4c672"
+      "bytes": 3983,
+      "sha256": "84b6fb7e0b140e9c3dbda4a84541a05b1828a68bdf985892082989fc8b362741"
     },
     {
       "file": "carbon-monoxide-safety.md",
@@ -554,8 +554,8 @@
       "title": "Snakebite Treatment",
       "domain": "medicine",
       "tier": "C1",
-      "bytes": 1914,
-      "sha256": "1a016ab6fd9547cdc3fc8099b7d5c9f2a5351de87b55d2fa77b3a26c069ea6ed"
+      "bytes": 4094,
+      "sha256": "d6d7eda7f9ad62e74c93e852fb0bb0761b8982b1fd0c06398f1959d9b89cfdbd"
     },
     {
       "file": "soap-saponification.md",
