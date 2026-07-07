@@ -40,6 +40,11 @@ evacuate), and expands the underlying documents to match.
   branch — the off-grid reality many kits face — including real no-adrenaline
   management (positioning, inhaler, airway, evacuate), correct dosing, position
   branches, repeat-dose timer, and biphasic watch.
+- **CPR** gained an off-grid **"when is it reasonable to stop?"** step — the
+  hardest question when no ambulance is coming: very low survival after ~20–30 min
+  with no signs of life, but keep going far longer for cold/drowning/avalanche/
+  lightning ("not dead until warm and dead").
+- **Burns** critical-burn list corrected to include **feet** (matching its doc).
 
 ### Documents (expanded to real off-grid depth)
 - **poisoning-first-aid.md** (~2 KB → ~7 KB): universal rules, decontamination by

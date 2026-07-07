@@ -130,8 +130,8 @@
       "title": "CPR for Adults, Children, and Infants",
       "domain": "medicine",
       "tier": "C1",
-      "bytes": 2042,
-      "sha256": "42ffc1bfb875d55fac4ea6e6cde8f84ec7a5e740693b3bf694efd764824f87bf"
+      "bytes": 3428,
+      "sha256": "cc9cb3999ce395fba77bfe2682f8d698ed423b501a09b3660a911a831ae195dc"
     },
     {
       "file": "dental-emergencies.md",

@@ -155,6 +155,13 @@
      "type": "info",
      "text": "**When an AED arrives:** attach it immediately, turn it on, follow its voice prompts. **Resume compressions immediately after any shock.**",
      "warning": "Do not stop CPR to wait for the AED — keep compressing until the pads are on and the machine says stand clear.",
+     "next": "stopping"
+    },
+    {
+     "id": "stopping",
+     "type": "info",
+     "text": "**Off-grid: when is it reasonable to stop?** Keep going until they show signs of life (movement, breathing, coughing), an AED tells you to stand clear, someone can take over, or you are physically unable to continue.",
+     "detail": "Without a defibrillator or advanced care, survival is very low once there are **no signs of life after 20–30 minutes** of good CPR. If you are exhausted, alone, in danger, or help will truly never come, it is acceptable — and not a failure — to stop. **Keep going far longer** if the person is **cold/hypothermic, was pulled from cold water, was buried in an avalanche, or was struck by lightning** — these can recover after prolonged CPR. The saying is 'not dead until warm and dead.'",
      "next": "END"
     }
    ]
@@ -500,7 +507,7 @@
     {
      "id": "critical",
      "type": "decision",
-     "text": "**Check for a critical burn.** The victim's own palm (with fingers) is about 1% of their body surface — count palms to estimate size. Any of these present?\n\n- Burns to the **face, hands, genitals**, or over joints\n- **Airway burn** signs: singed nostrils, hoarse voice, soot in mouth\n- More than **10% of body surface**\n- **Painless, white, leathery, or charred** areas (full-thickness)\n- Smoke inhalation",
+     "text": "**Check for a critical burn.** The victim's own palm (with fingers) is about 1% of their body surface — count palms to estimate size. Any of these present?\n\n- Burns to the **face, hands, feet, genitals**, or over joints\n- **Airway burn** signs: singed nostrils, hoarse voice, soot in mouth\n- More than **10% of body surface**\n- **Painless, white, leathery, or charred** areas (full-thickness)\n- Smoke inhalation",
      "options": [
       {
        "label": "Yes — any of these",
