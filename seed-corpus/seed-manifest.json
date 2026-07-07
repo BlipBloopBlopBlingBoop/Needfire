@@ -1,6 +1,6 @@
 {
   "name": "Needfire \u2014 Seed Corpus",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "license": "CC0-1.0",
   "description": "Original starter reference documents bundled with Needfire so the system works end-to-end offline out of the box. This is a small demonstration set, NOT a substitute for the full downloadable corpus. Written for Needfire and released into the public domain (CC0).",
   "disclaimer": "General reference only. Not professional medical, legal, chemical, or engineering advice. For anything affecting health or safety, read the primary source and use trained judgement.",
@@ -44,6 +44,14 @@
       "tier": "C1",
       "bytes": 2282,
       "sha256": "311270314fbc99797bf41bd8ad7f4097171ad087c67062eb6e9ad9f10bbc8db7"
+    },
+    {
+      "file": "batteries-and-charging.md",
+      "title": "Batteries and Charging",
+      "domain": "energy",
+      "tier": "C1",
+      "bytes": 2912,
+      "sha256": "b3d2f61c5152f3e34ce1b06a0ec13d69c40265ac8cbf0667a047069539f9147e"
     },
     {
       "file": "burn-treatment.md",
@@ -94,12 +102,28 @@
       "sha256": "4d8fcada54d8979963a77a93069ebd7274e2d9ca5d2a2c751997f2266d210dac"
     },
     {
+      "file": "composting-and-soil.md",
+      "title": "Composting and Building Soil",
+      "domain": "agriculture",
+      "tier": "C2",
+      "bytes": 2879,
+      "sha256": "6c208f2a7f803521db2afcf5f18cddfe38cebe84ba24f82f882f79778faef7c9"
+    },
+    {
       "file": "control-bleeding.md",
       "title": "Controlling Severe Bleeding",
       "domain": "medicine",
       "tier": "C1",
       "bytes": 1497,
       "sha256": "75a4d22d23692179107a877528450126efe5b34439dad19e67136ca06de88795"
+    },
+    {
+      "file": "cooking-methods-offgrid.md",
+      "title": "Cooking Without Power",
+      "domain": "food",
+      "tier": "C1",
+      "bytes": 2449,
+      "sha256": "16d567e5c1db2e167e4fbbe552cd0ec2824c29458c00330373502ed8a70cc545"
     },
     {
       "file": "cpr-adult-child.md",
@@ -148,6 +172,14 @@
       "tier": "C3",
       "bytes": 2303,
       "sha256": "02c1c1c7a9de7491627810415d89686ee1b7c311794777ce44451ca7e8713b81"
+    },
+    {
+      "file": "emergency-preparedness-kit.md",
+      "title": "Emergency Preparedness and the Go-Bag",
+      "domain": "reference",
+      "tier": "C1",
+      "bytes": 2951,
+      "sha256": "0dfa1355b985695c848c6a6641d3d1302feb6288d29d0ff1ad353d5a725857e9"
     },
     {
       "file": "eye-injuries.md",
@@ -214,6 +246,30 @@
       "sha256": "4d84996f1d05cb882d6fc96ea283183966b3b98359ce5255e86920da8fce129f"
     },
     {
+      "file": "generators-and-fuel-safety.md",
+      "title": "Generators and Fuel Safety",
+      "domain": "energy",
+      "tier": "C2",
+      "bytes": 2808,
+      "sha256": "bdc31cf750426a5cd3d868387f72d7b3fd4e69b3917ec687577aae22a5da8d84"
+    },
+    {
+      "file": "growing-food-basics.md",
+      "title": "Growing Food \u2014 Garden Basics",
+      "domain": "agriculture",
+      "tier": "C2",
+      "bytes": 2740,
+      "sha256": "d4c1d9ff7d865549de39e085ddc87fb7beffd955803425b4beeaa65538a8bc5c"
+    },
+    {
+      "file": "head-injury-concussion.md",
+      "title": "Head Injury and Concussion",
+      "domain": "medicine",
+      "tier": "C1",
+      "bytes": 2532,
+      "sha256": "545213049e5633c5432de1ba21606f8f86aaa6c6d2099da21c50e58d3626c2c4"
+    },
+    {
       "file": "heart-attack.md",
       "title": "Heart Attack and Chest Pain",
       "domain": "medicine",
@@ -238,12 +294,36 @@
       "sha256": "d80b55dfabec5a6989f78653a45c42fecca38ec9d60f50342b1acb415c33ed31"
     },
     {
+      "file": "improvised-repairs-adhesives.md",
+      "title": "Improvised Repairs and Adhesives",
+      "domain": "repair",
+      "tier": "C2",
+      "bytes": 2685,
+      "sha256": "76fc833a0f655f18751cb16481a8401d7558059f633c0c9c8a8bc0e008ab8a80"
+    },
+    {
+      "file": "improvised-shelter-types.md",
+      "title": "Improvised Shelter Types",
+      "domain": "shelter",
+      "tier": "C1",
+      "bytes": 2443,
+      "sha256": "107e991f457f53f028960725551dfcba8b463d4e8f6351457f884da887449dde"
+    },
+    {
       "file": "knots-and-cordage.md",
       "title": "Knots and Cordage",
       "domain": "repair",
       "tier": "C1",
       "bytes": 2226,
       "sha256": "87a31f30576355211d6f93a09a3e973f1574b7c8523c976923c4614186f995a9"
+    },
+    {
+      "file": "lashings-and-frames.md",
+      "title": "Lashings and Building Frames",
+      "domain": "repair",
+      "tier": "C1",
+      "bytes": 2534,
+      "sha256": "b8c0dd992325045ed9b177e6fe84d352ece8076f7188a090f724679b241df7cf"
     },
     {
       "file": "lightning-storm-safety.md",
@@ -254,12 +334,44 @@
       "sha256": "00127f03a38fa78ef66d56186fdddef417c5802d7223858a7e7d688c24312f20"
     },
     {
+      "file": "lye-from-wood-ash.md",
+      "title": "Lye and Potash from Wood Ash",
+      "domain": "chemistry",
+      "tier": "C3",
+      "bytes": 2996,
+      "sha256": "c39dcdda8179d1d3e22788c78c664050ce502872658c407565fd31ae9abc3d63"
+    },
+    {
+      "file": "making-disinfectants.md",
+      "title": "Making and Using Disinfectants",
+      "domain": "chemistry",
+      "tier": "C2",
+      "bytes": 2793,
+      "sha256": "fca2998606d5a68be3fea5dba2d20e0c5e8538f60e0ccd878d6395e7371ceb92"
+    },
+    {
       "file": "measuring-without-instruments.md",
       "title": "Measuring and Estimating Without Instruments",
       "domain": "reference",
       "tier": "C1",
       "bytes": 2703,
       "sha256": "80a3abab5a9e6679075168f5bdea16c96d437a0c63b9c9804ac140a57d5a646e"
+    },
+    {
+      "file": "mechanical-advantage.md",
+      "title": "Levers, Pulleys, and Mechanical Advantage",
+      "domain": "physics",
+      "tier": "C2",
+      "bytes": 2807,
+      "sha256": "9e8ede570eba446355323396eb8ac88821ce700991b274804c474554c650b9a7"
+    },
+    {
+      "file": "medicine-storage-shelf-life.md",
+      "title": "Storing Medicines and Shelf Life",
+      "domain": "pharma",
+      "tier": "C3",
+      "bytes": 2541,
+      "sha256": "e4c0e4c19188824fcfc6ad35e43cb37da8344ae58022ac67529aa58fb2d0ab5c"
     },
     {
       "file": "mental-health-crisis.md",
@@ -270,12 +382,52 @@
       "sha256": "bb957f5eba85905bea1f635dae89d399554135c4407562d85b988e12687aec52"
     },
     {
+      "file": "minor-wounds-blisters-splinters.md",
+      "title": "Minor Wounds \u2014 Blisters, Splinters, and Small Cuts",
+      "domain": "medicine",
+      "tier": "C1",
+      "bytes": 2756,
+      "sha256": "e44ff1747e20adbf90c67153157c26c4194caa6752fd4e3f1af52079b10a75a7"
+    },
+    {
+      "file": "multimeter-and-testing.md",
+      "title": "Using a Multimeter",
+      "domain": "electronics",
+      "tier": "C3",
+      "bytes": 2894,
+      "sha256": "93831097992714afe58cc9e9f8558fb02924cb988043d3e8e2bb1e8f4e1c570c"
+    },
+    {
+      "file": "natural-navigation-stars.md",
+      "title": "Finding Direction by Sun and Stars",
+      "domain": "navigation",
+      "tier": "C2",
+      "bytes": 2622,
+      "sha256": "86da6baca10be4102d616575e71e09cb1b85ae9d1e5308e42cbd6720a887c05d"
+    },
+    {
+      "file": "nutrition-basics.md",
+      "title": "Nutrition Basics for Hard Times",
+      "domain": "food",
+      "tier": "C2",
+      "bytes": 2680,
+      "sha256": "317fd9cfb0e468982acdef33933757321e0ca7afacfafe502b5d81c4575cd197"
+    },
+    {
       "file": "oral-rehydration-salts.md",
       "title": "Oral Rehydration Solution (ORS)",
       "domain": "medicine",
       "tier": "C1",
       "bytes": 1760,
       "sha256": "e59dc57b8dc05663c1c3a7930d391b97a3e875f48d9dc8ec5a1c5fed6f4c085e"
+    },
+    {
+      "file": "pain-and-fever-management.md",
+      "title": "Managing Pain and Fever",
+      "domain": "pharma",
+      "tier": "C2",
+      "bytes": 2551,
+      "sha256": "332519bd88cddb63da9034e1966013454c1ef527f6e83e96f39fbbb68c28ca75"
     },
     {
       "file": "poisoning-first-aid.md",
@@ -294,12 +446,36 @@
       "sha256": "149890ab6af8c66e2b43f13030e999ed49cb942c28405d06ebe86158a2ce6866"
     },
     {
+      "file": "radiation-detection-dosimetry.md",
+      "title": "Radiation Detection and Dose",
+      "domain": "physics",
+      "tier": "C3",
+      "bytes": 3076,
+      "sha256": "5d219767bb74824d357d5c61fd377f9c88902cb8f6fc6c2c6433dddaf8b9ecf2"
+    },
+    {
       "file": "radiation-shielding.md",
       "title": "Radiation Basics and Shielding",
       "domain": "physics",
       "tier": "C3",
       "bytes": 2123,
       "sha256": "28c54a1eadc4fc1326ef8d866ba9d59edb61b263cc4b94298256ec8c2eb46e35"
+    },
+    {
+      "file": "radio-communications.md",
+      "title": "Radio Communications Basics",
+      "domain": "electronics",
+      "tier": "C2",
+      "bytes": 2899,
+      "sha256": "1cae9a8791be4006cb3f1b2c76afac7ea67b43c18dc523bc48aa6175b20bf056"
+    },
+    {
+      "file": "rainwater-harvesting-storage.md",
+      "title": "Rainwater Harvesting and Water Storage",
+      "domain": "water",
+      "tier": "C1",
+      "bytes": 2629,
+      "sha256": "fabccb17eb6e32efcaa59f71f29db7db17878202ed79e01c65f50e3d3f9927e9"
     },
     {
       "file": "rationing-supplies.md",
@@ -340,6 +516,14 @@
       "tier": "C1",
       "bytes": 2054,
       "sha256": "d14c66e43fd1a8d9989e3df6984ce910c1241770b93304938581d1692861e7e5"
+    },
+    {
+      "file": "sewing-and-mending.md",
+      "title": "Sewing and Mending",
+      "domain": "repair",
+      "tier": "C1",
+      "bytes": 2408,
+      "sha256": "9a97b8439173db199231c7a70964228902fd602444609f41b65744efd27903ae"
     },
     {
       "file": "shock-treatment.md",
@@ -390,12 +574,44 @@
       "sha256": "280e7a8e05713637ed2a24c84fea36d7b5f7d2c67bc4269e915379c685c0b6a5"
     },
     {
+      "file": "sprains-strains.md",
+      "title": "Sprains, Strains, and Joint Injuries",
+      "domain": "medicine",
+      "tier": "C1",
+      "bytes": 2541,
+      "sha256": "2fae59c1005e13455417e8c10aa322fd329501ea9c7e85e6ecd03c07f2a06f24"
+    },
+    {
+      "file": "staying-warm-clothing.md",
+      "title": "Staying Warm \u2014 Clothing and Insulation",
+      "domain": "shelter",
+      "tier": "C1",
+      "bytes": 2542,
+      "sha256": "7178bfa7178a89bad5796af0d7b6ec2f447662996a6646a8e5991380c0715903"
+    },
+    {
       "file": "stroke-recognition.md",
       "title": "Stroke \u2014 Recognize It FAST",
       "domain": "medicine",
       "tier": "C1",
       "bytes": 2260,
       "sha256": "fbafdd86ff15776f39277a7b65b4e7861189d0d31a1609446d03b9c8d93a8bc1"
+    },
+    {
+      "file": "survival-priorities.md",
+      "title": "Survival Priorities \u2014 The Rule of Threes",
+      "domain": "reference",
+      "tier": "C1",
+      "bytes": 2712,
+      "sha256": "9b274c7e4b22fe25513e481e8b6e3cb030754c993d7d049deb6053d90d28fb89"
+    },
+    {
+      "file": "tick-insect-borne-disease.md",
+      "title": "Ticks, Mosquitoes, and Insect-Borne Disease",
+      "domain": "medicine",
+      "tier": "C2",
+      "bytes": 2763,
+      "sha256": "b4c223ef637931a60017c49e456ba722435582e949494801679ec56d300c31a5"
     },
     {
       "file": "tool-sharpening.md",
@@ -412,6 +628,14 @@
       "tier": "C1",
       "bytes": 1599,
       "sha256": "c5ed53613dcfea88de0c178db3ce4a9422783a8fc96298925562b020e4d85840"
+    },
+    {
+      "file": "weather-prediction.md",
+      "title": "Reading the Weather",
+      "domain": "navigation",
+      "tier": "C2",
+      "bytes": 2619,
+      "sha256": "fb0244dae721f7670fcfdbd07b7a793c3cd0862ef8ce8d0afb2035ed264a506a"
     },
     {
       "file": "wind-chill-heat-index.md",

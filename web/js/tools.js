@@ -20,6 +20,12 @@ const Tools = (function () {
     { id: 'assess', name: 'CASUALTY CHECK', sub: 'DR-ABC · AVPU · recovery', icon: 'pulse' },
     { id: 'estimate', name: 'FIELD ESTIMATOR', sub: 'distance · height · daylight', icon: 'grid' },
     { id: 'units', name: 'UNIT CONVERTER', sub: 'temp · length · mass · volume', icon: 'refresh' },
+    { id: 'disinfect', name: 'DISINFECTANT MIX', sub: 'bleach dilution ratios', icon: 'flask' },
+    { id: 'battery', name: 'BATTERY BANK', sub: 'capacity · runtime', icon: 'energy' },
+    { id: 'haul', name: 'MECHANICAL ADVANTAGE', sub: 'pulley pull + safe load', icon: 'wrench' },
+    { id: 'fallout', name: 'FALLOUT DECAY', sub: '7-10 rule dose projection', icon: 'atom' },
+    { id: 'weather', name: 'WIND & WEATHER', sub: 'Beaufort + storm signs', icon: 'wave' },
+    { id: 'priorities', name: 'SURVIVAL PRIORITIES', sub: 'rule of threes · STOP', icon: 'book' },
     { id: 'signals', name: 'SIGNAL CARD', sub: 'morse + ground-to-air', icon: 'compass' },
   ];
 
@@ -612,6 +618,227 @@ const Tools = (function () {
     ]);
   }
 
+  // ---- disinfectant dilution (per making-disinfectants.md: surfaces 1:100,
+  //      spills/high-risk 1:10 of 5–6% bleach) ----
+  function disinfect() {
+    const litres = numField('Water to mix (litres)', 1, { min: '0.25', step: '0.25' });
+    let ratio = 100;
+    const out = el('div', {}, []);
+    const toggle = el('div', { class: 'seg-toggle' }, [
+      el('button', { class: 'on', onclick: (e) => setRatio(100, e.target) }, ['SURFACES 1:100']),
+      el('button', { onclick: (e) => setRatio(10, e.target) }, ['SPILLS / BLOOD 1:10']),
+    ]);
+    function setRatio(v, btn) {
+      ratio = v;
+      toggle.querySelectorAll('button').forEach((b) => b.classList.toggle('on', b === btn));
+      calc();
+    }
+    function calc() {
+      const L = Math.max(0, parseFloat(litres.input.value) || 0);
+      const ml = L * 1000 / ratio; // mL of 5–6% bleach
+      const tsp = ml / 5, tbsp = ml / 15;
+      out.innerHTML = '';
+      out.appendChild(readout(ml >= 15 ? ml.toFixed(0) + ' mL' : ml.toFixed(1) + ' mL',
+        'plain 5–6% bleach to add',
+        '≈ ' + tbsp.toFixed(1) + ' tbsp (' + tsp.toFixed(1) + ' tsp). Contact time: leave wet 1–2 min (surfaces) or several minutes (spills), then air dry.'));
+      out.appendChild(el('div', { class: 'tool-warning' }, [icon('alert'),
+        el('div', {}, ['Mix fresh (loses strength in ~a day). Clean visible dirt off first. Never mix bleach with ammonia or acids. Ventilate. This is for surfaces — for drinking water use the Water Disinfect tool.'])]));
+    }
+    litres.input.addEventListener('input', calc);
+    calc();
+    return panel('Disinfectant mix', 'Dilutions of plain unscented household bleach (sodium hypochlorite 5–6%).', [
+      el('div', { class: 'field' }, [el('label', {}, ['Use']), toggle]),
+      litres.wrap, out, sourceLink('making-disinfectants.md'),
+    ]);
+  }
+
+  // ---- battery bank (per batteries-and-charging.md: Wh = Ah×V;
+  //      usable × depth-of-discharge; runtime = usable Wh ÷ load) ----
+  function battery() {
+    const ah = numField('Capacity (amp-hours, Ah)', 100, { min: '1', step: '1' });
+    const volts = numField('Battery voltage (V)', 12, { min: '1', step: '1' });
+    const load = numField('Load (watts)', 40, { min: '0', step: '1' });
+    let dod = 0.8;
+    const out = el('div', {}, []);
+    const toggle = el('div', { class: 'seg-toggle' }, [
+      el('button', { class: 'on', onclick: (e) => setDod(0.8, e.target) }, ['LiFePO₄ 80%']),
+      el('button', { onclick: (e) => setDod(0.5, e.target) }, ['LEAD-ACID 50%']),
+    ]);
+    function setDod(v, btn) {
+      dod = v;
+      toggle.querySelectorAll('button').forEach((b) => b.classList.toggle('on', b === btn));
+      calc();
+    }
+    function calc() {
+      const A = parseFloat(ah.input.value) || 0;
+      const V = parseFloat(volts.input.value) || 0;
+      const W = parseFloat(load.input.value) || 0;
+      const totalWh = A * V;
+      const usable = totalWh * dod;
+      const hours = W > 0 ? usable / W : 0;
+      const h = Math.floor(hours), m = Math.round((hours - h) * 60);
+      out.innerHTML = '';
+      out.appendChild(el('div', { class: 'readout-row' }, [
+        readout(Math.round(usable) + ' Wh', 'usable energy', Math.round(totalWh) + ' Wh × ' + Math.round(dod * 100) + '% depth'),
+        readout(W > 0 ? (h ? h + ' h ' : '') + m + ' min' : '—', 'runtime at load', 'usable Wh ÷ watts'),
+      ]));
+      out.appendChild(el('p', { class: 'tool-note' }, ['Series adds volts (Ah unchanged); parallel adds Ah (volts unchanged). Real runtime is lower — inverter and wiring lose ~10–20%. Fuse every battery positive.']));
+    }
+    [ah, volts, load].forEach((f) => f.input.addEventListener('input', calc));
+    calc();
+    return panel('Battery bank', 'Usable energy and runtime. Depth-of-discharge protects battery life — don’t plan on 100%.', [
+      el('div', { class: 'field-row' }, [ah.wrap, volts.wrap]),
+      el('div', { class: 'field' }, [el('label', {}, ['Chemistry / usable depth']), toggle]),
+      load.wrap, out, sourceLink('batteries-and-charging.md'),
+    ]);
+  }
+
+  // ---- mechanical advantage (per mechanical-advantage.md: MA = supporting rope
+  //      parts; ~10% friction loss per pulley; SWL = breaking ÷ safety factor) ----
+  function haul() {
+    const parts = numField('Rope parts supporting the load', 4, { min: '1', step: '1' });
+    const loadKg = numField('Load (kg)', 100, { min: '0', step: '5' });
+    const breakKg = numField('Rope/hardware breaking strength (kg)', 1000, { min: '0', step: '50' });
+    const out = el('div', {}, []);
+    let sf = 10;
+    const toggle = el('div', { class: 'seg-toggle' }, [
+      el('button', { class: 'on', onclick: (e) => setSf(10, e.target) }, ['LIFE-LOADED 10:1']),
+      el('button', { onclick: (e) => setSf(5, e.target) }, ['GEAR ONLY 5:1']),
+    ]);
+    function setSf(v, btn) {
+      sf = v;
+      toggle.querySelectorAll('button').forEach((b) => b.classList.toggle('on', b === btn));
+      calc();
+    }
+    function calc() {
+      const n = Math.max(1, parseFloat(parts.input.value) || 1);
+      const L = Math.max(0, parseFloat(loadKg.input.value) || 0);
+      const brk = Math.max(0, parseFloat(breakKg.input.value) || 0);
+      const effMA = n * Math.pow(0.9, n - 1); // ~10% loss per pulley
+      const idealEffort = L / n;
+      const realEffort = L / effMA;
+      const swl = brk / sf;
+      out.innerHTML = '';
+      out.appendChild(el('div', { class: 'readout-row' }, [
+        readout(idealEffort.toFixed(0) + ' kg', 'ideal pull force', n + ':1 (frictionless)'),
+        readout(realEffort.toFixed(0) + ' kg', 'realistic pull', '≈' + effMA.toFixed(1) + ':1 with friction'),
+      ]));
+      out.appendChild(readout(swl.toFixed(0) + ' kg', 'safe working load', 'breaking ' + brk + ' kg ÷ ' + sf + ' safety factor'));
+      if (L > swl && swl > 0) {
+        out.appendChild(el('div', { class: 'tool-warning' }, [icon('alert'),
+          el('div', {}, ['Load exceeds the safe working load for this rope — it can fail, especially under shock. The anchor sees the FULL load (up to ~' + L + ' kg), not your pull. Stay out of the line of a loaded rope.'])]));
+      } else {
+        out.appendChild(el('p', { class: 'tool-note' }, ['You pull ' + n + '× the distance you move the load. The anchor carries the full load, not your pull — build it for that. Keep clear of the line of pull.']));
+      }
+    }
+    [parts, loadKg, breakKg].forEach((f) => f.input.addEventListener('input', calc));
+    calc();
+    return panel('Mechanical advantage', 'Block-and-tackle pull force and safe working load. You trade distance for force.', [
+      el('div', { class: 'field-row' }, [parts.wrap, loadKg.wrap]),
+      breakKg.wrap,
+      el('div', { class: 'field' }, [el('label', {}, ['Safety factor']), toggle]),
+      out, sourceLink('mechanical-advantage.md'),
+    ]);
+  }
+
+  // ---- fallout decay (per radiation-detection-dosimetry.md: Way–Wigner t^-1.2;
+  //      the 7-10 rule) ----
+  function fallout() {
+    const since = numField('Hours since detonation (now)', 1, { min: '0.1', step: '0.5' });
+    const rate = numField('Dose rate measured now (any unit)', 100, { min: '0', step: '1' });
+    const target = numField('Project to hours after detonation', 48, { min: '0.1', step: '1' });
+    const out = el('div', {}, []);
+    function calc() {
+      const t1 = Math.max(0.1, parseFloat(since.input.value) || 0.1);
+      const r1 = Math.max(0, parseFloat(rate.input.value) || 0);
+      const t2 = Math.max(0.1, parseFloat(target.input.value) || 0.1);
+      const R1 = r1 * Math.pow(t1, 1.2);          // reference rate at H+1
+      const r2 = R1 * Math.pow(t2, -1.2);         // projected rate at target
+      out.innerHTML = '';
+      out.appendChild(el('div', { class: 'readout-row' }, [
+        readout(r2 < 10 ? r2.toFixed(2) : r2.toFixed(0), 'rate at +' + t2 + ' h', 'same units as measured'),
+        readout(R1 < 10 ? R1.toFixed(2) : R1.toFixed(0), 'H+1 reference rate', 'rate one hour after blast'),
+      ]));
+      out.appendChild(el('p', { class: 'tool-note' },
+        ['7-10 rule: for every 7× increase in time, the rate falls ~10×. So H+7 h ≈ 1/10, H+2 days ≈ 1/100, H+2 weeks ≈ 1/1000 of the H+1 rate. Shelter behind mass through the first hours to days; the danger drops fast.']));
+      out.appendChild(el('div', { class: 'tool-warning' }, [icon('alert'),
+        el('div', {}, ['Planning estimate only (idealised decay). Trust a real instrument and official guidance. Minimise time, maximise distance and shielding; brush off fallout dust and wash on entering shelter.'])]));
+    }
+    [since, rate, target].forEach((f) => f.input.addEventListener('input', calc));
+    calc();
+    return panel('Fallout decay', 'Projects how fast fallout radiation drops with time (Way–Wigner / the 7-10 rule).', [
+      el('div', { class: 'field-row' }, [since.wrap, rate.wrap]),
+      target.wrap, out, sourceLink('radiation-detection-dosimetry.md'),
+    ]);
+  }
+
+  // ---- wind & weather reference card (per weather-prediction.md) ----
+  function weather() {
+    const beaufort = [
+      ['0 Calm', '< 1', 'Smoke rises vertically'],
+      ['1–2 Light', '1–11', 'Leaves rustle; wind felt on face'],
+      ['3–4 Moderate', '12–28', 'Flags flap; dust and loose paper lift'],
+      ['5–6 Fresh/Strong', '29–49', 'Small trees sway; umbrellas hard to use'],
+      ['7–8 Gale', '50–74', 'Whole trees move; twigs break off; walking hard'],
+      ['9–10 Storm', '75–102', 'Branches down; slight structural damage'],
+      ['11–12 Violent/Hurricane', '103+', 'Widespread damage; devastation'],
+    ];
+    return panel('Wind & weather', 'Estimate wind by what it does (Beaufort), and read the sky for change.', [
+      C.sectionHead('Beaufort wind force'),
+      el('table', { class: 'ref-table' }, [
+        el('tr', {}, [el('th', {}, ['Force']), el('th', {}, ['km/h']), el('th', {}, ['Signs on land'])]),
+      ].concat(beaufort.map((r) => el('tr', {}, [
+        el('td', {}, [r[0]]), el('td', { class: 'mono' }, [r[1]]), el('td', {}, [r[2]])])))),
+      C.sectionHead('Worsening weather — warning signs'),
+      el('ul', { class: 'assess-ol' }, [
+        'Pressure falling (fast fall = fast, strong storm).',
+        'High wispy cirrus thickening and lowering into a milky sheet; a halo around sun or moon → front and rain within ~12–24 h.',
+        'Cloud lowering and greying over; towering cauliflower cumulus by afternoon → thunderstorms.',
+        'Wind picking up and shifting/backing; red sky in the morning.',
+      ].map((t) => el('li', {}, [t]))),
+      C.sectionHead('Improving weather'),
+      el('ul', { class: 'assess-ol' }, [
+        'Pressure steady or rising; cloud breaking up and flattening.',
+        'Clear calm dry night (dew or frost by dawn); red sky at night.',
+      ].map((t) => el('li', {}, [t]))),
+      sourceLink('weather-prediction.md'),
+    ]);
+  }
+
+  // ---- survival priorities reference card (per survival-priorities.md) ----
+  function priorities() {
+    const threes = [
+      ['3 minutes', 'without AIR (or in icy water; or with severe bleeding)'],
+      ['3 hours', 'without SHELTER in harsh heat or cold'],
+      ['3 days', 'without WATER'],
+      ['3 weeks', 'without FOOD'],
+    ];
+    const work = [
+      'First aid — treat injuries (see Casualty check).',
+      'Shelter & warmth — build before dark.',
+      'Fire — warmth, water, cooking, signalling, morale.',
+      'Water — find, then purify.',
+      'Signalling — three of anything means distress.',
+      'Food — last, and rarely urgent short-term.',
+    ];
+    return panel('Survival priorities', 'Fix the fastest threat first. The order matters more than the exact times.', [
+      C.sectionHead('Rule of threes'),
+      el('table', { class: 'ref-table' }, [
+        el('tr', {}, [el('th', {}, ['Survive ~']), el('th', {}, ['Without'])]),
+      ].concat(threes.map((r) => el('tr', {}, [el('td', { class: 'mono' }, [r[0]]), el('td', {}, [r[1]])])))),
+      C.sectionHead('STOP — before you move'),
+      el('ul', { class: 'assess-ol' }, [
+        'Stop — halt; don’t react in panic.',
+        'Think — what is the most-immediate threat? What do I have?',
+        'Observe — weather, terrain, injuries, resources, daylight.',
+        'Plan — decide, act deliberately, re-assess.',
+      ].map((t) => el('li', {}, [t]))),
+      C.sectionHead('Priorities of work'),
+      el('ol', { class: 'assess-ol' }, work.map((t) => el('li', {}, [t]))),
+      sourceLink('survival-priorities.md'),
+    ]);
+  }
+
   // ---- signal reference card ----
   function signals() {
     const morse = [['S O S', '··· ––– ···'], ['OK / understood', '–·–'], ['Repeat / say again', '··––··']];
@@ -631,7 +858,8 @@ const Tools = (function () {
 
   const VIEWS = { water, ors, metronome, timers, sos, solar, ohm,
     exposure, lightning, rations, pace, declination,
-    assess, estimate, units: units_tool, signals };
+    assess, estimate, units: units_tool,
+    disinfect, battery, haul, fallout, weather, priorities, signals };
   function view(id) {
     return (VIEWS[id] ? VIEWS[id]() : C.empty('Unknown tool.'));
   }

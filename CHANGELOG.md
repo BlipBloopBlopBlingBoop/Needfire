@@ -6,11 +6,54 @@ The artifacts in this repository version independently, on purpose:
 
 | Number | Where | Meaning |
 |---|---|---|
-| App version (`2.4.0`) | `needfire/__init__.py` `__version__` | **The release number** — the only user-facing version. SemVer. The `docker-compose.yml` image tag tracks it; bump both together. |
+| App version (`2.5.0`) | `needfire/__init__.py` `__version__` | **The release number** — the only user-facing version. SemVer. The `docker-compose.yml` image tag tracks it; bump both together. |
 | Index schema (`2`) | `needfire/db.py` `SCHEMA_VERSION` | Integer. A mismatch with an existing index triggers the rebuild warning in the server; bump when the SQLite layout changes. |
-| Seed manifest (`2.4.0`) | `seed-corpus/seed-manifest.json` | Bumped when the bundled seed documents change (regenerate with `make seed-manifest`). |
+| Seed manifest (`2.5.0`) | `seed-corpus/seed-manifest.json` | Bumped when the bundled seed documents change (regenerate with `make seed-manifest`). |
 | Catalog (`1.0.0`) | `catalog/catalog.json` | Bumped when the download-source list changes. |
 | Protocols (`1`) | `web/data/protocols.json` | The emergency-protocol data format. |
+
+## 2.5.0 — 2026-07-07
+
+Comprehensive corpus completion — balance every domain and round out the toolkit.
+
+The bundled library had grown lopsided (26 medicine docs vs. one each for
+agriculture, energy, and physics). Because the download catalog ships only
+placeholder URLs, the bundled docs are the real always-offline knowledge, so this
+release fills the gaps across all 13 domains.
+
+### New seed documents (53 → 81; +28)
+- **water:** rainwater-harvesting-storage
+- **food:** cooking-methods-offgrid, nutrition-basics
+- **shelter:** staying-warm-clothing, improvised-shelter-types
+- **repair:** lashings-and-frames, sewing-and-mending, improvised-repairs-adhesives
+- **navigation:** weather-prediction, natural-navigation-stars
+- **medicine:** head-injury-concussion, sprains-strains,
+  minor-wounds-blisters-splinters, tick-insect-borne-disease
+- **pharma:** pain-and-fever-management, medicine-storage-shelf-life
+- **chemistry:** making-disinfectants, lye-from-wood-ash
+- **physics:** radiation-detection-dosimetry, mechanical-advantage
+- **electronics:** radio-communications, multimeter-and-testing
+- **energy:** batteries-and-charging, generators-and-fuel-safety
+- **agriculture:** growing-food-basics, composting-and-soil
+- **reference:** survival-priorities, emergency-preparedness-kit
+
+Result: no domain below 3 docs; the thin C3 rebuild-stack domains roughly double.
+
+### New toolkit tools (16 → 22)
+Each pure-offline and citing its source doc:
+- **disinfectant mix** — surface vs. blood/spill bleach dilution ratios
+- **battery bank** — usable Wh (Ah × V × depth-of-discharge) and runtime
+- **mechanical advantage** — block-and-tackle pull force + safe working load
+- **fallout decay** — Way–Wigner / 7-10-rule dose-rate projection
+- **wind & weather** — Beaufort force + storm-sign reference card
+- **survival priorities** — rule-of-threes / STOP / priorities-of-work card
+
+### Router
+- Added `concussion` and `fallout` to the critical-query keywords.
+
+### Fixes
+- Corrected stale bundled-doc counts (some docs still said "40") across
+  `01-ARCHITECTURE.md`, `03-DATA-ARCHITECTURE.md`, and `07-CORPUS-ACQUISITION.md`.
 
 ## 2.4.0 — 2026-07-07
 
