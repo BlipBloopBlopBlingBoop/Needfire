@@ -11,7 +11,8 @@ _CRIT_WORDS = re.compile(
     r"\b(dose|dosage|bleed|bleeding|wound|poison|venom|voltage|volt|amp|amps|"
     r"radiation|radioactive|acid|antibiotic|cpr|burn|burns|fracture|shock|"
     r"toxic|overdose|seizure|allergic|anaphyl|choking|drown|snakebite|"
-    r"frostbite|hypothermia|heatstroke)\w*\b",
+    r"frostbite|hypothermia|heatstroke|stroke|cardiac|asthma|wheez|diabet|"
+    r"hypoglyc|hyperglyc|unconscious|unrespons|chest)\w*\b",
     re.I,
 )
 _MED_WORDS = ("medical", "first aid", "doctor", "drug", "injury", "infection")

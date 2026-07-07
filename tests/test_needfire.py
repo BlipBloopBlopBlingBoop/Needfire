@@ -162,7 +162,8 @@ class TestIndexAndRetrieval(unittest.TestCase):
         keywords = ["cpr", "bleeding", "burn", "fracture", "poison", "venom",
                     "seizure", "allergic", "choking", "drowning", "snakebite",
                     "frostbite", "hypothermia", "radiation", "voltage", "acid",
-                    "antibiotic", "dose"]
+                    "antibiotic", "dose", "stroke", "chest", "diabetic",
+                    "asthma", "unconscious"]
         conn = db.connect()
         missing = []
         for kw in keywords:

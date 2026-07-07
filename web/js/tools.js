@@ -17,6 +17,9 @@ const Tools = (function () {
     { id: 'rations', name: 'RATION PLANNER', sub: 'water + food days', icon: 'food' },
     { id: 'pace', name: 'PACE & TRAVEL', sub: 'distance + walk time', icon: 'compass' },
     { id: 'declination', name: 'DECLINATION', sub: 'true ↔ magnetic bearing', icon: 'compass' },
+    { id: 'assess', name: 'CASUALTY CHECK', sub: 'DR-ABC · AVPU · recovery', icon: 'pulse' },
+    { id: 'estimate', name: 'FIELD ESTIMATOR', sub: 'distance · height · daylight', icon: 'grid' },
+    { id: 'units', name: 'UNIT CONVERTER', sub: 'temp · length · mass · volume', icon: 'refresh' },
     { id: 'signals', name: 'SIGNAL CARD', sub: 'morse + ground-to-air', icon: 'compass' },
   ];
 
@@ -457,6 +460,158 @@ const Tools = (function () {
     ]);
   }
 
+  // ---- casualty assessment card (per casualty-assessment.md) ----
+  function assess() {
+    function step(letter, title, body) {
+      return el('div', { class: 'assess-step' }, [
+        el('div', { class: 'assess-letter' }, [letter]),
+        el('div', {}, [el('strong', {}, [title]), el('div', { class: 'tool-note', style: 'margin:.15rem 0 0' }, [body])]),
+      ]);
+    }
+    const drabc = el('div', { class: 'assess-list' }, [
+      step('D', 'Danger', 'Check the scene first — traffic, fire, live wires, water. Do not become a second casualty.'),
+      step('R', 'Response', 'Shout and squeeze the shoulders. Grade with AVPU below.'),
+      step('A', 'Airway', 'If unresponsive, tilt the head back, lift the chin, clear the mouth.'),
+      step('B', 'Breathing', 'Look/listen/feel up to 10 s. Gasps are NOT normal. Not breathing normally → start CPR now.'),
+      step('C', 'Circulation', 'Stop severe bleeding with firm direct pressure; watch for shock.'),
+    ]);
+    const avpu = el('table', { class: 'ref-table' }, [
+      el('tr', {}, [el('th', {}, ['AVPU']), el('th', {}, ['Meaning'])]),
+      el('tr', {}, [el('td', { class: 'mono' }, ['A']), el('td', {}, ['Alert — eyes open, talking'])]),
+      el('tr', {}, [el('td', { class: 'mono' }, ['V']), el('td', {}, ['responds to Voice only'])]),
+      el('tr', {}, [el('td', { class: 'mono' }, ['P']), el('td', {}, ['responds to Pain only'])]),
+      el('tr', {}, [el('td', { class: 'mono' }, ['U']), el('td', {}, ['Unresponsive'])]),
+    ]);
+    const recovery = el('ol', { class: 'assess-ol' }, [
+      'Kneel beside them; straighten the legs.',
+      'Near arm out at a right angle, elbow bent, palm up.',
+      'Far arm across the chest, back of hand against their near cheek.',
+      'Bend the far knee up; use it to roll them toward you onto their side.',
+      'Tilt the head back so the airway stays open and fluid drains. Keep checking breathing.',
+    ].map((t) => el('li', {}, [t])));
+    return panel('Casualty check', 'The first minute for any collapsed or injured person. Work top to bottom; do not skip a step.', [
+      C.sectionHead('DR-ABC — primary survey'), drabc,
+      el('a', { class: 'big-btn danger', href: '#/emergency/cpr', style: 'margin-top:.5rem' }, ['NOT BREATHING → CPR']),
+      C.sectionHead('AVPU — level of response'), avpu,
+      C.sectionHead('Recovery position'),
+      el('p', { class: 'tool-note' }, ['For an unresponsive person who IS breathing normally:']),
+      recovery,
+      sourceLink('casualty-assessment.md'),
+    ]);
+  }
+
+  // ---- field estimator (per measuring-without-instruments.md) ----
+  function estimate() {
+    // body ruler
+    const units = [['Thumb', 2], ['Palm', 9], ['Span', 20], ['Cubit', 45]];
+    let cm = 20;
+    const count = numField('How many', 5, { min: '0', step: '0.5' });
+    const rulerOut = el('div', {}, []);
+    const rulerToggle = el('div', { class: 'seg-toggle' }, units.map((u, i) =>
+      el('button', { class: i === 2 ? 'on' : '', onclick: (e) => setUnit(u[1], e.target) }, [u[0] + ' ' + u[1] + 'cm'])));
+    function setUnit(v, btn) {
+      cm = v;
+      rulerToggle.querySelectorAll('button').forEach((b) => b.classList.toggle('on', b === btn));
+      ruler();
+    }
+    function ruler() {
+      const n = Math.max(0, parseFloat(count.input.value) || 0);
+      const totalCm = n * cm;
+      rulerOut.innerHTML = '';
+      rulerOut.appendChild(readout(totalCm >= 100 ? (totalCm / 100).toFixed(2) + ' m' : Math.round(totalCm) + ' cm',
+        'estimated length', 'calibrate the body unit against a known length for your hands'));
+    }
+    // height by shadow
+    const myH = numField('Your height (m)', 1.7, { min: '0.1', step: '0.05' });
+    const myS = numField('Your shadow (any unit)', 2, { min: '0.1', step: '0.1' });
+    const objS = numField('Object shadow (same unit)', 12, { min: '0.1', step: '0.1' });
+    const shadowOut = el('div', {}, []);
+    function shadow() {
+      const h = parseFloat(myH.input.value) || 0;
+      const s = parseFloat(myS.input.value) || 0;
+      const o = parseFloat(objS.input.value) || 0;
+      shadowOut.innerHTML = '';
+      const height = s > 0 ? h * o / s : 0;
+      shadowOut.appendChild(readout(height ? height.toFixed(1) + ' m' : '—', 'estimated object height',
+        'height = your height × object shadow ÷ your shadow'));
+    }
+    // daylight remaining
+    const fingers = numField('Finger widths (sun to horizon)', 4, { min: '0', step: '1' });
+    const dayOut = el('div', {}, []);
+    function daylight() {
+      const f = Math.max(0, parseFloat(fingers.input.value) || 0);
+      const mins = f * 15;
+      const h = Math.floor(mins / 60), m = mins % 60;
+      dayOut.innerHTML = '';
+      dayOut.appendChild(readout((h ? h + ' h ' : '') + m + ' min', 'daylight remaining',
+        'each finger at arm’s length ≈ 15 min; four fingers ≈ 1 hour'));
+    }
+    count.input.addEventListener('input', ruler);
+    [myH, myS, objS].forEach((f) => f.input.addEventListener('input', shadow));
+    fingers.input.addEventListener('input', daylight);
+    ruler(); shadow(); daylight();
+    return panel('Field estimator', 'Measure with your body, the sun, and arithmetic when you have no instruments.', [
+      C.sectionHead('Body ruler'),
+      el('div', { class: 'field' }, [el('label', {}, ['Body unit']), rulerToggle]),
+      count.wrap, rulerOut,
+      C.sectionHead('Height by shadow'),
+      myH.wrap, el('div', { class: 'field-row' }, [myS.wrap, objS.wrap]), shadowOut,
+      C.sectionHead('Daylight remaining'),
+      fingers.wrap, dayOut,
+      sourceLink('measuring-without-instruments.md'),
+    ]);
+  }
+
+  // ---- unit converter (per measuring-without-instruments.md) ----
+  function units_tool() {
+    const CATS = {
+      Temp: { a: '°C', b: '°F', toB: (x) => x * 9 / 5 + 32, toA: (x) => (x - 32) * 5 / 9 },
+      Distance: { a: 'kilometres', b: 'miles', toB: (x) => x * 0.621371, toA: (x) => x / 0.621371 },
+      Weight: { a: 'kilograms', b: 'pounds', toB: (x) => x * 2.20462, toA: (x) => x / 2.20462 },
+      Volume: { a: 'litres', b: 'US gallons', toB: (x) => x * 0.264172, toA: (x) => x / 0.264172 },
+    };
+    let cat = 'Temp';
+    const labelA = el('label', {}, []);
+    const labelB = el('label', {}, []);
+    const inA = el('input', { type: 'number', inputmode: 'decimal', step: 'any' });
+    const inB = el('input', { type: 'number', inputmode: 'decimal', step: 'any' });
+    let lock = false;
+    const round = (x) => Math.round(x * 1000) / 1000;
+    function fromA() {
+      if (lock) return; lock = true;
+      const v = parseFloat(inA.value);
+      inB.value = isNaN(v) ? '' : String(round(CATS[cat].toB(v)));
+      lock = false;
+    }
+    function fromB() {
+      if (lock) return; lock = true;
+      const v = parseFloat(inB.value);
+      inA.value = isNaN(v) ? '' : String(round(CATS[cat].toA(v)));
+      lock = false;
+    }
+    function setCat(name, btn) {
+      cat = name;
+      toggle.querySelectorAll('button').forEach((b) => b.classList.toggle('on', b === btn));
+      labelA.textContent = CATS[cat].a;
+      labelB.textContent = CATS[cat].b;
+      fromA();
+    }
+    const toggle = el('div', { class: 'seg-toggle' }, Object.keys(CATS).map((name, i) =>
+      el('button', { class: i === 0 ? 'on' : '', onclick: (e) => setCat(name, e.target) }, [name])));
+    inA.addEventListener('input', fromA);
+    inB.addEventListener('input', fromB);
+    labelA.textContent = CATS[cat].a; labelB.textContent = CATS[cat].b;
+    inA.value = '1'; fromA();
+    return panel('Unit converter', 'Two-way field conversions. Type in either box.', [
+      el('div', { class: 'field' }, [el('label', {}, ['Quantity']), toggle]),
+      el('div', { class: 'field-row' }, [
+        el('div', { class: 'field' }, [labelA, inA]),
+        el('div', { class: 'field' }, [labelB, inB]),
+      ]),
+      sourceLink('measuring-without-instruments.md'),
+    ]);
+  }
+
   // ---- signal reference card ----
   function signals() {
     const morse = [['S O S', '··· ––– ···'], ['OK / understood', '–·–'], ['Repeat / say again', '··––··']];
@@ -475,7 +630,8 @@ const Tools = (function () {
   }
 
   const VIEWS = { water, ors, metronome, timers, sos, solar, ohm,
-    exposure, lightning, rations, pace, declination, signals };
+    exposure, lightning, rations, pace, declination,
+    assess, estimate, units: units_tool, signals };
   function view(id) {
     return (VIEWS[id] ? VIEWS[id]() : C.empty('Unknown tool.'));
   }

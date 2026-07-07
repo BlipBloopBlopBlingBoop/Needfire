@@ -91,3 +91,19 @@ body.strobe-on .strip, body.strobe-on .tabbar { visibility: hidden; }
 .timer-row .t-clock { font-family: var(--mono); font-size: 1.3rem; font-weight: 800; }
 .timer-row.t-done { border-color: var(--ok); }
 .timer-row.t-done .t-clock { color: var(--ok); }
+
+/* casualty assessment card */
+.assess-list { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.6rem; }
+.assess-step {
+  display: flex; align-items: flex-start; gap: 0.8rem;
+  border: 1px solid var(--border-2); border-radius: var(--radius-sm);
+  padding: 0.6rem 0.9rem; background: var(--bg-2);
+}
+.assess-letter {
+  flex: none; width: 2rem; height: 2rem; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-weight: 800; font-size: 1.1rem;
+  background: var(--surface-2); color: var(--accent-hi);
+}
+.assess-ol { margin: 0.4rem 0 0; padding-left: 1.4rem; line-height: 1.6; font-size: 0.9rem; }
+.assess-ol li { margin-bottom: 0.3rem; }

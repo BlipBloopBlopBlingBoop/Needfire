@@ -6,11 +6,46 @@ The artifacts in this repository version independently, on purpose:
 
 | Number | Where | Meaning |
 |---|---|---|
-| App version (`2.3.0`) | `needfire/__init__.py` `__version__` | **The release number** — the only user-facing version. SemVer. The `docker-compose.yml` image tag tracks it; bump both together. |
+| App version (`2.4.0`) | `needfire/__init__.py` `__version__` | **The release number** — the only user-facing version. SemVer. The `docker-compose.yml` image tag tracks it; bump both together. |
 | Index schema (`2`) | `needfire/db.py` `SCHEMA_VERSION` | Integer. A mismatch with an existing index triggers the rebuild warning in the server; bump when the SQLite layout changes. |
-| Seed manifest (`2.3.0`) | `seed-corpus/seed-manifest.json` | Bumped when the bundled seed documents change (regenerate with `make seed-manifest`). |
+| Seed manifest (`2.4.0`) | `seed-corpus/seed-manifest.json` | Bumped when the bundled seed documents change (regenerate with `make seed-manifest`). |
 | Catalog (`1.0.0`) | `catalog/catalog.json` | Bumped when the download-source list changes. |
 | Protocols (`1`) | `web/data/protocols.json` | The emergency-protocol data format. |
+
+## 2.4.0 — 2026-07-07
+
+More tools and knowledge (round two).
+
+### New seed documents (46 → 53)
+Seven new CC0 reference documents, weighted toward high-frequency medical
+emergencies that were not yet covered:
+- **Stroke — Recognize It FAST** (medicine): the FAST test, act-fast window, and
+  why NOT to give aspirin.
+- **Heart Attack and Chest Pain** (medicine): warning signs (including the quiet
+  presentations), the sit-and-rest position, chew-aspirin guidance, and the
+  slide into cardiac arrest.
+- **Diabetic Emergencies** (medicine): low vs high blood sugar, and the
+  when-in-doubt-give-sugar rule.
+- **Asthma Attack and Sudden Breathing Trouble** (medicine): reliever-inhaler
+  technique, danger signs, and the no-inhaler fallback.
+- **Assessing a Casualty — DR-ABC** (medicine): the primary survey, the AVPU
+  response scale, and the recovery position — backs the new casualty-check tool.
+- **Measuring and Estimating Without Instruments** (reference): body ruler,
+  shadow-stick height, thumb-jump distance, daylight-left, and conversions —
+  backs the field estimator and unit converter.
+- **Altitude Sickness — AMS, HACE, HAPE** (medicine): recognition and the
+  descend-now rules.
+
+### Router
+- Added `stroke`, `cardiac`, `chest`, `asthma`, `wheez`, `diabet`, `hypoglyc`,
+  `hyperglyc`, `unconscious`, and `unrespons` to the critical-query keywords so
+  these emergencies route to depth and carry the read-the-source banner.
+
+### New toolkit tools (13 → 16)
+- **Casualty check** — a DR-ABC / AVPU / recovery-position reference card with a
+  one-tap jump to the CPR protocol.
+- **Field estimator** — body-ruler length, height-by-shadow, and daylight-left.
+- **Unit converter** — two-way temperature, distance, mass, and volume.
 
 ## 2.3.0 — 2026-07-07
 

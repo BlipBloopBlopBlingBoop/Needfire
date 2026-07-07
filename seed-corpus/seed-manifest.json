@@ -1,6 +1,6 @@
 {
   "name": "Needfire \u2014 Seed Corpus",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "license": "CC0-1.0",
   "description": "Original starter reference documents bundled with Needfire so the system works end-to-end offline out of the box. This is a small demonstration set, NOT a substitute for the full downloadable corpus. Written for Needfire and released into the public domain (CC0).",
   "disclaimer": "General reference only. Not professional medical, legal, chemical, or engineering advice. For anything affecting health or safety, read the primary source and use trained judgement.",
@@ -12,6 +12,14 @@
       "tier": "C1",
       "bytes": 2428,
       "sha256": "98c605f40e6051c868492f46acc1c6eca4736ab173945ef3636e7c3443541019"
+    },
+    {
+      "file": "altitude-sickness.md",
+      "title": "Altitude Sickness \u2014 AMS, HACE, and HAPE",
+      "domain": "medicine",
+      "tier": "C2",
+      "bytes": 2353,
+      "sha256": "7b429f68e55d37ad351922c754907c6c660474d9a18d83c96d0b8c7f566b72df"
     },
     {
       "file": "anaphylaxis-allergy.md",
@@ -30,6 +38,14 @@
       "sha256": "872452dae81d0fbc907e643c8e381a15b4cdbbd64f2a9d4503e57a3bc680d7a0"
     },
     {
+      "file": "asthma-breathing.md",
+      "title": "Asthma Attack and Sudden Breathing Trouble",
+      "domain": "medicine",
+      "tier": "C1",
+      "bytes": 2282,
+      "sha256": "311270314fbc99797bf41bd8ad7f4097171ad087c67062eb6e9ad9f10bbc8db7"
+    },
+    {
       "file": "burn-treatment.md",
       "title": "Burn Treatment",
       "domain": "medicine",
@@ -44,6 +60,14 @@
       "tier": "C1",
       "bytes": 2534,
       "sha256": "6294096c70dc520915499d8f6b65dd9d4db677cb9fe1dd53b6397458038a7968"
+    },
+    {
+      "file": "casualty-assessment.md",
+      "title": "Assessing a Casualty \u2014 DR-ABC and the Recovery Position",
+      "domain": "medicine",
+      "tier": "C1",
+      "bytes": 2888,
+      "sha256": "ed1c5e0269e005e33d0db1a98817cb62398e8180c4e0efb01b298744fe50967a"
     },
     {
       "file": "chemical-safety-basics.md",
@@ -92,6 +116,14 @@
       "tier": "C3",
       "bytes": 2055,
       "sha256": "e2001f377040461548d9c4f2008a22f6de3dd1e6df5185ea562a05080afde8a5"
+    },
+    {
+      "file": "diabetic-emergency.md",
+      "title": "Diabetic Emergencies \u2014 Low and High Blood Sugar",
+      "domain": "medicine",
+      "tier": "C1",
+      "bytes": 2463,
+      "sha256": "9a14ad1ae3676e7a086f16ab179a07e754f2b8af8bd0fbff39b14689566826da"
     },
     {
       "file": "drowning-response.md",
@@ -182,6 +214,14 @@
       "sha256": "4d84996f1d05cb882d6fc96ea283183966b3b98359ce5255e86920da8fce129f"
     },
     {
+      "file": "heart-attack.md",
+      "title": "Heart Attack and Chest Pain",
+      "domain": "medicine",
+      "tier": "C1",
+      "bytes": 2259,
+      "sha256": "eb023a03583a8adba3f5b7ffda57ef821e89bf7391b3ecaae421105eb7b0e029"
+    },
+    {
       "file": "heat-illness.md",
       "title": "Heat Illness \u2014 Exhaustion and Heat Stroke",
       "domain": "medicine",
@@ -212,6 +252,14 @@
       "tier": "C1",
       "bytes": 2487,
       "sha256": "00127f03a38fa78ef66d56186fdddef417c5802d7223858a7e7d688c24312f20"
+    },
+    {
+      "file": "measuring-without-instruments.md",
+      "title": "Measuring and Estimating Without Instruments",
+      "domain": "reference",
+      "tier": "C1",
+      "bytes": 2703,
+      "sha256": "80a3abab5a9e6679075168f5bdea16c96d437a0c63b9c9804ac140a57d5a646e"
     },
     {
       "file": "mental-health-crisis.md",
@@ -340,6 +388,14 @@
       "tier": "C3",
       "bytes": 1679,
       "sha256": "280e7a8e05713637ed2a24c84fea36d7b5f7d2c67bc4269e915379c685c0b6a5"
+    },
+    {
+      "file": "stroke-recognition.md",
+      "title": "Stroke \u2014 Recognize It FAST",
+      "domain": "medicine",
+      "tier": "C1",
+      "bytes": 2260,
+      "sha256": "fbafdd86ff15776f39277a7b65b4e7861189d0d31a1609446d03b9c8d93a8bc1"
     },
     {
       "file": "tool-sharpening.md",

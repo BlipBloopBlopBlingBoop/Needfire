@@ -26,7 +26,7 @@ Or with Docker:
 docker compose up         # then open http://localhost:8848
 ```
 
-That's it — it works fully offline using the bundled **46-document seed
+That's it — it works fully offline using the bundled **53-document seed
 library** and a stdlib hashing retriever. No AI model required (it answers in
 "sources-only" mode and shows you the cited documents).
 
@@ -46,8 +46,9 @@ The web UI is built for the situations the Bothy is actually used in:
   mixer, solar/battery sizer, Ohm's-law + wire-gauge helper, field timers,
   an SOS screen strobe, a wind-chill/heat-index "feels-like" calculator, a
   lightning flash-to-bang range finder, a food/water ration planner, pace-count
-  and travel-time estimators, a magnetic-declination converter, and a signal
-  reference card.
+  and travel-time estimators, a magnetic-declination converter, a DR-ABC
+  casualty-assessment card, a no-instrument field estimator (distance, height,
+  daylight), a unit converter, and a signal reference card.
 - **LIBRARY** — search, ask (cited answers), browse by category, and a clean
   document reader with **pin-to-kit** (pinned docs appear on the home screen).
 - **SYSTEM** — a hub for running the box: the old **Status** page plus
