@@ -64,6 +64,17 @@ evacuate), and expands the underlying documents to match.
   large burns and oral-ORS resuscitation (keep urine pale), circumferential-burn
   warning, and days-to-weeks wound care incl. honey dressings and infection watch.
 
+### More protocols + docs deepened
+- **Choking** rebuilt (8 → **13 steps**) with proper "did it clear?" branches, an
+  infant path, a **self-rescue-when-alone** branch, and aftercare (abdominal-thrust
+  injury check). Doc expanded to match.
+- **Drowning** rebuilt (8 → **9 steps**): reach-throw-row, keep-horizontal
+  extraction, spinal caveat, breaths-first CPR, expect-vomiting, prolonged cold-
+  water CPR, and 24-hour secondary-drowning watch. Doc expanded.
+- **Seizure** rebuilt (7 → **8 steps**) with a duration decision that surfaces
+  **status epilepticus**, a stamp timer, and an off-grid causes step (febrile,
+  low sugar, low salt, withdrawal, recurrent-without-help). Doc expanded.
+
 ## 2.6.0 — 2026-07-07
 
 One-click corpus downloads, plus a quality pass over the whole library.

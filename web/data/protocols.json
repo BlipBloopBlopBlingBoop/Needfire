@@ -319,10 +319,15 @@
    "severity": "life-threat",
    "keywords": [
     "choking",
-    "can't breathe",
-    "airway",
+    "cant breathe",
+    "food stuck",
     "heimlich",
-    "something stuck"
+    "airway blocked",
+    "back blows",
+    "abdominal thrusts",
+    "turning blue",
+    "infant choking",
+    "choking alone"
    ],
    "source_doc": "choking-airway.md",
    "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
@@ -331,21 +336,26 @@
     {
      "id": "assess",
      "type": "decision",
-     "text": "**Can they cough, speak, or cry?**",
+     "text": "**Can they cough, speak, or cry?** A person clutching the throat who can't make a sound has a fully blocked airway.",
      "options": [
       {
-       "label": "Yes — coughing / can speak",
+       "label": "Yes — coughing or can speak",
        "goto": "mild",
        "tone": "ok"
       },
       {
-       "label": "No — silent, can't breathe, turning blue",
+       "label": "No — silent, can't breathe, going blue",
        "goto": "age",
        "tone": "danger"
       },
       {
-       "label": "They've gone unconscious",
+       "label": "They've gone limp / unconscious",
        "goto": "unconscious",
+       "tone": "danger"
+      },
+      {
+       "label": "It's ME — I'm choking and alone",
+       "goto": "selfheimlich",
        "tone": "danger"
       }
      ]
@@ -353,24 +363,24 @@
     {
      "id": "mild",
      "type": "loop",
-     "text": "**Encourage them to keep coughing.** A strong cough beats anything you can do. Do NOT slap the back of someone who is coughing effectively. Stay with them.",
+     "text": "**Encourage them to keep coughing.** A forceful cough clears an airway better than anything you can do. Do NOT slap the back of, or thrust on, someone who is coughing effectively. Stay with them.",
      "loop": {
-      "until": "The object comes out, or they stop being able to cough/speak (then go back and choose the silent option).",
+      "until": "the object comes out, or they can no longer cough, speak, or breathe",
       "back_to": "assess"
      },
-     "next": "END"
+     "next": "cleared"
     },
     {
      "id": "age",
      "type": "decision",
-     "text": "**Adult/child, or infant under 1 year?**",
+     "text": "**Who is choking?** It changes the technique.",
      "options": [
       {
-       "label": "Adult or child",
+       "label": "Adult or child (over 1 year)",
        "goto": "backblows"
       },
       {
-       "label": "Infant (under 1 yr)",
+       "label": "Infant (under 1 year)",
        "goto": "infant"
       }
      ]
@@ -378,43 +388,117 @@
     {
      "id": "backblows",
      "type": "action",
-     "text": "**5 back blows.** Lean them forward. Strike hard between the shoulder blades with the heel of your hand. Check the mouth after each blow.",
-     "detail": "If pregnant or too large to reach around the abdomen: use CHEST thrusts instead of abdominal thrusts."
+     "text": "**5 sharp back blows.** Lean them well forward. Strike firmly between the shoulder blades with the heel of your hand. Check the mouth after each — remove anything you can SEE.",
+     "detail": "For a **pregnant or very large person** you cannot reach around, use **chest thrusts** instead of abdominal thrusts: fist on the centre of the breastbone, pull sharply straight back.",
+     "next": "abdominal"
     },
     {
      "id": "abdominal",
-     "type": "loop",
-     "text": "**5 abdominal thrusts.** Stand behind them, fist just above the navel, grasp with the other hand, pull sharply inward and UPWARD. Alternate: 5 back blows, 5 thrusts.",
-     "warning": "Never do a blind finger sweep — you can push the object deeper.",
-     "loop": {
-      "until": "The object comes out, or they go unconscious.",
-      "back_to": "backblows"
-     },
-     "next": "unconscious"
+     "type": "action",
+     "text": "**5 abdominal thrusts (Heimlich).** Stand behind them, make a fist just above the navel, grasp it with your other hand, and pull sharply **inward and upward**.",
+     "warning": "Never do a blind finger sweep — it can push the object deeper. Only remove what you can see.",
+     "next": "recheck"
+    },
+    {
+     "id": "recheck",
+     "type": "decision",
+     "text": "**After 5 back blows and 5 thrusts — what now?**",
+     "options": [
+      {
+       "label": "Object out / breathing again",
+       "goto": "cleared",
+       "tone": "ok"
+      },
+      {
+       "label": "Still choking",
+       "goto": "backblows",
+       "tone": "danger"
+      },
+      {
+       "label": "Gone unconscious",
+       "goto": "unconscious",
+       "tone": "danger"
+      }
+     ]
     },
     {
      "id": "infant",
-     "type": "loop",
-     "text": "**Infant: 5 back blows + 5 chest thrusts.** Lay the infant face-down along your forearm, head low; give 5 firm back blows. Turn face-up; give 5 chest thrusts with two fingers on the breastbone. NO abdominal thrusts on infants.",
-     "loop": {
-      "until": "The object comes out, or the infant goes limp/unconscious.",
-      "back_to": "infant"
-     },
-     "next": "unconscious"
+     "type": "action",
+     "text": "**Infant: 5 back blows, then 5 chest thrusts.** Lay the infant face-down along your forearm, head lower than the body; give 5 back blows. Turn face-up; give 5 chest thrusts with two fingers on the breastbone (sharper and deeper than CPR). **No abdominal thrusts on an infant.**",
+     "next": "infant-recheck"
+    },
+    {
+     "id": "infant-recheck",
+     "type": "decision",
+     "text": "**After the back blows and chest thrusts — what now?**",
+     "options": [
+      {
+       "label": "Object out / breathing again",
+       "goto": "cleared",
+       "tone": "ok"
+      },
+      {
+       "label": "Still choking",
+       "goto": "infant",
+       "tone": "danger"
+      },
+      {
+       "label": "Gone limp / unconscious",
+       "goto": "unconscious",
+       "tone": "danger"
+      }
+     ]
+    },
+    {
+     "id": "selfheimlich",
+     "type": "action",
+     "text": "**Choking and alone:** give yourself abdominal thrusts. Make a fist above your navel, grasp it with your other hand, and thrust in and up — or **press your upper belly hard over a firm edge** (the back of a chair, a railing, a rock) with a quick upward shove. Repeat.",
+     "detail": "Keep trying — do not run for help until the airway is clear or you must. If you feel you are about to pass out, get to where someone might find you and, if you can, make noise.",
+     "next": "self-recheck"
+    },
+    {
+     "id": "self-recheck",
+     "type": "decision",
+     "text": "**Is it clearing?**",
+     "options": [
+      {
+       "label": "Yes — I can breathe",
+       "goto": "cleared",
+       "tone": "ok"
+      },
+      {
+       "label": "No — keep going",
+       "goto": "selfheimlich",
+       "tone": "danger"
+      },
+      {
+       "label": "Feeling faint",
+       "goto": "unconscious",
+       "tone": "danger"
+      }
+     ]
     },
     {
      "id": "unconscious",
      "type": "action",
-     "text": "**Unconscious → start CPR now.** Lower them gently to the ground. Before each set of rescue breaths, LOOK in the mouth and remove the object only if you can SEE it.",
+     "text": "**Unconscious → lower them gently to the ground and start CPR.** Before each set of breaths, LOOK in the mouth and remove the object **only if you can see it**. The chest compressions themselves help force the blockage out.",
      "next": "gocpr"
     },
     {
      "id": "gocpr",
      "type": "info",
-     "text": "Open the **CPR protocol** and follow it: [CPR — Adult, Child, Infant](#/emergency/cpr)",
+     "text": "Open the **CPR protocol** and follow it: [CPR — Adult, Child, Infant](#/emergency/cpr). Keep checking the mouth for the dislodged object at each breath.",
+     "next": "END"
+    },
+    {
+     "id": "cleared",
+     "type": "info",
+     "text": "**Airway cleared — well done.** Let them rest and recover; a sore throat or cough is normal for a while.",
+     "detail": "Anyone who **received abdominal thrusts** should be checked for internal injury when care is available. Seek help if they have ongoing trouble swallowing or breathing, a persistent cough, chest pain, or the feeling that something is still stuck — the object may have passed into the lung.",
      "next": "END"
     }
-   ]
+   ],
+   "entry_warning": "Silent and can't breathe = fully blocked airway. Act now."
   },
   {
    "id": "burns",
@@ -1064,55 +1148,75 @@
     "fit",
     "shaking",
     "epilepsy",
-    "foaming mouth"
+    "status epilepticus",
+    "foaming mouth",
+    "fever seizure",
+    "febrile",
+    "not waking"
    ],
    "source_doc": "seizure-response.md",
    "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
-   "start": "clear",
+   "start": "protect",
    "steps": [
     {
-     "id": "clear",
+     "id": "protect",
      "type": "action",
-     "text": "**Clear hard and sharp objects away** from the person. Most seizures stop on their own within 1–3 minutes — your job is to protect them from injury while it runs its course.",
-     "next": "cushion"
-    },
-    {
-     "id": "cushion",
-     "type": "action",
-     "text": "**Cushion the head** with something soft — a folded jacket, your hands. Loosen anything tight around the neck. **Do not restrain** the movements.",
-     "warning": "Put NOTHING in the mouth. They cannot swallow their tongue; forcing objects in breaks teeth and blocks the airway.",
+     "text": "**Protect them from injury — do not restrain them.** Clear hard or sharp objects away, or ease the person away from danger (fire, water, edges, machinery). Cushion the head with something soft.",
+     "warning": "Put NOTHING in the mouth. They cannot swallow their tongue; forcing anything in breaks teeth and blocks the airway.",
      "next": "time"
     },
     {
      "id": "time",
      "type": "action",
-     "text": "**Time the seizure from the moment it starts.**",
+     "text": "**Time it from the moment it starts** (or note the clock). How long it lasts decides whether this is an emergency. Loosen anything tight around the neck.",
      "timer": {
-      "kind": "countdown",
-      "label": "Seizure duration — over 5 min is an emergency",
-      "seconds": 300,
-      "auto": true
+      "kind": "stamp",
+      "label": "Seizure started",
+      "persist": true
      },
+     "next": "duration"
+    },
+    {
+     "id": "duration",
+     "type": "decision",
+     "text": "**How long has the active seizure (shaking) gone on?**",
+     "options": [
+      {
+       "label": "Still going at 5 minutes, or back-to-back",
+       "goto": "status",
+       "tone": "danger"
+      },
+      {
+       "label": "Stopped within a few minutes",
+       "goto": "after",
+       "tone": "ok"
+      }
+     ]
+    },
+    {
+     "id": "status",
+     "type": "info",
+     "text": "**This is a life-threatening emergency (status epilepticus)** — a seizure that won't self-stop starves the brain of oxygen. Keep protecting the airway and head, and **get to help / emergency medication** any way you can. If you have prescribed rescue medication (e.g. midazolam) and know how, this is when to use it.",
      "next": "after"
     },
     {
      "id": "after",
      "type": "action",
-     "text": "**When the shaking stops, roll them into the recovery position** (on their side, head tilted slightly back) so saliva or vomit drains. Confusion and drowsiness afterward are normal. Stay with them until they are fully awake and speak calmly.",
+     "text": "**When the shaking stops, roll them onto their side (recovery position)** so saliva or vomit drains. Keep the airway open and stay with them — they will be confused and drowsy ('postictal'); that is normal. Speak calmly and reassure them.",
      "next": "emergency"
     },
     {
      "id": "emergency",
      "type": "decision",
-     "text": "**Any of these emergency signs?**\n\n- Seizure lasting **more than 5 minutes**\n- Seizures **back-to-back** without waking in between\n- The person's **first-ever seizure**\n- It happened **in water**, caused **injury**, or the person is **pregnant**\n- They do **not wake** within minutes of the shaking stopping",
+     "text": "**Do any of these apply?** They change this from 'wait it out' to 'reach help'.",
      "options": [
       {
-       "label": "Yes — any of these",
+       "label": "First-ever seizure, injury, in water, pregnant, or not waking",
        "goto": "help",
        "tone": "danger"
       },
       {
-       "label": "None of these",
+       "label": "Known epilepsy, recovered as usual",
        "goto": "causes",
        "tone": "ok"
       }
@@ -1121,16 +1225,18 @@
     {
      "id": "help",
      "type": "info",
-     "text": "**Do everything you can to reach help.** A seizure lasting more than 5 minutes (status epilepticus) may not stop on its own and is life-threatening.",
-     "next": "END"
+     "text": "**Reach help / evacuate.** A first-ever seizure, one causing injury, one in water, one in a pregnant woman, repeated seizures without waking between, or failure to wake within ~15–20 minutes all need medical assessment.",
+     "next": "causes"
     },
     {
      "id": "causes",
      "type": "info",
-     "text": "**Think about the cause:** high fever in a child (cool gradually — remove layers, lukewarm cloth; do not plunge into cold water); a head injury in the last days; drinking only plain water without salt after heavy sweating (rehydrate with ORS, not plain water alone); alcohol or medication withdrawal; low blood sugar — **if they wake fully, give sugar**.",
+     "text": "**Treat the cause you can find (see the full document):** cool a feverish child gradually; give sugar if low blood sugar and they are fully awake; rehydrate with ORS (not plain water) after heavy sweating; consider head injury, and alcohol or medication withdrawal when supplies run out.",
+     "detail": "- **Febrile seizure (young child, fever):** cool gradually — remove layers, lukewarm sponging — never plunge into cold water; treat the fever. Usually brief and not dangerous, but a first one should be checked.\n- **Low blood sugar** (diabetic): once fully awake and able to swallow, give sugar (see the Diabetic emergency guide).\n- **Low salt** from drinking only water after heavy sweating — rehydrate with oral rehydration solution.\n- **Withdrawal** from alcohol or seizure medicines running out can trigger dangerous repeated seizures — evacuate.\n- **Recurrent seizures off-grid:** protect during each, keep them safe and hydrated, ration any remaining medication sensibly, and move toward help.",
      "next": "END"
     }
-   ]
+   ],
+   "entry_warning": "Protect them and do NOT restrain or put anything in the mouth."
   },
   {
    "id": "drowning",
@@ -1153,68 +1259,68 @@
     {
      "id": "rescue",
      "type": "action",
-     "text": "**Reach, throw, row — don't go.** Reach with a stick, paddle, or clothing; throw a rope or anything that floats; row a boat to them. Enter the water only as a last resort, and bring something that floats.",
-     "warning": "A drowning person will climb on you and pull you under.",
+     "text": "**Reach, throw, row — don't go.** Rescue from shore first: **reach** with a stick, paddle, or clothing; **throw** a rope or anything that floats; **row** a boat out. Enter the water only as a last resort, and bring something that floats.",
+     "warning": "A drowning person will climb on you and push you under. More would-be rescuers drown than victims. Do not become the second casualty.",
+     "next": "out"
+    },
+    {
+     "id": "out",
+     "type": "action",
+     "text": "**Get them out and onto their back on firm ground.** Keep them horizontal — hauling a near-drowning person upright can drop their blood pressure. Then check breathing.",
+     "detail": "If they fell or dived and a neck injury is possible, keep the head and neck as still and aligned as you can while you move them — but **an open airway and breathing always come first**; don't let spinal caution stop you resuscitating.",
      "next": "check"
     },
     {
      "id": "check",
-     "type": "action",
-     "text": "**Once out of the water, check breathing** — no more than 10 seconds. **Gasping is not breathing.**",
-     "timer": {
-      "kind": "countdown",
-      "label": "Breathing check",
-      "seconds": 10,
-      "auto": true
-     },
-     "next": "call"
-    },
-    {
-     "id": "call",
      "type": "decision",
-     "text": "**Are they breathing normally?**",
+     "text": "**Check for normal breathing — no more than 10 seconds.** Gasping is NOT breathing. What do you see?",
      "options": [
       {
        "label": "Breathing normally",
-       "goto": "hypothermia",
+       "goto": "recovery",
        "tone": "ok"
       },
       {
-       "label": "Not breathing / only gasping",
+       "label": "Not breathing normally",
        "goto": "breaths",
        "tone": "danger"
       }
      ]
     },
     {
+     "id": "recovery",
+     "type": "action",
+     "text": "**Put them on their side (recovery position)** so water and vomit drain, keep them warm, and watch breathing continuously — it can fail again.",
+     "next": "hypothermia"
+    },
+    {
      "id": "breaths",
      "type": "action",
-     "text": "**Give 5 initial rescue breaths BEFORE starting compressions.** Tilt head, lift chin, seal your mouth over theirs — mouth AND nose for a small child. Drowning arrest comes from lack of oxygen, so ventilation comes first — the opposite of typical adult cardiac arrest.",
+     "text": "**Give 5 initial rescue breaths, THEN start compressions.** Drowning arrest is from lack of oxygen, so breaths come first — the opposite of a normal adult collapse. Tilt the head, lift the chin, seal your mouth over theirs (mouth and nose for a small child).",
      "next": "cpr"
     },
     {
      "id": "cpr",
      "type": "action",
-     "text": "**Then continue CPR at 30 compressions to 2 breaths.** Open the CPR protocol and follow it: [CPR](#/emergency/cpr)",
-     "warning": "Do NOT waste time trying to \"drain water\" from the lungs with abdominal thrusts or by hanging them head-down. It does not work and delays CPR.",
+     "text": "**Continue CPR at 30 compressions to 2 breaths.** Follow the full [CPR protocol](#/emergency/cpr). Keep the breaths in — do not switch to hands-only for a drowning victim.",
      "next": "vomit"
     },
     {
      "id": "vomit",
-     "type": "action",
-     "text": "**Expect vomiting** — it happens in most drowning resuscitations. **Roll them to the side, clear the mouth, and continue.**",
+     "type": "info",
+     "text": "**Expect vomiting** — it happens in most drowning resuscitations. **Roll them onto their side, sweep the mouth clear, then roll back and continue.** Do NOT waste time trying to 'drain the lungs' by pressing the belly or hanging them upside down — it doesn't work and delays CPR.",
      "next": "hypothermia"
     },
     {
      "id": "hypothermia",
-     "type": "action",
-     "text": "**Handle gently — cold water victims are often hypothermic too.** If they are breathing but not fully awake, put them in the **recovery position** (on their side) and keep checking breathing. Remove wet clothing, insulate from the ground, and warm gradually. Do not give up resuscitation early on a cold victim — **\"not dead until warm and dead.\"**",
+     "type": "info",
+     "text": "**Cold-water victims are usually hypothermic — this can save them.** Handle very gently, remove wet clothing, insulate above and below, and warm gradually. The cold protects the brain, so **keep resuscitating far longer than usual: 'not dead until warm and dead.'**",
      "next": "watch"
     },
     {
      "id": "watch",
      "type": "info",
-     "text": "**Watch them for 24 hours.** Anyone who inhaled water can deteriorate over the next 24 hours — worsening cough, fast or laboured breathing, unusual tiredness. **Treat new breathing trouble as an emergency.**",
+     "text": "**Watch for 24 hours, even if they seem fine.** Anyone who inhaled water can deteriorate hours later ('secondary drowning'): worsening cough, fast or laboured breathing, chest tightness, or unusual tiredness. Treat new breathing trouble as an emergency and evacuate.",
      "next": "END"
     }
    ]
