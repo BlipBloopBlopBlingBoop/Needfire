@@ -74,6 +74,17 @@ evacuate), and expands the underlying documents to match.
 - **Seizure** rebuilt (7 → **8 steps**) with a duration decision that surfaces
   **status epilepticus**, a stamp timer, and an off-grid causes step (febrile,
   low sugar, low salt, withdrawal, recurrent-without-help). Doc expanded.
+- **Heat illness** rebuilt (9 → **12 steps**): cramps/exhaustion/stroke triage, a
+  cool-by-immersion-vs-douse branch, stop-when-alert, and a recheck that escalates
+  to stroke. **Cold injury** rebuilt (11 → **12 steps**): hypothermia severity
+  branch (afterdrop, gentle handling, prolonged CPR) and the frostbite
+  refreeze/rewarm decision with fire-burn warning. **Emergency childbirth** rebuilt
+  (10 → **14 steps**) with nuchal-cord, shoulder-dystocia/breech detail, newborn
+  resuscitation (3:1), delayed cord clamping, and postpartum-haemorrhage management.
+  frostbite-cold-injuries.md and emergency-childbirth.md expanded to match.
+
+With this, **all 12 emergency protocols and their documents** have been rebuilt as
+real off-grid decision trees.
 
 ## 2.6.0 — 2026-07-07
 

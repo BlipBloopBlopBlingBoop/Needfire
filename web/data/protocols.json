@@ -1347,82 +1347,108 @@
     {
      "id": "triage",
      "type": "decision",
-     "text": "**What are you seeing?** Heat illness is a spectrum: cramps → exhaustion → stroke.",
+     "text": "**What are you seeing?** Heat illness runs cramps → exhaustion → stroke. The dividing line is the brain: **confusion or collapse means heat STROKE.**",
      "options": [
       {
-       "label": "Confused, strange behaviour, stumbling, seizure, or collapse — hot skin (dry OR still sweaty)",
-       "goto": "stroke-cool",
+       "label": "Confused, stumbling, collapsed, or seizing — hot skin",
+       "goto": "stroke",
        "tone": "danger"
       },
       {
-       "label": "Heavy sweating, weak, nauseous, dizzy, pale clammy skin — but thinking clearly",
+       "label": "Sweating, weak, nauseous, dizzy — but thinking clearly",
        "goto": "exhaustion"
+      },
+      {
+       "label": "Painful muscle cramps only",
+       "goto": "cramps"
       }
      ]
     },
     {
-     "id": "stroke-cool",
+     "id": "stroke",
      "type": "action",
-     "text": "**HEAT STROKE — cool aggressively NOW. Cool first, transport second.** Whole-body immersion in cool water (stream, trough, tub) is the best treatment — keep the head supported above water.",
-     "next": "stroke-alt"
+     "text": "**HEAT STROKE — cool aggressively NOW. Cool first, move second.** Get them into shade, strip off clothing. Every minute hot damages the brain and organs.",
+     "warning": "Confusion, hot skin (which may be dry OR still sweaty), or collapse in the heat is life-threatening.",
+     "next": "stroke-how"
     },
     {
-     "id": "stroke-alt",
+     "id": "stroke-how",
+     "type": "decision",
+     "text": "**How can you cool them?**",
+     "options": [
+      {
+       "label": "Water to immerse them (stream, tub, trough)",
+       "goto": "immerse"
+      },
+      {
+       "label": "No immersion — water + air",
+       "goto": "douse"
+      }
+     ]
+    },
+    {
+     "id": "immerse",
      "type": "action",
-     "text": "**No immersion available?** Douse continuously with water and fan hard, and put cold packs at the **neck, armpits, and groin**.",
+     "text": "**Whole-body immersion in cool water is the best treatment.** Lower them into a stream, trough, or tub, **keeping the head supported above water**. Keep them in until they cool.",
+     "next": "stroke-stop"
+    },
+    {
+     "id": "douse",
+     "type": "action",
+     "text": "**Douse continuously with water and fan hard** to drive evaporation. Drape a wet sheet and fan it; put **cold packs / wet cloths at the neck, armpits, and groin**. Keep re-wetting.",
      "next": "stroke-stop"
     },
     {
      "id": "stroke-stop",
-     "type": "action",
-     "text": "**Stop active cooling once they become alert.** Give nothing by mouth while confused. Then get them to advanced medical care even if they seem recovered — heat stroke injures organs after the crisis passes.",
-     "warning": "Shivering alone is NOT a reason to stop — heat stroke victims often shiver while still dangerously hot.",
+     "type": "info",
+     "text": "**Stop active cooling once they become alert** (avoid overshooting into shivering cold). Shivering alone is not a reason to stop — heat-stroke victims often shiver while still dangerously hot. **Give nothing by mouth while confused.** Heat stroke damages organs — evacuate to care.",
      "next": "END"
+    },
+    {
+     "id": "cramps",
+     "type": "action",
+     "text": "**Heat cramps: rest in shade, gently stretch the muscle, and replace salt and water** — sip oral rehydration solution or lightly salted water. Do not go back to hard work until the cramps settle.",
+     "next": "watch"
     },
     {
      "id": "exhaustion",
      "type": "action",
-     "text": "**Stop all work.** Move to shade and loosen or remove clothing.",
-     "next": "lie"
+     "text": "**Heat exhaustion: stop all work now.** Move to shade and loosen or remove clothing.",
+     "next": "exh-lie"
     },
     {
-     "id": "lie",
+     "id": "exh-lie",
      "type": "action",
-     "text": "**Lie them flat with legs raised.**",
-     "next": "sip"
+     "text": "**Lie them flat with the legs raised.** Cool the skin with a wet cloth and fanning.",
+     "next": "exh-sip"
     },
     {
-     "id": "sip",
+     "id": "exh-sip",
      "type": "action",
-     "text": "**Sip water or oral rehydration solution steadily.** Cool with a wet cloth on the skin plus fanning. Recovery should come within 30 minutes.",
-     "timer": {
-      "kind": "countdown",
-      "label": "Recheck in 30 minutes",
-      "seconds": 1800
-     },
+     "text": "**Sip water or oral rehydration solution steadily** — about half a litre over 15–20 minutes, with electrolytes/salt (plain water alone for hours risks dangerously low sodium).",
      "next": "recheck"
     },
     {
      "id": "recheck",
      "type": "decision",
-     "text": "**Recovering within 30 minutes?**",
+     "text": "**Recovering within about 30 minutes?**",
      "options": [
       {
-       "label": "Yes — recovering",
-       "goto": "done",
+       "label": "Yes — improving",
+       "goto": "watch",
        "tone": "ok"
       },
       {
-       "label": "No — or the mind is clouding",
-       "goto": "stroke-cool",
+       "label": "No, or the mind is clouding",
+       "goto": "stroke",
        "tone": "danger"
       }
      ]
     },
     {
-     "id": "done",
+     "id": "watch",
      "type": "info",
-     "text": "**Keep them at rest in the shade** and continue sips of fluid. Before returning to work: schedule hard work for dawn and dusk, and drink about 0.5–1 litre per hour **with electrolytes or salted food** — plain water alone for hours risks dangerously low sodium.",
+     "text": "**Rest in the shade and keep hydrating.** No return to hard work in the heat today. Off-grid prevention: work at dawn and dusk, acclimatise over 1–2 weeks, drink ~0.5–1 L/hour with salt during hard work, and check urine is pale straw.",
      "next": "END"
     }
    ]
@@ -1448,113 +1474,113 @@
     {
      "id": "which",
      "type": "decision",
-     "text": "**Whole body, or a body part?**",
+     "text": "**What are you dealing with?**",
      "options": [
       {
-       "label": "Whole body: shivering, clumsy, slurred speech, confused",
-       "goto": "shelter",
+       "label": "Whole body cold — shivering, clumsy, confused",
+       "goto": "hypo",
        "tone": "danger"
       },
       {
-       "label": "A frozen part: skin hard, waxy, wooden",
-       "goto": "frost-first",
-       "tone": "danger"
+       "label": "A body part — numb, white, hard (frostbite)",
+       "goto": "frost"
       },
       {
-       "label": "Skin numb and white but still SOFT (frostnip)",
-       "goto": "frostnip",
-       "tone": "ok"
-      },
-      {
-       "label": "Wet, cold feet: numb, pale, swollen — but not frozen (trench foot)",
+       "label": "Wet, cold feet for hours — not frozen (trench foot)",
        "goto": "trench"
       }
      ]
     },
     {
-     "id": "frostnip",
-     "type": "info",
-     "text": "**Frostnip — rewarm it skin-to-skin**: fingers in an armpit, a warm palm on a cheek. No harm done.",
-     "next": "END"
-    },
-    {
-     "id": "shelter",
+     "id": "hypo",
      "type": "action",
-     "text": "**Get them into shelter, out of the wind, and off the cold ground** — ground contact steals body heat, so insulate underneath at least as much as above. Remove wet clothing; insulate with dry layers and cover the head and neck.",
-     "next": "warm"
+     "text": "**Hypothermia: get them into shelter, out of the wind, and off the cold ground.** Remove wet clothing (cut it away to avoid moving them much) and insulate all around — including the head and neck — above and below.",
+     "next": "hypo-level"
     },
     {
-     "id": "warm",
-     "type": "action",
-     "text": "**Apply gentle warmth to the core** — chest, neck, armpits, groin. Give warm sweet drinks **only if fully alert** and able to swallow. **No alcohol.**",
-     "warning": "Do not rub the limbs or apply sudden intense heat — harmful in severe cases. Handle a severely hypothermic person gently.",
-     "next": "shiver"
-    },
-    {
-     "id": "shiver",
-     "type": "info",
-     "text": "**Loss of shivering is a danger sign, not improvement.** Worsening hypothermia: shivering stops, confusion, drowsiness, slow weak pulse. Keep handling gently and seek advanced care.",
-     "next": "END"
-    },
-    {
-     "id": "frost-first",
-     "type": "action",
-     "text": "**Get out of the cold.** Remove wet clothing, and remove **rings and watches** before swelling. Protect the frozen part from bumps and pressure.",
-     "next": "refreeze"
-    },
-    {
-     "id": "refreeze",
+     "id": "hypo-level",
      "type": "decision",
-     "text": "**Could the part refreeze after thawing?** Choose the moment of rewarming deliberately.",
+     "text": "**How bad is it?**",
      "options": [
       {
-       "label": "No — refreezing is impossible",
-       "goto": "rewarm",
+       "label": "Still shivering, awake and alert (mild)",
+       "goto": "hypo-mild",
        "tone": "ok"
       },
       {
-       "label": "Yes — it might refreeze",
-       "goto": "keep-frozen",
+       "label": "Shivering stopped, drowsy/confused, or barely rousable (severe)",
+       "goto": "hypo-severe",
        "tone": "danger"
       }
      ]
     },
     {
+     "id": "hypo-mild",
+     "type": "action",
+     "text": "**Rewarm gently.** Add dry insulating layers, cover the head, and apply gentle warmth to the core (chest, neck, armpits, groin). If **fully alert** and able to swallow, give **warm sweet drinks** — no alcohol. Let them move gently to make heat.",
+     "next": "hypo-watch"
+    },
+    {
+     "id": "hypo-severe",
+     "type": "info",
+     "text": "**Severe hypothermia — handle very gently.** Rough movement can stop a cold heart. Insulate thoroughly and add gentle heat to the core only; do NOT rub the limbs or use fierce heat, and give **nothing by mouth**. If they are not breathing, start CPR and keep going a long time — **'not dead until warm and dead.'** Evacuate.",
+     "next": "hypo-watch"
+    },
+    {
+     "id": "hypo-watch",
+     "type": "info",
+     "text": "**Rewarm slowly and keep watching.** Warming can cause 'afterdrop' — cold blood from the limbs cooling the core — so warm the core first and keep the person still and insulated. Keep them dry and sheltered until steadily improving.",
+     "next": "END"
+    },
+    {
+     "id": "frost",
+     "type": "action",
+     "text": "**Frostbite: get out of the cold. Remove rings, watches, and wet clothing** before swelling starts. **Do NOT rub the part** (ice crystals tear tissue) and do not use direct fierce heat like a fire.",
+     "next": "refreeze"
+    },
+    {
+     "id": "refreeze",
+     "type": "decision",
+     "text": "**Could the part refreeze after you thaw it?** Refreezing destroys tissue far worse than staying frozen — this decision matters.",
+     "options": [
+      {
+       "label": "Yes — still in the cold, or must travel out",
+       "goto": "keep-frozen",
+       "tone": "danger"
+      },
+      {
+       "label": "No — safe and warm to stay",
+       "goto": "rewarm"
+      }
+     ]
+    },
+    {
      "id": "keep-frozen",
-     "type": "loop",
-     "text": "**Do NOT rewarm yet** — refreezing destroys tissue far worse than staying frozen a few hours longer. **Walking on frozen feet to reach shelter is acceptable; walking on thawed feet is not.**",
-     "loop": {
-      "until": "You are in shelter and refreezing is impossible — then rewarm.",
-      "back_to": "rewarm"
-     },
+     "type": "info",
+     "text": "**Do NOT rewarm yet.** Keep the part frozen, padded, and protected, and get to safety. It is safer to **walk out on a frozen foot** than to thaw it and have it refreeze — a thawed part cannot be walked on and must not refreeze.",
      "next": "END"
     },
     {
      "id": "rewarm",
      "type": "action",
-     "text": "**Immerse the part in warm water at 37–39°C (99–102°F)** — comfortable to your own elbow, never hot. Keep it there **20–30 minutes**, topping up warm water, until the tissue is soft and red or purple. Severe pain during rewarming is expected — a sign of returning circulation. Give pain relief if available.",
-     "warning": "NEVER rub the part with snow, massage it, or hold it to direct dry heat — a fire or stove will burn tissue that cannot feel.",
-     "timer": {
-      "kind": "countdown",
-      "label": "Rewarm in 37–39°C water",
-      "seconds": 1500
-     },
+     "text": "**Rewarm in warm water at 37–39 °C (99–102 °F)** — comfortably warm to your elbow, not hot — for **20–40 minutes**, until the part is soft and flushed pink/red. It will hurt a lot as it thaws; that pain means living tissue. Give pain relief.",
+     "warning": "Never thaw with a fire, stove, or hot rock — numb skin burns without you feeling it.",
      "next": "after-rewarm"
     },
     {
      "id": "after-rewarm",
      "type": "info",
-     "text": "**Leave blisters intact.** Place dry gauze between fingers and toes, bandage loosely, and elevate. **Do not let the part refreeze** — do not walk on thawed feet.",
+     "text": "**Leave blisters intact.** Place dry gauze between thawed fingers or toes, keep the part elevated, clean, and protected, and **do not walk on a thawed foot**. Watch for infection over the following days. Evacuate — depth of damage takes weeks to declare and needs care.",
      "next": "END"
     },
     {
      "id": "trench",
      "type": "action",
-     "text": "**Trench foot — wet and cold above freezing for hours to days.** Get the feet dry: remove wet boots and socks, air and gently dry the feet, and keep them clean. **Rewarm gradually** — body warmth or a warm room, not hot water. Elevate the feet and avoid walking on them where possible. Change into dry socks daily to prevent it coming back.",
-     "warning": "Do not rub the feet, and do not use hot water or direct dry heat — the tissue is fragile.",
+     "text": "**Trench/immersion foot** (wet + cold above freezing for hours to days): get the feet **dry and warm gradually**, elevate them, and do **not** rub or walk on them. Keep them dry from now on. Expect burning pain as they warm; watch for infection. Prevent it by keeping feet dry and changing wet socks.",
      "next": "END"
     }
-   ]
+   ],
+   "entry_warning": "Loss of shivering with drowsiness is severe hypothermia — handle gently."
   },
   {
    "id": "childbirth",
@@ -1563,12 +1589,16 @@
    "icon": "baby",
    "severity": "serious",
    "keywords": [
-    "baby coming",
+    "childbirth",
     "labor",
-    "birth",
-    "contractions",
-    "umbilical cord",
-    "bleeding after birth"
+    "labour",
+    "baby coming",
+    "delivery",
+    "newborn",
+    "placenta",
+    "cord",
+    "breech",
+    "postpartum bleeding"
    ],
    "source_doc": "emergency-childbirth.md",
    "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
@@ -1577,36 +1607,76 @@
     {
      "id": "prepare",
      "type": "action",
-     "text": "**Wash your hands thoroughly** and lay out clean cloths or plastic under the mother. Most births proceed normally with little intervention — your job is cleanliness, warmth, and calm support.",
-     "next": "labor"
+     "text": "**Birth is usually normal — stay calm and let it happen.** Wash your hands well, lay out clean cloths or plastic, and reassure the mother. Do not rush or pull.",
+     "next": "imminent"
     },
     {
-     "id": "labor",
-     "type": "action",
-     "text": "**Let labor progress at its own pace.** Do not push on the abdomen or tell her to push before she feels the urge.",
-     "next": "crown"
+     "id": "imminent",
+     "type": "decision",
+     "text": "**Is the birth imminent?** (An overwhelming urge to push, or the baby's head bulging/visible.)",
+     "options": [
+      {
+       "label": "Yes — head coming / strong urge to push",
+       "goto": "deliver",
+       "tone": "danger"
+      },
+      {
+       "label": "Contractions, but not yet",
+       "goto": "laboring"
+      }
+     ]
     },
     {
-     "id": "crown",
-     "type": "action",
-     "text": "**As the head crowns, support it gently with a clean hand** so it emerges slowly. **Do not pull on the head or body.** Check for the cord around the neck — if present, slip it gently over the head. The shoulders and body usually follow within a contraction or two; the baby will be slippery — hold securely.",
-     "next": "warm"
+     "id": "laboring",
+     "type": "info",
+     "text": "**Let labour progress at its own pace.** Time the contractions; let her move and find comfortable positions; **do not push before the urge comes.** Get to skilled help if you possibly can — early labour leaves time to move. Keep her hydrated and calm.",
+     "next": "deliver"
     },
     {
-     "id": "warm",
+     "id": "deliver",
      "type": "action",
-     "text": "**Dry the baby vigorously** and place it **skin-to-skin on the mother's chest**, covered with dry cloth. Warmth is critical.",
-     "timer": {
-      "kind": "stamp",
-      "label": "Baby born",
-      "persist": true
-     },
+     "text": "**Let her push with the contractions.** As the head crowns, **support it gently** with a clean hand so it doesn't deliver too fast — do NOT pull. Let the head turn on its own.",
+     "next": "cord-neck"
+    },
+    {
+     "id": "cord-neck",
+     "type": "decision",
+     "text": "**Is the cord looped around the baby's neck?** Feel gently after the head is out.",
+     "options": [
+      {
+       "label": "Yes",
+       "goto": "cord-loop",
+       "tone": "danger"
+      },
+      {
+       "label": "No / can't feel one",
+       "goto": "shoulders"
+      }
+     ]
+    },
+    {
+     "id": "cord-loop",
+     "type": "action",
+     "text": "**Gently hook a finger under the cord and slip the loop over the baby's head.** If it is too tight to move, keep the baby close and deliver quickly — the body will come with the next push.",
+     "next": "shoulders"
+    },
+    {
+     "id": "shoulders",
+     "type": "action",
+     "text": "**Deliver the shoulders.** With the next contraction, guide the head **gently downward** to free the top shoulder, then **gently upward** for the lower one. The body follows fast and slippery — support it.",
+     "detail": "**Shoulders stuck after the head is out (shoulder dystocia)?** Get the mother's **knees up to her chest** (McRoberts) and have someone press just above the pubic bone. Do NOT pull hard on the head. **Baby coming feet- or bottom-first (breech)?** Let it deliver on its own, support the body, and do not pull — keep the body warm and wait for the head; if the head delays, lift the body slightly and clear the baby's mouth.",
+     "next": "newborn"
+    },
+    {
+     "id": "newborn",
+     "type": "action",
+     "text": "**Dry the baby vigorously** with a clean cloth and place it **skin-to-skin on the mother's bare chest**, covering both — especially the baby's head. Note the time of birth. Drying and warmth are usually all a baby needs to start breathing.",
      "next": "breathing"
     },
     {
      "id": "breathing",
      "type": "decision",
-     "text": "**Is the baby crying and breathing?** Most do within a minute.",
+     "text": "**Is the baby crying or breathing well?** Most do within a minute of drying.",
      "options": [
       {
        "label": "Yes — crying / breathing",
@@ -1614,44 +1684,47 @@
        "tone": "ok"
       },
       {
-       "label": "No — not breathing",
-       "goto": "stimulate",
+       "label": "No — floppy, blue, or gasping",
+       "goto": "resus",
        "tone": "danger"
       }
      ]
     },
     {
-     "id": "stimulate",
+     "id": "resus",
      "type": "action",
-     "text": "**Rub the back firmly and flick the soles of the feet.** If the baby still does not breathe after about a minute of drying and stimulation, **start gentle rescue breaths**: cover the baby's mouth AND nose with your mouth and give small puffs — see the infant guidance in [CPR](#/emergency/cpr). Do not give up quickly.",
+     "text": "**Stimulate, then breathe for the baby.** Rub the back firmly and flick the soles; wipe the mouth and nose clear. If still not breathing after about a minute, give **gentle puffs of air** (just enough to lift the chest, about 30–40/min).",
+     "detail": "If there is still no breathing or heartbeat after good inflation breaths, start infant CPR at **3 compressions to 1 breath** (two thumbs on the breastbone). Keep the baby warm and dry throughout — cold babies don't respond. See *CPR for Adults, Children, and Infants*.",
      "next": "cord"
     },
     {
      "id": "cord",
      "type": "action",
-     "text": "**Do not cut the cord early.** Wait until it stops pulsing, then tie it tightly in two places with clean cord (about 5 and 10 cm from the baby) and cut between the ties with a clean blade.",
+     "text": "**Do not cut the cord early.** Leave it alone — wait until it **stops pulsing** (several minutes), which lets the baby get its full blood. Then tie it tightly in two places and cut between them with a clean, flame-sterilised blade.",
      "next": "placenta"
     },
     {
      "id": "placenta",
      "type": "action",
-     "text": "**The placenta usually delivers within 30 minutes.** If it has not delivered within 30–60 minutes, **treat it as a danger sign** — retained placenta causes severe bleeding.",
-     "warning": "Never pull on the cord.",
-     "next": "massage"
+     "text": "**The placenta usually delivers within 5–30 minutes.** Let it come with a gentle push from the mother — **do NOT pull the cord** (it can turn the womb inside out). Keep the placenta; check it looks complete.",
+     "next": "hemorrhage"
     },
     {
-     "id": "massage",
+     "id": "hemorrhage",
      "type": "action",
-     "text": "**After the placenta delivers, massage the mother's lower abdomen firmly** until the uterus feels like a hard ball — this limits bleeding. Put the baby to the breast; nursing helps the uterus contract.",
+     "text": "**Prevent bleeding: after the placenta is out, massage the womb.** Rub the lower belly firmly until you feel it harden into a ball, and **put the baby to the breast** — both make the womb clamp down and stop bleeding.",
+     "warning": "Heavy bleeding after birth is the biggest killer of mothers. Keep massaging the womb firm, keep her flat and warm, and treat for shock.",
+     "detail": "Off-grid postpartum haemorrhage: keep the uterus massaged firm, keep the baby suckling, lay her flat with legs raised, keep her warm, and give fluids by mouth if fully alert — and evacuate urgently. If you have and know how to use **misoprostol or oxytocin**, this is when it is given.",
      "next": "danger"
     },
     {
      "id": "danger",
      "type": "info",
-     "text": "**Danger signs — seek skilled help:** heavy bleeding, feet or cord appearing first, or labor lasting many hours without progress. These are emergencies beyond home care.",
+     "text": "**Danger signs — get skilled help / evacuate:** heavy bleeding; a **foot, arm, or cord coming before the head**; the placenta not delivering within ~30–60 minutes; the baby not breathing well; or the mother becoming faint, feverish, or very unwell. Keep mother and baby warm, together, and monitored.",
      "next": "END"
     }
-   ]
+   ],
+   "entry_warning": "Birth is usually normal. Stay calm, keep it clean, do not pull."
   }
  ]
 }

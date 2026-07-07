@@ -170,8 +170,8 @@
       "title": "Emergency Childbirth",
       "domain": "medicine",
       "tier": "C3",
-      "bytes": 2303,
-      "sha256": "02c1c1c7a9de7491627810415d89686ee1b7c311794777ce44451ca7e8713b81"
+      "bytes": 4119,
+      "sha256": "ea4cb58d1bfcee16891802678ee30d4d975e65dd0c918c811a704071504ccbe1"
     },
     {
       "file": "emergency-preparedness-kit.md",
@@ -242,8 +242,8 @@
       "title": "Frostbite and Cold Injuries",
       "domain": "medicine",
       "tier": "C1",
-      "bytes": 2085,
-      "sha256": "4d84996f1d05cb882d6fc96ea283183966b3b98359ce5255e86920da8fce129f"
+      "bytes": 3204,
+      "sha256": "fce61e50bf4120f3017b5288ea9159cd4c18b77b42a6ffb934fcc4d41d19e158"
     },
     {
       "file": "generators-and-fuel-safety.md",
