@@ -6,11 +6,126 @@ The artifacts in this repository version independently, on purpose:
 
 | Number | Where | Meaning |
 |---|---|---|
-| App version (`2.2.0`) | `needfire/__init__.py` `__version__` | **The release number** — the only user-facing version. SemVer. The `docker-compose.yml` image tag tracks it; bump both together. |
+| App version (`2.5.0`) | `needfire/__init__.py` `__version__` | **The release number** — the only user-facing version. SemVer. The `docker-compose.yml` image tag tracks it; bump both together. |
 | Index schema (`2`) | `needfire/db.py` `SCHEMA_VERSION` | Integer. A mismatch with an existing index triggers the rebuild warning in the server; bump when the SQLite layout changes. |
-| Seed manifest (`2.0.0`) | `seed-corpus/seed-manifest.json` | Bumped when the bundled seed documents change (regenerate with `make seed-manifest`). |
+| Seed manifest (`2.5.0`) | `seed-corpus/seed-manifest.json` | Bumped when the bundled seed documents change (regenerate with `make seed-manifest`). |
 | Catalog (`1.0.0`) | `catalog/catalog.json` | Bumped when the download-source list changes. |
 | Protocols (`1`) | `web/data/protocols.json` | The emergency-protocol data format. |
+
+## 2.5.0 — 2026-07-07
+
+Comprehensive corpus completion — balance every domain and round out the toolkit.
+
+The bundled library had grown lopsided (26 medicine docs vs. one each for
+agriculture, energy, and physics). Because the download catalog ships only
+placeholder URLs, the bundled docs are the real always-offline knowledge, so this
+release fills the gaps across all 13 domains.
+
+### New seed documents (53 → 81; +28)
+- **water:** rainwater-harvesting-storage
+- **food:** cooking-methods-offgrid, nutrition-basics
+- **shelter:** staying-warm-clothing, improvised-shelter-types
+- **repair:** lashings-and-frames, sewing-and-mending, improvised-repairs-adhesives
+- **navigation:** weather-prediction, natural-navigation-stars
+- **medicine:** head-injury-concussion, sprains-strains,
+  minor-wounds-blisters-splinters, tick-insect-borne-disease
+- **pharma:** pain-and-fever-management, medicine-storage-shelf-life
+- **chemistry:** making-disinfectants, lye-from-wood-ash
+- **physics:** radiation-detection-dosimetry, mechanical-advantage
+- **electronics:** radio-communications, multimeter-and-testing
+- **energy:** batteries-and-charging, generators-and-fuel-safety
+- **agriculture:** growing-food-basics, composting-and-soil
+- **reference:** survival-priorities, emergency-preparedness-kit
+
+Result: no domain below 3 docs; the thin C3 rebuild-stack domains roughly double.
+
+### New toolkit tools (16 → 22)
+Each pure-offline and citing its source doc:
+- **disinfectant mix** — surface vs. blood/spill bleach dilution ratios
+- **battery bank** — usable Wh (Ah × V × depth-of-discharge) and runtime
+- **mechanical advantage** — block-and-tackle pull force + safe working load
+- **fallout decay** — Way–Wigner / 7-10-rule dose-rate projection
+- **wind & weather** — Beaufort force + storm-sign reference card
+- **survival priorities** — rule-of-threes / STOP / priorities-of-work card
+
+### Router
+- Added `concussion` and `fallout` to the critical-query keywords.
+
+### Fixes
+- Corrected stale bundled-doc counts (some docs still said "40") across
+  `01-ARCHITECTURE.md`, `03-DATA-ARCHITECTURE.md`, and `07-CORPUS-ACQUISITION.md`.
+
+## 2.4.0 — 2026-07-07
+
+More tools and knowledge (round two).
+
+### New seed documents (46 → 53)
+Seven new CC0 reference documents, weighted toward high-frequency medical
+emergencies that were not yet covered:
+- **Stroke — Recognize It FAST** (medicine): the FAST test, act-fast window, and
+  why NOT to give aspirin.
+- **Heart Attack and Chest Pain** (medicine): warning signs (including the quiet
+  presentations), the sit-and-rest position, chew-aspirin guidance, and the
+  slide into cardiac arrest.
+- **Diabetic Emergencies** (medicine): low vs high blood sugar, and the
+  when-in-doubt-give-sugar rule.
+- **Asthma Attack and Sudden Breathing Trouble** (medicine): reliever-inhaler
+  technique, danger signs, and the no-inhaler fallback.
+- **Assessing a Casualty — DR-ABC** (medicine): the primary survey, the AVPU
+  response scale, and the recovery position — backs the new casualty-check tool.
+- **Measuring and Estimating Without Instruments** (reference): body ruler,
+  shadow-stick height, thumb-jump distance, daylight-left, and conversions —
+  backs the field estimator and unit converter.
+- **Altitude Sickness — AMS, HACE, HAPE** (medicine): recognition and the
+  descend-now rules.
+
+### Router
+- Added `stroke`, `cardiac`, `chest`, `asthma`, `wheez`, `diabet`, `hypoglyc`,
+  `hyperglyc`, `unconscious`, and `unrespons` to the critical-query keywords so
+  these emergencies route to depth and carry the read-the-source banner.
+
+### New toolkit tools (13 → 16)
+- **Casualty check** — a DR-ABC / AVPU / recovery-position reference card with a
+  one-tap jump to the CPR protocol.
+- **Field estimator** — body-ruler length, height-by-shadow, and daylight-left.
+- **Unit converter** — two-way temperature, distance, mass, and volume.
+
+## 2.3.0 — 2026-07-07
+
+More tools and knowledge.
+
+### New seed documents (40 → 46)
+Six new CC0 reference documents, all offline-first and cited by the toolkit
+where relevant:
+- **Shock — Recognition and First Aid** (medicine): whole-body circulatory
+  shock — the picture, the causes, and the field priorities. Also closes the
+  gap behind the router's deliberately un-hinted bare "shock" query.
+- **Carbon Monoxide — The Silent Killer** (medicine): the leading killer after
+  storms and power cuts — never run generators/stoves/engines indoors,
+  recognition, and response.
+- **Lightning and Severe-Storm Safety** (reference): flash-to-bang ranging, the
+  30-30 rule, where to shelter, and the caught-in-the-open crouch.
+- **Wind Chill and Heat Index** (reference): the standard "feels-like" formulas
+  and frostbite/heat-illness danger bands that drive the new exposure tool.
+- **Rationing Food and Water** (reference): planning figures and survival floors
+  for water (~3 L/day plan, ~2 L floor) and food (~2,000 kcal/day, ~1,200 floor).
+- **Eye Injuries and Chemical Splashes** (medicine): flush-first for chemicals,
+  foreign bodies, and never-remove-embedded-objects.
+
+*Navigation:* added a "judging distance and travel time" section (pace count +
+Naismith's rule) to *Navigation with Map and Compass*.
+
+### New toolkit tools (8 → 13)
+All pure client-side, offline, and citing their source document:
+- **Feels-like temperature** — wind chill (cold) and heat index (heat) with
+  frostbite-time and heat-illness warnings.
+- **Lightning range** — flash-to-bang distance in km/mi with the 30-30 shelter
+  warning.
+- **Ration planner** — days of water and food from stores, people, and per-day
+  rates, flagging plans below the survival floor.
+- **Pace & travel time** — calibrate stride, estimate distance from a pace
+  tally, and estimate walking time (Naismith).
+- **Declination converter** — true ↔ magnetic bearing conversion.
 
 ## 2.2.0 — 2026-07-03
 

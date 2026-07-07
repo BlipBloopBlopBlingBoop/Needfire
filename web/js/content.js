@@ -8,7 +8,7 @@ const Content = (function () {
     const wrap = el('div', {}, [
       el('a', { class: 'back-link', href: '#/system' }, [icon('arrowleft'), 'System']),
       C.sectionHead('Knowledge library'),
-      el('p', { class: 'muted-note' }, ['The bundled 40-document seed library works offline right now. Add more below — big reference archives (Wikipedia, medical manuals, how-to guides) or your own files. Downloads verify by SHA-256.']),
+      el('p', { class: 'muted-note' }, ['The bundled 81-document seed library works offline right now. Add more below — big reference archives (Wikipedia, medical manuals, how-to guides) or your own files. Downloads verify by SHA-256.']),
     ]);
 
     // add-content tools

@@ -142,7 +142,7 @@ you can run C1 → C2 → C3 → C4 and resume safely at any point.
    after any transport, and on the monthly schedule. It re-hashes every artifact and flags
    **missing, changed, or corrupt** files — catching bad transfers, tampering, and silent bit-rot
    **before** you depend on the data.
-5. Verify the **bundled seed library** too: `python3 -m needfire verify --seed` checks all 40 documents
+5. Verify the **bundled seed library** too: `python3 -m needfire verify --seed` checks all 81 documents
    against `seed-corpus/seed-manifest.json`.
 6. Verify **every clone** the same way (`--home /mnt/backup/needfire`). A backup you haven't verified is
    not a backup.
