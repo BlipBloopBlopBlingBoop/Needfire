@@ -6,11 +6,38 @@ The artifacts in this repository version independently, on purpose:
 
 | Number | Where | Meaning |
 |---|---|---|
-| App version (`2.6.0`) | `needfire/__init__.py` `__version__` | **The release number** — the only user-facing version. SemVer. The `docker-compose.yml` image tag tracks it; bump both together. |
+| App version (`2.7.0`) | `needfire/__init__.py` `__version__` | **The release number** — the only user-facing version. SemVer. The `docker-compose.yml` image tag tracks it; bump both together. |
 | Index schema (`2`) | `needfire/db.py` `SCHEMA_VERSION` | Integer. A mismatch with an existing index triggers the rebuild warning in the server; bump when the SQLite layout changes. |
-| Seed manifest (`2.6.0`) | `seed-corpus/seed-manifest.json` | Bumped when the bundled seed documents change (regenerate with `make seed-manifest`). |
+| Seed manifest (`2.7.0`) | `seed-corpus/seed-manifest.json` | Bumped when the bundled seed documents change (regenerate with `make seed-manifest`). |
 | Catalog (`1.1.0`) | `catalog/catalog.json` | Bumped when the download-source list changes. |
 | Protocols (`1`) | `web/data/protocols.json` | The emergency-protocol data format. |
+
+## 2.7.0 — 2026-07-07
+
+Deeper emergency guides and expanded documents for real off-grid use.
+
+The guided protocols and their documents were accurate but shallow, and leaned on
+"call an ambulance" — the opposite of the situation Needfire is built for. This
+release rebuilds them into real decision trees with off-grid branches (identify
+the specific problem, manage it when no professional help is coming, know when to
+evacuate), and expands the underlying documents to match.
+
+### Emergency protocols (`web/data/protocols.json`)
+- **Poisoning** rebuilt from 10 shallow steps into a **24-step decision tree**:
+  scene safety → primary survey (recovery/CPR/seizure branches) → route in →
+  *what was swallowed* (corrosive / fuel / pesticide / painkillers / opioids /
+  alcohol / plants & mushrooms / unknown), each with its own correct management
+  (no-vomit rules, dilution, button-battery honey, naloxone, methanol/paracetamol
+  red flags), an activated-charcoal decision, an ongoing-monitoring loop, and an
+  explicit "if no help is coming / when to evacuate" step. Uses the collapsible
+  "More detail" field to carry depth without cluttering each screen.
+
+### Documents
+- **poisoning-first-aid.md** expanded (~2 KB → ~7 KB) into a real off-grid
+  reference: universal rules, decontamination by route, and per-class management
+  (corrosives, hydrocarbons, pesticides, medicines incl. paracetamol/opioid/
+  alcohol, plants & mushrooms, gases/CO, botulism), activated-charcoal guidance,
+  and ongoing care / evacuation triggers.
 
 ## 2.6.0 — 2026-07-07
 

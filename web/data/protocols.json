@@ -1,1276 +1,1452 @@
 {
-  "$comment": "Needfire emergency protocols. Hand-derived from the seed corpus documents named in source_doc — every step must be traceable to its source. Schema: Protocol{id,title,short,icon,severity(life-threat|urgent|serious),keywords[],source_doc,entry_warning?,disclaimer,start,steps[]}; Step{id,type(action|decision|loop|info),text(markdown),detail?,warning?,timer?,options?(decision only, 2-4),next?(id|END|omitted=next in array),loop{until,back_to}?}; Timer{kind(metronome|countdown|stamp),label,bpm?,seconds?,count?,persist?,auto?(never true for metronome)}.",
-  "version": 1,
-  "protocols": [
+ "$comment": "Needfire emergency protocols. Hand-derived from the seed corpus documents named in source_doc — every step must be traceable to its source. Schema: Protocol{id,title,short,icon,severity(life-threat|urgent|serious),keywords[],source_doc,entry_warning?,disclaimer,start,steps[]}; Step{id,type(action|decision|loop|info),text(markdown),detail?,warning?,timer?,options?(decision only, 2-4),next?(id|END|omitted=next in array),loop{until,back_to}?}; Timer{kind(metronome|countdown|stamp),label,bpm?,seconds?,count?,persist?,auto?(never true for metronome)}.",
+ "version": 1,
+ "protocols": [
+  {
+   "id": "cpr",
+   "title": "CPR — Adult, Child, Infant",
+   "short": "CPR",
+   "icon": "heart",
+   "severity": "life-threat",
+   "keywords": [
+    "not breathing",
+    "cardiac arrest",
+    "collapsed",
+    "unresponsive",
+    "heart stopped",
+    "aed"
+   ],
+   "source_doc": "cpr-adult-child.md",
+   "entry_warning": "Send someone for help and an AED NOW.",
+   "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
+   "start": "check",
+   "steps": [
     {
-      "id": "cpr",
-      "title": "CPR — Adult, Child, Infant",
-      "short": "CPR",
-      "icon": "heart",
-      "severity": "life-threat",
-      "keywords": [
-        "not breathing",
-        "cardiac arrest",
-        "collapsed",
-        "unresponsive",
-        "heart stopped",
-        "aed"
-      ],
-      "source_doc": "cpr-adult-child.md",
-      "entry_warning": "Send someone for help and an AED NOW.",
-      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
-      "start": "check",
-      "steps": [
-        {
-          "id": "check",
-          "type": "action",
-          "text": "**Check response.** Shout and tap the shoulders. Look for normal breathing — no more than 10 seconds. **Gasping is NOT normal breathing.**",
-          "timer": {
-            "kind": "countdown",
-            "label": "Breathing check",
-            "seconds": 10,
-            "auto": true
-          }
-        },
-        {
-          "id": "breathing-call",
-          "type": "decision",
-          "text": "**Call it: what are you seeing?**",
-          "options": [
-            {
-              "label": "Breathing normally",
-              "goto": "recovery",
-              "tone": "ok"
-            },
-            {
-              "label": "Not breathing / only gasping",
-              "goto": "who",
-              "tone": "danger"
-            }
-          ]
-        },
-        {
-          "id": "recovery",
-          "type": "info",
-          "text": "They do not need CPR. Lay them on their **side** (recovery position), keep the airway clear, keep them warm, and **watch their breathing continuously**.",
-          "next": "END"
-        },
-        {
-          "id": "who",
-          "type": "decision",
-          "text": "**Who is the patient?** This changes hand position and depth.",
-          "options": [
-            {
-              "label": "Adult",
-              "goto": "alone-adult"
-            },
-            {
-              "label": "Child",
-              "goto": "alone-child"
-            },
-            {
-              "label": "Infant (under 1 yr)",
-              "goto": "alone-child"
-            }
-          ]
-        },
-        {
-          "id": "alone-adult",
-          "type": "action",
-          "text": "**If you are alone:** go get help and an AED NOW, then come back and start compressions. If someone else is here, they go — you start compressions immediately.",
-          "next": "compress"
-        },
-        {
-          "id": "alone-child",
-          "type": "action",
-          "text": "If you are alone with a child or infant, **do CPR for about 2 minutes BEFORE leaving them** to get help.",
-          "timer": {
-            "kind": "countdown",
-            "label": "CPR before leaving",
-            "seconds": 120
-          },
-          "next": "compress"
-        },
-        {
-          "id": "compress",
-          "type": "action",
-          "text": "**Compress the centre of the chest, hard and fast.** Firm surface. Rate **100–120/min**. Let the chest recoil fully; minimise pauses.\n\n- **Adult:** two hands, 5–6 cm (2 in) deep\n- **Child:** one or two hands, about 5 cm\n- **Infant:** two fingers (or two thumbs, hands encircling), about 4 cm",
-          "detail": "Push with straight arms, shoulders over hands, using your body weight. Cracked ribs happen — keep going.",
-          "timer": {
-            "kind": "metronome",
-            "label": "Compression tempo",
-            "bpm": 110,
-            "count": 30
-          },
-          "next": "breaths"
-        },
-        {
-          "id": "breaths",
-          "type": "decision",
-          "text": "**Are you trained in rescue breaths?** Breaths matter more for children, infants, and drowning victims.",
-          "options": [
-            {
-              "label": "Yes — 30 : 2",
-              "goto": "cycle-302"
-            },
-            {
-              "label": "No — hands-only",
-              "goto": "cycle-hands"
-            }
-          ]
-        },
-        {
-          "id": "cycle-302",
-          "type": "loop",
-          "text": "**30 compressions, then 2 breaths.** Tilt head, lift chin. Cover an infant's mouth AND nose. The metronome counter rolls over at 30.",
-          "timer": {
-            "kind": "metronome",
-            "label": "30 : 2 cycle",
-            "bpm": 110,
-            "count": 30
-          },
-          "loop": {
-            "until": "Signs of life, an AED tells you to stand clear, trained help takes over, or you physically cannot continue. Swap rescuers every 2 minutes.",
-            "back_to": "cycle-302"
-          },
-          "next": "aed"
-        },
-        {
-          "id": "cycle-hands",
-          "type": "loop",
-          "text": "**Continuous compressions.** Do not stop to check. Swap rescuers every 2 minutes if you can.",
-          "timer": {
-            "kind": "metronome",
-            "label": "Compression tempo",
-            "bpm": 110
-          },
-          "loop": {
-            "until": "Signs of life, an AED tells you to stand clear, trained help takes over, or you physically cannot continue.",
-            "back_to": "cycle-hands"
-          },
-          "next": "aed"
-        },
-        {
-          "id": "aed",
-          "type": "info",
-          "text": "**When an AED arrives:** attach it immediately, turn it on, follow its voice prompts. **Resume compressions immediately after any shock.**",
-          "warning": "Do not stop CPR to wait for the AED — keep compressing until the pads are on and the machine says stand clear.",
-          "next": "END"
-        }
-      ]
+     "id": "check",
+     "type": "action",
+     "text": "**Check response.** Shout and tap the shoulders. Look for normal breathing — no more than 10 seconds. **Gasping is NOT normal breathing.**",
+     "timer": {
+      "kind": "countdown",
+      "label": "Breathing check",
+      "seconds": 10,
+      "auto": true
+     }
     },
     {
-      "id": "bleeding",
-      "title": "Severe Bleeding",
-      "short": "BLEEDING",
-      "icon": "blood",
-      "severity": "life-threat",
-      "keywords": [
-        "bleeding",
-        "blood",
-        "hemorrhage",
-        "cut",
-        "wound",
-        "tourniquet"
-      ],
-      "source_doc": "control-bleeding.md",
-      "entry_warning": "Severe bleeding can be fatal in minutes. Act immediately.",
-      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
-      "start": "pressure",
-      "steps": [
-        {
-          "id": "pressure",
-          "type": "action",
-          "text": "**Apply firm direct pressure** on the wound with a clean cloth or your hand. Press HARD and do not release to \"check\" — keep pressure constant.",
-          "detail": "Protect yourself from blood contact if possible (gloves, a barrier), but do not delay for a serious arterial bleed."
-        },
-        {
-          "id": "deep",
-          "type": "action",
-          "text": "**Deep wound? Pack it.** Pack gauze or clean cloth firmly INTO the wound, then keep pressing on top."
-        },
-        {
-          "id": "working",
-          "type": "decision",
-          "text": "**Is the bleeding slowing after several minutes of hard, constant pressure?**",
-          "options": [
-            {
-              "label": "Yes — slowing",
-              "goto": "keep-on",
-              "tone": "ok"
-            },
-            {
-              "label": "No — still life-threatening (limb)",
-              "goto": "tourniquet",
-              "tone": "danger"
-            },
-            {
-              "label": "No — not on a limb",
-              "goto": "keep-pressing",
-              "tone": "danger"
-            }
-          ]
-        },
-        {
-          "id": "keep-pressing",
-          "type": "loop",
-          "text": "**Keep maximum direct pressure.** For wounds where a tourniquet can't go (neck, torso, groin), packing + relentless pressure is the treatment.",
-          "loop": {
-            "until": "Bleeding controlled or trained help takes over.",
-            "back_to": "keep-pressing"
-          },
-          "next": "shock"
-        },
-        {
-          "id": "tourniquet",
-          "type": "action",
-          "text": "**Apply a tourniquet** 5–7 cm (2–3 in) ABOVE the wound — not on a joint. Tighten until the bleeding STOPS. It should hurt; that means it's working.",
-          "warning": "Once on, do NOT loosen or remove it. Note the time.",
-          "timer": {
-            "kind": "stamp",
-            "label": "Tourniquet applied",
-            "persist": true
-          },
-          "next": "shock"
-        },
-        {
-          "id": "keep-on",
-          "type": "action",
-          "text": "**Do not remove the soaked dressing** — add more on top. Bandage firmly to hold the pressure. Keep the wound covered and the person still.",
-          "next": "shock"
-        },
-        {
-          "id": "shock",
-          "type": "info",
-          "text": "**Watch for shock:** pale, cold, clammy skin; rapid weak pulse; rapid breathing; confusion; thirst. Lay them flat, raise the legs if no spinal or leg injury, keep them warm, keep monitoring. Seek the highest level of care available.",
-          "next": "END"
-        }
-      ]
+     "id": "breathing-call",
+     "type": "decision",
+     "text": "**Call it: what are you seeing?**",
+     "options": [
+      {
+       "label": "Breathing normally",
+       "goto": "recovery",
+       "tone": "ok"
+      },
+      {
+       "label": "Not breathing / only gasping",
+       "goto": "who",
+       "tone": "danger"
+      }
+     ]
     },
     {
-      "id": "choking",
-      "title": "Choking / Blocked Airway",
-      "short": "CHOKING",
-      "icon": "lungs",
-      "severity": "life-threat",
-      "keywords": [
-        "choking",
-        "can't breathe",
-        "airway",
-        "heimlich",
-        "something stuck"
-      ],
-      "source_doc": "choking-airway.md",
-      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
-      "start": "assess",
-      "steps": [
-        {
-          "id": "assess",
-          "type": "decision",
-          "text": "**Can they cough, speak, or cry?**",
-          "options": [
-            {
-              "label": "Yes — coughing / can speak",
-              "goto": "mild",
-              "tone": "ok"
-            },
-            {
-              "label": "No — silent, can't breathe, turning blue",
-              "goto": "age",
-              "tone": "danger"
-            },
-            {
-              "label": "They've gone unconscious",
-              "goto": "unconscious",
-              "tone": "danger"
-            }
-          ]
-        },
-        {
-          "id": "mild",
-          "type": "loop",
-          "text": "**Encourage them to keep coughing.** A strong cough beats anything you can do. Do NOT slap the back of someone who is coughing effectively. Stay with them.",
-          "loop": {
-            "until": "The object comes out, or they stop being able to cough/speak (then go back and choose the silent option).",
-            "back_to": "assess"
-          },
-          "next": "END"
-        },
-        {
-          "id": "age",
-          "type": "decision",
-          "text": "**Adult/child, or infant under 1 year?**",
-          "options": [
-            {
-              "label": "Adult or child",
-              "goto": "backblows"
-            },
-            {
-              "label": "Infant (under 1 yr)",
-              "goto": "infant"
-            }
-          ]
-        },
-        {
-          "id": "backblows",
-          "type": "action",
-          "text": "**5 back blows.** Lean them forward. Strike hard between the shoulder blades with the heel of your hand. Check the mouth after each blow.",
-          "detail": "If pregnant or too large to reach around the abdomen: use CHEST thrusts instead of abdominal thrusts."
-        },
-        {
-          "id": "abdominal",
-          "type": "loop",
-          "text": "**5 abdominal thrusts.** Stand behind them, fist just above the navel, grasp with the other hand, pull sharply inward and UPWARD. Alternate: 5 back blows, 5 thrusts.",
-          "warning": "Never do a blind finger sweep — you can push the object deeper.",
-          "loop": {
-            "until": "The object comes out, or they go unconscious.",
-            "back_to": "backblows"
-          },
-          "next": "unconscious"
-        },
-        {
-          "id": "infant",
-          "type": "loop",
-          "text": "**Infant: 5 back blows + 5 chest thrusts.** Lay the infant face-down along your forearm, head low; give 5 firm back blows. Turn face-up; give 5 chest thrusts with two fingers on the breastbone. NO abdominal thrusts on infants.",
-          "loop": {
-            "until": "The object comes out, or the infant goes limp/unconscious.",
-            "back_to": "infant"
-          },
-          "next": "unconscious"
-        },
-        {
-          "id": "unconscious",
-          "type": "action",
-          "text": "**Unconscious → start CPR now.** Lower them gently to the ground. Before each set of rescue breaths, LOOK in the mouth and remove the object only if you can SEE it.",
-          "next": "gocpr"
-        },
-        {
-          "id": "gocpr",
-          "type": "info",
-          "text": "Open the **CPR protocol** and follow it: [CPR — Adult, Child, Infant](#/emergency/cpr)",
-          "next": "END"
-        }
-      ]
+     "id": "recovery",
+     "type": "info",
+     "text": "They do not need CPR. Lay them on their **side** (recovery position), keep the airway clear, keep them warm, and **watch their breathing continuously**.",
+     "next": "END"
     },
     {
-      "id": "burns",
-      "title": "Burns — Heat, Chemical, Electrical",
-      "short": "BURNS",
-      "icon": "burn",
-      "severity": "urgent",
-      "keywords": [
-        "burn",
-        "burned",
-        "scald",
-        "boiling water",
-        "chemical burn",
-        "skin peeling"
-      ],
-      "source_doc": "burn-treatment.md",
-      "entry_warning": "Stop the burning first — get them away from the source.",
-      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
-      "start": "stop",
-      "steps": [
-        {
-          "id": "stop",
-          "type": "action",
-          "text": "**Stop the burning.** Remove the person from the source. Smother flames — stop, drop, roll.",
-          "next": "type"
-        },
-        {
-          "id": "type",
-          "type": "decision",
-          "text": "**What kind of burn?**",
-          "options": [
-            {
-              "label": "Heat — flame, scald, hot object",
-              "goto": "cool"
-            },
-            {
-              "label": "Chemical",
-              "goto": "chemical",
-              "tone": "danger"
-            },
-            {
-              "label": "Electrical",
-              "goto": "electrical",
-              "tone": "danger"
-            }
-          ]
-        },
-        {
-          "id": "chemical",
-          "type": "action",
-          "text": "**Brush off any dry powder first, then flush with water for 20+ minutes.** Remove contaminated clothing; protect yourself.",
-          "timer": {
-            "kind": "countdown",
-            "label": "Flush with water",
-            "seconds": 1200
-          },
-          "next": "jewelry"
-        },
-        {
-          "id": "electrical",
-          "type": "action",
-          "text": "**Cut the power BEFORE touching the casualty.** Electrical damage runs deep between entry and exit wounds even when the skin looks minor. **Watch for heart rhythm problems** — if they collapse or stop breathing normally, go to [CPR](#/emergency/cpr).",
-          "next": "cool"
-        },
-        {
-          "id": "cool",
-          "type": "action",
-          "text": "**Cool the burn with cool running water for 20 minutes.** Cooling helps even if started an hour after the burn.",
-          "warning": "No ice, no ice water — ice deepens the injury.",
-          "timer": {
-            "kind": "countdown",
-            "label": "Cool the burn",
-            "seconds": 1200
-          },
-          "next": "jewelry"
-        },
-        {
-          "id": "jewelry",
-          "type": "action",
-          "text": "**Remove rings, watches, and tight clothing early**, before swelling starts. Do not pull off clothing stuck to the burn.",
-          "next": "cover"
-        },
-        {
-          "id": "cover",
-          "type": "action",
-          "text": "**Cover with a clean non-stick dressing** or kitchen cling film laid loosely over the wound. Keep the person warm — large burns lose heat fast.",
-          "warning": "Do NOT pop blisters, or apply butter, toothpaste, oil, or grease — they trap heat and cause infection.",
-          "next": "critical"
-        },
-        {
-          "id": "critical",
-          "type": "decision",
-          "text": "**Check for a critical burn.** The victim's own palm (with fingers) is about 1% of their body surface — count palms to estimate size. Any of these present?\n\n- Burns to the **face, hands, genitals**, or over joints\n- **Airway burn** signs: singed nostrils, hoarse voice, soot in mouth\n- More than **10% of body surface**\n- **Painless, white, leathery, or charred** areas (full-thickness)\n- Smoke inhalation",
-          "options": [
-            {
-              "label": "Yes — any of these",
-              "goto": "evacuate",
-              "tone": "danger"
-            },
-            {
-              "label": "None of these",
-              "goto": "hydrate",
-              "tone": "ok"
-            }
-          ]
-        },
-        {
-          "id": "evacuate",
-          "type": "info",
-          "text": "**Treat as life-threatening — evacuate to the highest care available.** While waiting: keep the wound covered, keep them warm, and give frequent sips of water or oral rehydration solution if they are awake and able to drink — large burns leak enormous amounts of fluid and cause shock.",
-          "next": "END"
-        },
-        {
-          "id": "hydrate",
-          "type": "info",
-          "text": "Keep the dressing clean and the person warm. For any **large burn**, give frequent sips of water or oral rehydration solution to an awake person who can drink — large burns leak fluid and cause shock.",
-          "next": "END"
-        }
-      ]
+     "id": "who",
+     "type": "decision",
+     "text": "**Who is the patient?** This changes hand position and depth.",
+     "options": [
+      {
+       "label": "Adult",
+       "goto": "alone-adult"
+      },
+      {
+       "label": "Child",
+       "goto": "alone-child"
+      },
+      {
+       "label": "Infant (under 1 yr)",
+       "goto": "alone-child"
+      }
+     ]
     },
     {
-      "id": "anaphylaxis",
-      "title": "Anaphylaxis — Severe Allergic Reaction",
-      "short": "ALLERGY",
-      "icon": "bee",
-      "severity": "life-threat",
-      "keywords": [
-        "allergic reaction",
-        "epipen",
-        "bee sting",
-        "swelling face",
-        "hives",
-        "throat closing"
-      ],
-      "source_doc": "anaphylaxis-allergy.md",
-      "entry_warning": "Epinephrine first and fast — the dangerous mistake is giving it late.",
-      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
-      "start": "epi",
-      "steps": [
-        {
-          "id": "epi",
-          "type": "action",
-          "text": "**Give epinephrine (adrenaline) NOW** into the muscle of the **outer mid-thigh**, through clothing if needed.\n\n- **Adult: 0.3 mg** auto-injector\n- **Child: 0.15 mg** (roughly under 25–30 kg / 55–66 lb)",
-          "detail": "Suspect anaphylaxis when, soon after a sting, food, or medicine: swelling of the lips, tongue, or throat; hoarse voice or wheeze; widespread hives or flushing; vomiting or cramps; dizziness or collapse. Epinephrine given early is very safe.",
-          "warning": "Antihistamines are NOT a substitute for epinephrine. They may ease itching but do nothing for the airway or blood pressure — never delay epinephrine to try them.",
-          "next": "position"
-        },
-        {
-          "id": "position",
-          "type": "decision",
-          "text": "**Position them — how are they?**",
-          "warning": "Do NOT stand the person up suddenly — a sudden upright move can cause fatal collapse when blood pressure is low.",
-          "options": [
-            {
-              "label": "Breathing is hard",
-              "goto": "sit"
-            },
-            {
-              "label": "Vomiting, or unconscious but breathing",
-              "goto": "recovery"
-            },
-            {
-              "label": "Visibly pregnant",
-              "goto": "left-side"
-            },
-            {
-              "label": "None of these",
-              "goto": "flat"
-            }
-          ]
-        },
-        {
-          "id": "sit",
-          "type": "action",
-          "text": "Let them **sit up** to ease breathing. Keep watching them.",
-          "next": "reassess"
-        },
-        {
-          "id": "recovery",
-          "type": "action",
-          "text": "Put them in the **recovery position** (on their side) so the airway stays clear.",
-          "next": "reassess"
-        },
-        {
-          "id": "left-side",
-          "type": "action",
-          "text": "Lay her on her **left side**.",
-          "next": "reassess"
-        },
-        {
-          "id": "flat",
-          "type": "action",
-          "text": "**Lie them flat and raise the legs.**",
-          "next": "reassess"
-        },
-        {
-          "id": "reassess",
-          "type": "action",
-          "text": "**Repeat the dose after 5–15 minutes if they are not clearly improving.** Keep a second epinephrine dose within reach.",
-          "timer": {
-            "kind": "countdown",
-            "label": "Reassess — repeat dose if not improving",
-            "seconds": 300
-          },
-          "next": "biphasic"
-        },
-        {
-          "id": "biphasic",
-          "type": "info",
-          "text": "**Watch them closely for at least 4–6 hours** — symptoms can return hours later with no new exposure (a biphasic reaction). Watch longer after a severe reaction. Remove any remaining stinger by scraping it out. **Evacuate to medical care even if they recover fully.**",
-          "next": "END"
-        }
-      ]
+     "id": "alone-adult",
+     "type": "action",
+     "text": "**If you are alone:** go get help and an AED NOW, then come back and start compressions. If someone else is here, they go — you start compressions immediately.",
+     "next": "compress"
     },
     {
-      "id": "poisoning",
-      "title": "Poisoning",
-      "short": "POISON",
-      "icon": "poison",
-      "severity": "life-threat",
-      "keywords": [
-        "poison",
-        "swallowed chemical",
-        "carbon monoxide",
-        "mushrooms",
-        "chemical in eye",
-        "fumes"
-      ],
-      "source_doc": "poisoning-first-aid.md",
-      "entry_warning": "Do NOT induce vomiting — for any poison.",
-      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
-      "start": "route",
-      "steps": [
-        {
-          "id": "route",
-          "type": "decision",
-          "text": "**How did the poison get in?**",
-          "options": [
-            {
-              "label": "Swallowed",
-              "goto": "swallowed"
-            },
-            {
-              "label": "On the skin",
-              "goto": "skin"
-            },
-            {
-              "label": "In the eyes",
-              "goto": "eyes"
-            },
-            {
-              "label": "Inhaled — fumes, smoke, gas",
-              "goto": "inhaled",
-              "tone": "danger"
-            }
-          ]
-        },
-        {
-          "id": "swallowed",
-          "type": "action",
-          "text": "**Rinse the mouth with water and spit.** Give nothing further by mouth — no milk, no salt water, no charcoal — unless a trusted reference for that specific substance says otherwise.",
-          "warning": "Do NOT induce vomiting. Vomiting corrosives burns the throat twice; vomiting fuels floods the lungs.",
-          "next": "identify"
-        },
-        {
-          "id": "skin",
-          "type": "action",
-          "text": "**Remove contaminated clothing** (protect your own hands) and **flush the skin with water for 15–20 minutes**.",
-          "timer": {
-            "kind": "countdown",
-            "label": "Flush the skin",
-            "seconds": 900
-          },
-          "next": "identify"
-        },
-        {
-          "id": "eyes",
-          "type": "action",
-          "text": "**Flush the eyes for 15–20 minutes** with lukewarm clean water, eyelids held open, water flowing from the nose side outward.",
-          "timer": {
-            "kind": "countdown",
-            "label": "Flush the eyes (aim for 20 min)",
-            "seconds": 1200
-          },
-          "next": "identify"
-        },
-        {
-          "id": "inhaled",
-          "type": "action",
-          "text": "**Protect yourself FIRST — do not become the second casualty** in a fume-filled space. Get the person to fresh air.",
-          "detail": "Carbon monoxide from stoves, heaters, engines, or charcoal in an enclosed shelter is invisible and odorless — headache, nausea, dizziness, confusion. A headache shared by everyone in the shelter is CO until proven otherwise: get everyone out into fresh air and ventilate before returning.",
-          "next": "identify"
-        },
-        {
-          "id": "identify",
-          "type": "action",
-          "text": "**Identify what happened**: the substance, the container and its label, how much, and when. **Keep the container.**",
-          "next": "conscious"
-        },
-        {
-          "id": "conscious",
-          "type": "decision",
-          "text": "**Check them — responsive and breathing?**",
-          "options": [
-            {
-              "label": "Awake and breathing",
-              "goto": "watch",
-              "tone": "ok"
-            },
-            {
-              "label": "Unconscious but breathing",
-              "goto": "recovery",
-              "tone": "danger"
-            },
-            {
-              "label": "Not breathing normally",
-              "goto": "cpr",
-              "tone": "danger"
-            }
-          ]
-        },
-        {
-          "id": "recovery",
-          "type": "action",
-          "text": "Place them in the **recovery position** and monitor the airway continuously.",
-          "next": "watch"
-        },
-        {
-          "id": "cpr",
-          "type": "info",
-          "text": "**Start CPR now.** Open the CPR protocol and follow it: [CPR](#/emergency/cpr)",
-          "next": "END"
-        },
-        {
-          "id": "watch",
-          "type": "info",
-          "text": "**Keep watching — some poisons act late.** The deadliest wild mushrooms cause symptoms **delayed 6+ hours** (late onset is a bad sign, not a reassuring one). Botulism from badly canned food: blurred vision, drooping lids, descending weakness. An aspirated mouthful of fuel can inflame the lungs — watch breathing for 24 hours.",
-          "next": "END"
-        }
-      ]
+     "id": "alone-child",
+     "type": "action",
+     "text": "If you are alone with a child or infant, **do CPR for about 2 minutes BEFORE leaving them** to get help.",
+     "timer": {
+      "kind": "countdown",
+      "label": "CPR before leaving",
+      "seconds": 120
+     },
+     "next": "compress"
     },
     {
-      "id": "snakebite",
-      "title": "Snakebite",
-      "short": "SNAKEBITE",
-      "icon": "snake",
-      "severity": "urgent",
-      "keywords": [
-        "snakebite",
-        "snake bit me",
-        "venom",
-        "fang marks",
-        "bite swelling",
-        "antivenom"
-      ],
-      "source_doc": "snakebite-treatment.md",
-      "entry_warning": "Move away from the snake. Treat every bite as venomous.",
-      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
-      "start": "calm",
-      "steps": [
-        {
-          "id": "calm",
-          "type": "action",
-          "text": "**Keep the victim calm and still.** Have them sit or lie down; carry them if possible rather than letting them walk. Panic and exertion pump venom through the body faster — your first medicine is calm.",
-          "next": "immobilize"
-        },
-        {
-          "id": "immobilize",
-          "type": "action",
-          "text": "**Immobilize the bitten limb** with a splint or sling and keep it at about **heart level**.",
-          "next": "rings"
-        },
-        {
-          "id": "rings",
-          "type": "action",
-          "text": "**Remove rings, watches, and tight clothing NOW**, before swelling makes it impossible.",
-          "next": "mark"
-        },
-        {
-          "id": "mark",
-          "type": "action",
-          "text": "**Mark the edge of the swelling** with a pen and write the time next to it. Repeat every 15–30 minutes to track spread.",
-          "timer": {
-            "kind": "stamp",
-            "label": "Bite time",
-            "persist": true
-          },
-          "next": "wash"
-        },
-        {
-          "id": "wash",
-          "type": "action",
-          "text": "**Wash the bite gently** and cover with a clean dressing.",
-          "warning": "Do NOT cut the wound, suck out venom, apply a tourniquet, apply ice, or give alcohol. All of these worsen the injury or speed the venom, and none remove it.",
-          "next": "snake-type"
-        },
-        {
-          "id": "snake-type",
-          "type": "decision",
-          "text": "**Is the snake a known NEUROTOXIC type** — an Australian elapid, coral snake, or similar?",
-          "options": [
-            {
-              "label": "Yes — known neurotoxic elapid",
-              "goto": "pib"
-            },
-            {
-              "label": "No / unsure / viper or rattlesnake",
-              "goto": "evacuate"
-            }
-          ]
-        },
-        {
-          "id": "pib",
-          "type": "action",
-          "text": "**Apply a pressure-immobilization bandage**: a firm wrap of the whole limb (snug as for a sprain) plus a splint. This slows paralysing venom.",
-          "warning": "Do NOT use this for vipers or rattlesnakes — their venom destroys tissue, and trapping it in the limb concentrates that damage.",
-          "next": "evacuate"
-        },
-        {
-          "id": "evacuate",
-          "type": "info",
-          "text": "**Antivenom is the only definitive treatment — evacuate to medical care**, even if symptoms seem mild; envenomation can worsen over hours. Note the snake's colour, pattern, and size **from a safe distance** (a photo is ideal); do not try to catch or kill it. Some bites inject no venom (\"dry bites\"), but **never assume you got one**.",
-          "next": "END"
-        }
-      ]
+     "id": "compress",
+     "type": "action",
+     "text": "**Compress the centre of the chest, hard and fast.** Firm surface. Rate **100–120/min**. Let the chest recoil fully; minimise pauses.\n\n- **Adult:** two hands, 5–6 cm (2 in) deep\n- **Child:** one or two hands, about 5 cm\n- **Infant:** two fingers (or two thumbs, hands encircling), about 4 cm",
+     "detail": "Push with straight arms, shoulders over hands, using your body weight. Cracked ribs happen — keep going.",
+     "timer": {
+      "kind": "metronome",
+      "label": "Compression tempo",
+      "bpm": 110,
+      "count": 30
+     },
+     "next": "breaths"
     },
     {
-      "id": "seizure",
-      "title": "Seizure",
-      "short": "SEIZURE",
-      "icon": "brain",
-      "severity": "urgent",
-      "keywords": [
-        "seizure",
-        "convulsion",
-        "fit",
-        "shaking",
-        "epilepsy",
-        "foaming mouth"
-      ],
-      "source_doc": "seizure-response.md",
-      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
-      "start": "clear",
-      "steps": [
-        {
-          "id": "clear",
-          "type": "action",
-          "text": "**Clear hard and sharp objects away** from the person. Most seizures stop on their own within 1–3 minutes — your job is to protect them from injury while it runs its course.",
-          "next": "cushion"
-        },
-        {
-          "id": "cushion",
-          "type": "action",
-          "text": "**Cushion the head** with something soft — a folded jacket, your hands. Loosen anything tight around the neck. **Do not restrain** the movements.",
-          "warning": "Put NOTHING in the mouth. They cannot swallow their tongue; forcing objects in breaks teeth and blocks the airway.",
-          "next": "time"
-        },
-        {
-          "id": "time",
-          "type": "action",
-          "text": "**Time the seizure from the moment it starts.**",
-          "timer": {
-            "kind": "countdown",
-            "label": "Seizure duration — over 5 min is an emergency",
-            "seconds": 300,
-            "auto": true
-          },
-          "next": "after"
-        },
-        {
-          "id": "after",
-          "type": "action",
-          "text": "**When the shaking stops, roll them into the recovery position** (on their side, head tilted slightly back) so saliva or vomit drains. Confusion and drowsiness afterward are normal. Stay with them until they are fully awake and speak calmly.",
-          "next": "emergency"
-        },
-        {
-          "id": "emergency",
-          "type": "decision",
-          "text": "**Any of these emergency signs?**\n\n- Seizure lasting **more than 5 minutes**\n- Seizures **back-to-back** without waking in between\n- The person's **first-ever seizure**\n- It happened **in water**, caused **injury**, or the person is **pregnant**\n- They do **not wake** within minutes of the shaking stopping",
-          "options": [
-            {
-              "label": "Yes — any of these",
-              "goto": "help",
-              "tone": "danger"
-            },
-            {
-              "label": "None of these",
-              "goto": "causes",
-              "tone": "ok"
-            }
-          ]
-        },
-        {
-          "id": "help",
-          "type": "info",
-          "text": "**Do everything you can to reach help.** A seizure lasting more than 5 minutes (status epilepticus) may not stop on its own and is life-threatening.",
-          "next": "END"
-        },
-        {
-          "id": "causes",
-          "type": "info",
-          "text": "**Think about the cause:** high fever in a child (cool gradually — remove layers, lukewarm cloth; do not plunge into cold water); a head injury in the last days; drinking only plain water without salt after heavy sweating (rehydrate with ORS, not plain water alone); alcohol or medication withdrawal; low blood sugar — **if they wake fully, give sugar**.",
-          "next": "END"
-        }
-      ]
+     "id": "breaths",
+     "type": "decision",
+     "text": "**Are you trained in rescue breaths?** Breaths matter more for children, infants, and drowning victims.",
+     "options": [
+      {
+       "label": "Yes — 30 : 2",
+       "goto": "cycle-302"
+      },
+      {
+       "label": "No — hands-only",
+       "goto": "cycle-hands"
+      }
+     ]
     },
     {
-      "id": "drowning",
-      "title": "Drowning",
-      "short": "DROWNING",
-      "icon": "wave",
-      "severity": "life-threat",
-      "keywords": [
-        "drowning",
-        "pulled from water",
-        "fell in water",
-        "not breathing water",
-        "water rescue"
-      ],
-      "source_doc": "drowning-response.md",
-      "entry_warning": "Rescue from shore — do not become the second victim.",
-      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
-      "start": "rescue",
-      "steps": [
-        {
-          "id": "rescue",
-          "type": "action",
-          "text": "**Reach, throw, row — don't go.** Reach with a stick, paddle, or clothing; throw a rope or anything that floats; row a boat to them. Enter the water only as a last resort, and bring something that floats.",
-          "warning": "A drowning person will climb on you and pull you under.",
-          "next": "check"
-        },
-        {
-          "id": "check",
-          "type": "action",
-          "text": "**Once out of the water, check breathing** — no more than 10 seconds. **Gasping is not breathing.**",
-          "timer": {
-            "kind": "countdown",
-            "label": "Breathing check",
-            "seconds": 10,
-            "auto": true
-          },
-          "next": "call"
-        },
-        {
-          "id": "call",
-          "type": "decision",
-          "text": "**Are they breathing normally?**",
-          "options": [
-            {
-              "label": "Breathing normally",
-              "goto": "hypothermia",
-              "tone": "ok"
-            },
-            {
-              "label": "Not breathing / only gasping",
-              "goto": "breaths",
-              "tone": "danger"
-            }
-          ]
-        },
-        {
-          "id": "breaths",
-          "type": "action",
-          "text": "**Give 5 initial rescue breaths BEFORE starting compressions.** Tilt head, lift chin, seal your mouth over theirs — mouth AND nose for a small child. Drowning arrest comes from lack of oxygen, so ventilation comes first — the opposite of typical adult cardiac arrest.",
-          "next": "cpr"
-        },
-        {
-          "id": "cpr",
-          "type": "action",
-          "text": "**Then continue CPR at 30 compressions to 2 breaths.** Open the CPR protocol and follow it: [CPR](#/emergency/cpr)",
-          "warning": "Do NOT waste time trying to \"drain water\" from the lungs with abdominal thrusts or by hanging them head-down. It does not work and delays CPR.",
-          "next": "vomit"
-        },
-        {
-          "id": "vomit",
-          "type": "action",
-          "text": "**Expect vomiting** — it happens in most drowning resuscitations. **Roll them to the side, clear the mouth, and continue.**",
-          "next": "hypothermia"
-        },
-        {
-          "id": "hypothermia",
-          "type": "action",
-          "text": "**Handle gently — cold water victims are often hypothermic too.** If they are breathing but not fully awake, put them in the **recovery position** (on their side) and keep checking breathing. Remove wet clothing, insulate from the ground, and warm gradually. Do not give up resuscitation early on a cold victim — **\"not dead until warm and dead.\"**",
-          "next": "watch"
-        },
-        {
-          "id": "watch",
-          "type": "info",
-          "text": "**Watch them for 24 hours.** Anyone who inhaled water can deteriorate over the next 24 hours — worsening cough, fast or laboured breathing, unusual tiredness. **Treat new breathing trouble as an emergency.**",
-          "next": "END"
-        }
-      ]
+     "id": "cycle-302",
+     "type": "loop",
+     "text": "**30 compressions, then 2 breaths.** Tilt head, lift chin. Cover an infant's mouth AND nose. The metronome counter rolls over at 30.",
+     "timer": {
+      "kind": "metronome",
+      "label": "30 : 2 cycle",
+      "bpm": 110,
+      "count": 30
+     },
+     "loop": {
+      "until": "Signs of life, an AED tells you to stand clear, trained help takes over, or you physically cannot continue. Swap rescuers every 2 minutes.",
+      "back_to": "cycle-302"
+     },
+     "next": "aed"
     },
     {
-      "id": "heat",
-      "title": "Heat Exhaustion and Heat Stroke",
-      "short": "HEAT",
-      "icon": "sun",
-      "severity": "urgent",
-      "keywords": [
-        "heat stroke",
-        "heat exhaustion",
-        "overheating",
-        "too hot",
-        "sunstroke",
-        "collapsed heat"
-      ],
-      "source_doc": "heat-illness.md",
-      "entry_warning": "The dividing line is the brain: confusion means heat stroke.",
-      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
-      "start": "triage",
-      "steps": [
-        {
-          "id": "triage",
-          "type": "decision",
-          "text": "**What are you seeing?** Heat illness is a spectrum: cramps → exhaustion → stroke.",
-          "options": [
-            {
-              "label": "Confused, strange behaviour, stumbling, seizure, or collapse — hot skin (dry OR still sweaty)",
-              "goto": "stroke-cool",
-              "tone": "danger"
-            },
-            {
-              "label": "Heavy sweating, weak, nauseous, dizzy, pale clammy skin — but thinking clearly",
-              "goto": "exhaustion"
-            }
-          ]
-        },
-        {
-          "id": "stroke-cool",
-          "type": "action",
-          "text": "**HEAT STROKE — cool aggressively NOW. Cool first, transport second.** Whole-body immersion in cool water (stream, trough, tub) is the best treatment — keep the head supported above water.",
-          "next": "stroke-alt"
-        },
-        {
-          "id": "stroke-alt",
-          "type": "action",
-          "text": "**No immersion available?** Douse continuously with water and fan hard, and put cold packs at the **neck, armpits, and groin**.",
-          "next": "stroke-stop"
-        },
-        {
-          "id": "stroke-stop",
-          "type": "action",
-          "text": "**Stop active cooling once they become alert.** Give nothing by mouth while confused. Then get them to advanced medical care even if they seem recovered — heat stroke injures organs after the crisis passes.",
-          "warning": "Shivering alone is NOT a reason to stop — heat stroke victims often shiver while still dangerously hot.",
-          "next": "END"
-        },
-        {
-          "id": "exhaustion",
-          "type": "action",
-          "text": "**Stop all work.** Move to shade and loosen or remove clothing.",
-          "next": "lie"
-        },
-        {
-          "id": "lie",
-          "type": "action",
-          "text": "**Lie them flat with legs raised.**",
-          "next": "sip"
-        },
-        {
-          "id": "sip",
-          "type": "action",
-          "text": "**Sip water or oral rehydration solution steadily.** Cool with a wet cloth on the skin plus fanning. Recovery should come within 30 minutes.",
-          "timer": {
-            "kind": "countdown",
-            "label": "Recheck in 30 minutes",
-            "seconds": 1800
-          },
-          "next": "recheck"
-        },
-        {
-          "id": "recheck",
-          "type": "decision",
-          "text": "**Recovering within 30 minutes?**",
-          "options": [
-            {
-              "label": "Yes — recovering",
-              "goto": "done",
-              "tone": "ok"
-            },
-            {
-              "label": "No — or the mind is clouding",
-              "goto": "stroke-cool",
-              "tone": "danger"
-            }
-          ]
-        },
-        {
-          "id": "done",
-          "type": "info",
-          "text": "**Keep them at rest in the shade** and continue sips of fluid. Before returning to work: schedule hard work for dawn and dusk, and drink about 0.5–1 litre per hour **with electrolytes or salted food** — plain water alone for hours risks dangerously low sodium.",
-          "next": "END"
-        }
-      ]
+     "id": "cycle-hands",
+     "type": "loop",
+     "text": "**Continuous compressions.** Do not stop to check. Swap rescuers every 2 minutes if you can.",
+     "timer": {
+      "kind": "metronome",
+      "label": "Compression tempo",
+      "bpm": 110
+     },
+     "loop": {
+      "until": "Signs of life, an AED tells you to stand clear, trained help takes over, or you physically cannot continue.",
+      "back_to": "cycle-hands"
+     },
+     "next": "aed"
     },
     {
-      "id": "cold",
-      "title": "Hypothermia and Frostbite",
-      "short": "COLD",
-      "icon": "snow",
-      "severity": "urgent",
-      "keywords": [
-        "frostbite",
-        "frozen fingers",
-        "numb hands",
-        "hypothermia",
-        "shivering",
-        "white skin cold"
-      ],
-      "source_doc": "frostbite-cold-injuries.md",
-      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
-      "start": "which",
-      "steps": [
-        {
-          "id": "which",
-          "type": "decision",
-          "text": "**Whole body, or a body part?**",
-          "options": [
-            {
-              "label": "Whole body: shivering, clumsy, slurred speech, confused",
-              "goto": "shelter",
-              "tone": "danger"
-            },
-            {
-              "label": "A frozen part: skin hard, waxy, wooden",
-              "goto": "frost-first",
-              "tone": "danger"
-            },
-            {
-              "label": "Skin numb and white but still SOFT (frostnip)",
-              "goto": "frostnip",
-              "tone": "ok"
-            },
-            {
-              "label": "Wet, cold feet: numb, pale, swollen — but not frozen (trench foot)",
-              "goto": "trench"
-            }
-          ]
-        },
-        {
-          "id": "frostnip",
-          "type": "info",
-          "text": "**Frostnip — rewarm it skin-to-skin**: fingers in an armpit, a warm palm on a cheek. No harm done.",
-          "next": "END"
-        },
-        {
-          "id": "shelter",
-          "type": "action",
-          "text": "**Get them into shelter, out of the wind, and off the cold ground** — ground contact steals body heat, so insulate underneath at least as much as above. Remove wet clothing; insulate with dry layers and cover the head and neck.",
-          "next": "warm"
-        },
-        {
-          "id": "warm",
-          "type": "action",
-          "text": "**Apply gentle warmth to the core** — chest, neck, armpits, groin. Give warm sweet drinks **only if fully alert** and able to swallow. **No alcohol.**",
-          "warning": "Do not rub the limbs or apply sudden intense heat — harmful in severe cases. Handle a severely hypothermic person gently.",
-          "next": "shiver"
-        },
-        {
-          "id": "shiver",
-          "type": "info",
-          "text": "**Loss of shivering is a danger sign, not improvement.** Worsening hypothermia: shivering stops, confusion, drowsiness, slow weak pulse. Keep handling gently and seek advanced care.",
-          "next": "END"
-        },
-        {
-          "id": "frost-first",
-          "type": "action",
-          "text": "**Get out of the cold.** Remove wet clothing, and remove **rings and watches** before swelling. Protect the frozen part from bumps and pressure.",
-          "next": "refreeze"
-        },
-        {
-          "id": "refreeze",
-          "type": "decision",
-          "text": "**Could the part refreeze after thawing?** Choose the moment of rewarming deliberately.",
-          "options": [
-            {
-              "label": "No — refreezing is impossible",
-              "goto": "rewarm",
-              "tone": "ok"
-            },
-            {
-              "label": "Yes — it might refreeze",
-              "goto": "keep-frozen",
-              "tone": "danger"
-            }
-          ]
-        },
-        {
-          "id": "keep-frozen",
-          "type": "loop",
-          "text": "**Do NOT rewarm yet** — refreezing destroys tissue far worse than staying frozen a few hours longer. **Walking on frozen feet to reach shelter is acceptable; walking on thawed feet is not.**",
-          "loop": {
-            "until": "You are in shelter and refreezing is impossible — then rewarm.",
-            "back_to": "rewarm"
-          },
-          "next": "END"
-        },
-        {
-          "id": "rewarm",
-          "type": "action",
-          "text": "**Immerse the part in warm water at 37–39°C (99–102°F)** — comfortable to your own elbow, never hot. Keep it there **20–30 minutes**, topping up warm water, until the tissue is soft and red or purple. Severe pain during rewarming is expected — a sign of returning circulation. Give pain relief if available.",
-          "warning": "NEVER rub the part with snow, massage it, or hold it to direct dry heat — a fire or stove will burn tissue that cannot feel.",
-          "timer": {
-            "kind": "countdown",
-            "label": "Rewarm in 37–39°C water",
-            "seconds": 1500
-          },
-          "next": "after-rewarm"
-        },
-        {
-          "id": "after-rewarm",
-          "type": "info",
-          "text": "**Leave blisters intact.** Place dry gauze between fingers and toes, bandage loosely, and elevate. **Do not let the part refreeze** — do not walk on thawed feet.",
-          "next": "END"
-        },
-        {
-          "id": "trench",
-          "type": "action",
-          "text": "**Trench foot — wet and cold above freezing for hours to days.** Get the feet dry: remove wet boots and socks, air and gently dry the feet, and keep them clean. **Rewarm gradually** — body warmth or a warm room, not hot water. Elevate the feet and avoid walking on them where possible. Change into dry socks daily to prevent it coming back.",
-          "warning": "Do not rub the feet, and do not use hot water or direct dry heat — the tissue is fragile.",
-          "next": "END"
-        }
-      ]
-    },
-    {
-      "id": "childbirth",
-      "title": "Emergency Childbirth",
-      "short": "BIRTH",
-      "icon": "baby",
-      "severity": "serious",
-      "keywords": [
-        "baby coming",
-        "labor",
-        "birth",
-        "contractions",
-        "umbilical cord",
-        "bleeding after birth"
-      ],
-      "source_doc": "emergency-childbirth.md",
-      "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
-      "start": "prepare",
-      "steps": [
-        {
-          "id": "prepare",
-          "type": "action",
-          "text": "**Wash your hands thoroughly** and lay out clean cloths or plastic under the mother. Most births proceed normally with little intervention — your job is cleanliness, warmth, and calm support.",
-          "next": "labor"
-        },
-        {
-          "id": "labor",
-          "type": "action",
-          "text": "**Let labor progress at its own pace.** Do not push on the abdomen or tell her to push before she feels the urge.",
-          "next": "crown"
-        },
-        {
-          "id": "crown",
-          "type": "action",
-          "text": "**As the head crowns, support it gently with a clean hand** so it emerges slowly. **Do not pull on the head or body.** Check for the cord around the neck — if present, slip it gently over the head. The shoulders and body usually follow within a contraction or two; the baby will be slippery — hold securely.",
-          "next": "warm"
-        },
-        {
-          "id": "warm",
-          "type": "action",
-          "text": "**Dry the baby vigorously** and place it **skin-to-skin on the mother's chest**, covered with dry cloth. Warmth is critical.",
-          "timer": {
-            "kind": "stamp",
-            "label": "Baby born",
-            "persist": true
-          },
-          "next": "breathing"
-        },
-        {
-          "id": "breathing",
-          "type": "decision",
-          "text": "**Is the baby crying and breathing?** Most do within a minute.",
-          "options": [
-            {
-              "label": "Yes — crying / breathing",
-              "goto": "cord",
-              "tone": "ok"
-            },
-            {
-              "label": "No — not breathing",
-              "goto": "stimulate",
-              "tone": "danger"
-            }
-          ]
-        },
-        {
-          "id": "stimulate",
-          "type": "action",
-          "text": "**Rub the back firmly and flick the soles of the feet.** If the baby still does not breathe after about a minute of drying and stimulation, **start gentle rescue breaths**: cover the baby's mouth AND nose with your mouth and give small puffs — see the infant guidance in [CPR](#/emergency/cpr). Do not give up quickly.",
-          "next": "cord"
-        },
-        {
-          "id": "cord",
-          "type": "action",
-          "text": "**Do not cut the cord early.** Wait until it stops pulsing, then tie it tightly in two places with clean cord (about 5 and 10 cm from the baby) and cut between the ties with a clean blade.",
-          "next": "placenta"
-        },
-        {
-          "id": "placenta",
-          "type": "action",
-          "text": "**The placenta usually delivers within 30 minutes.** If it has not delivered within 30–60 minutes, **treat it as a danger sign** — retained placenta causes severe bleeding.",
-          "warning": "Never pull on the cord.",
-          "next": "massage"
-        },
-        {
-          "id": "massage",
-          "type": "action",
-          "text": "**After the placenta delivers, massage the mother's lower abdomen firmly** until the uterus feels like a hard ball — this limits bleeding. Put the baby to the breast; nursing helps the uterus contract.",
-          "next": "danger"
-        },
-        {
-          "id": "danger",
-          "type": "info",
-          "text": "**Danger signs — seek skilled help:** heavy bleeding, feet or cord appearing first, or labor lasting many hours without progress. These are emergencies beyond home care.",
-          "next": "END"
-        }
-      ]
+     "id": "aed",
+     "type": "info",
+     "text": "**When an AED arrives:** attach it immediately, turn it on, follow its voice prompts. **Resume compressions immediately after any shock.**",
+     "warning": "Do not stop CPR to wait for the AED — keep compressing until the pads are on and the machine says stand clear.",
+     "next": "END"
     }
-  ]
+   ]
+  },
+  {
+   "id": "bleeding",
+   "title": "Severe Bleeding",
+   "short": "BLEEDING",
+   "icon": "blood",
+   "severity": "life-threat",
+   "keywords": [
+    "bleeding",
+    "blood",
+    "hemorrhage",
+    "cut",
+    "wound",
+    "tourniquet"
+   ],
+   "source_doc": "control-bleeding.md",
+   "entry_warning": "Severe bleeding can be fatal in minutes. Act immediately.",
+   "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
+   "start": "pressure",
+   "steps": [
+    {
+     "id": "pressure",
+     "type": "action",
+     "text": "**Apply firm direct pressure** on the wound with a clean cloth or your hand. Press HARD and do not release to \"check\" — keep pressure constant.",
+     "detail": "Protect yourself from blood contact if possible (gloves, a barrier), but do not delay for a serious arterial bleed."
+    },
+    {
+     "id": "deep",
+     "type": "action",
+     "text": "**Deep wound? Pack it.** Pack gauze or clean cloth firmly INTO the wound, then keep pressing on top."
+    },
+    {
+     "id": "working",
+     "type": "decision",
+     "text": "**Is the bleeding slowing after several minutes of hard, constant pressure?**",
+     "options": [
+      {
+       "label": "Yes — slowing",
+       "goto": "keep-on",
+       "tone": "ok"
+      },
+      {
+       "label": "No — still life-threatening (limb)",
+       "goto": "tourniquet",
+       "tone": "danger"
+      },
+      {
+       "label": "No — not on a limb",
+       "goto": "keep-pressing",
+       "tone": "danger"
+      }
+     ]
+    },
+    {
+     "id": "keep-pressing",
+     "type": "loop",
+     "text": "**Keep maximum direct pressure.** For wounds where a tourniquet can't go (neck, torso, groin), packing + relentless pressure is the treatment.",
+     "loop": {
+      "until": "Bleeding controlled or trained help takes over.",
+      "back_to": "keep-pressing"
+     },
+     "next": "shock"
+    },
+    {
+     "id": "tourniquet",
+     "type": "action",
+     "text": "**Apply a tourniquet** 5–7 cm (2–3 in) ABOVE the wound — not on a joint. Tighten until the bleeding STOPS. It should hurt; that means it's working.",
+     "warning": "Once on, do NOT loosen or remove it. Note the time.",
+     "timer": {
+      "kind": "stamp",
+      "label": "Tourniquet applied",
+      "persist": true
+     },
+     "next": "shock"
+    },
+    {
+     "id": "keep-on",
+     "type": "action",
+     "text": "**Do not remove the soaked dressing** — add more on top. Bandage firmly to hold the pressure. Keep the wound covered and the person still.",
+     "next": "shock"
+    },
+    {
+     "id": "shock",
+     "type": "info",
+     "text": "**Watch for shock:** pale, cold, clammy skin; rapid weak pulse; rapid breathing; confusion; thirst. Lay them flat, raise the legs if no spinal or leg injury, keep them warm, keep monitoring. Seek the highest level of care available.",
+     "next": "END"
+    }
+   ]
+  },
+  {
+   "id": "choking",
+   "title": "Choking / Blocked Airway",
+   "short": "CHOKING",
+   "icon": "lungs",
+   "severity": "life-threat",
+   "keywords": [
+    "choking",
+    "can't breathe",
+    "airway",
+    "heimlich",
+    "something stuck"
+   ],
+   "source_doc": "choking-airway.md",
+   "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
+   "start": "assess",
+   "steps": [
+    {
+     "id": "assess",
+     "type": "decision",
+     "text": "**Can they cough, speak, or cry?**",
+     "options": [
+      {
+       "label": "Yes — coughing / can speak",
+       "goto": "mild",
+       "tone": "ok"
+      },
+      {
+       "label": "No — silent, can't breathe, turning blue",
+       "goto": "age",
+       "tone": "danger"
+      },
+      {
+       "label": "They've gone unconscious",
+       "goto": "unconscious",
+       "tone": "danger"
+      }
+     ]
+    },
+    {
+     "id": "mild",
+     "type": "loop",
+     "text": "**Encourage them to keep coughing.** A strong cough beats anything you can do. Do NOT slap the back of someone who is coughing effectively. Stay with them.",
+     "loop": {
+      "until": "The object comes out, or they stop being able to cough/speak (then go back and choose the silent option).",
+      "back_to": "assess"
+     },
+     "next": "END"
+    },
+    {
+     "id": "age",
+     "type": "decision",
+     "text": "**Adult/child, or infant under 1 year?**",
+     "options": [
+      {
+       "label": "Adult or child",
+       "goto": "backblows"
+      },
+      {
+       "label": "Infant (under 1 yr)",
+       "goto": "infant"
+      }
+     ]
+    },
+    {
+     "id": "backblows",
+     "type": "action",
+     "text": "**5 back blows.** Lean them forward. Strike hard between the shoulder blades with the heel of your hand. Check the mouth after each blow.",
+     "detail": "If pregnant or too large to reach around the abdomen: use CHEST thrusts instead of abdominal thrusts."
+    },
+    {
+     "id": "abdominal",
+     "type": "loop",
+     "text": "**5 abdominal thrusts.** Stand behind them, fist just above the navel, grasp with the other hand, pull sharply inward and UPWARD. Alternate: 5 back blows, 5 thrusts.",
+     "warning": "Never do a blind finger sweep — you can push the object deeper.",
+     "loop": {
+      "until": "The object comes out, or they go unconscious.",
+      "back_to": "backblows"
+     },
+     "next": "unconscious"
+    },
+    {
+     "id": "infant",
+     "type": "loop",
+     "text": "**Infant: 5 back blows + 5 chest thrusts.** Lay the infant face-down along your forearm, head low; give 5 firm back blows. Turn face-up; give 5 chest thrusts with two fingers on the breastbone. NO abdominal thrusts on infants.",
+     "loop": {
+      "until": "The object comes out, or the infant goes limp/unconscious.",
+      "back_to": "infant"
+     },
+     "next": "unconscious"
+    },
+    {
+     "id": "unconscious",
+     "type": "action",
+     "text": "**Unconscious → start CPR now.** Lower them gently to the ground. Before each set of rescue breaths, LOOK in the mouth and remove the object only if you can SEE it.",
+     "next": "gocpr"
+    },
+    {
+     "id": "gocpr",
+     "type": "info",
+     "text": "Open the **CPR protocol** and follow it: [CPR — Adult, Child, Infant](#/emergency/cpr)",
+     "next": "END"
+    }
+   ]
+  },
+  {
+   "id": "burns",
+   "title": "Burns — Heat, Chemical, Electrical",
+   "short": "BURNS",
+   "icon": "burn",
+   "severity": "urgent",
+   "keywords": [
+    "burn",
+    "burned",
+    "scald",
+    "boiling water",
+    "chemical burn",
+    "skin peeling"
+   ],
+   "source_doc": "burn-treatment.md",
+   "entry_warning": "Stop the burning first — get them away from the source.",
+   "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
+   "start": "stop",
+   "steps": [
+    {
+     "id": "stop",
+     "type": "action",
+     "text": "**Stop the burning.** Remove the person from the source. Smother flames — stop, drop, roll.",
+     "next": "type"
+    },
+    {
+     "id": "type",
+     "type": "decision",
+     "text": "**What kind of burn?**",
+     "options": [
+      {
+       "label": "Heat — flame, scald, hot object",
+       "goto": "cool"
+      },
+      {
+       "label": "Chemical",
+       "goto": "chemical",
+       "tone": "danger"
+      },
+      {
+       "label": "Electrical",
+       "goto": "electrical",
+       "tone": "danger"
+      }
+     ]
+    },
+    {
+     "id": "chemical",
+     "type": "action",
+     "text": "**Brush off any dry powder first, then flush with water for 20+ minutes.** Remove contaminated clothing; protect yourself.",
+     "timer": {
+      "kind": "countdown",
+      "label": "Flush with water",
+      "seconds": 1200
+     },
+     "next": "jewelry"
+    },
+    {
+     "id": "electrical",
+     "type": "action",
+     "text": "**Cut the power BEFORE touching the casualty.** Electrical damage runs deep between entry and exit wounds even when the skin looks minor. **Watch for heart rhythm problems** — if they collapse or stop breathing normally, go to [CPR](#/emergency/cpr).",
+     "next": "cool"
+    },
+    {
+     "id": "cool",
+     "type": "action",
+     "text": "**Cool the burn with cool running water for 20 minutes.** Cooling helps even if started an hour after the burn.",
+     "warning": "No ice, no ice water — ice deepens the injury.",
+     "timer": {
+      "kind": "countdown",
+      "label": "Cool the burn",
+      "seconds": 1200
+     },
+     "next": "jewelry"
+    },
+    {
+     "id": "jewelry",
+     "type": "action",
+     "text": "**Remove rings, watches, and tight clothing early**, before swelling starts. Do not pull off clothing stuck to the burn.",
+     "next": "cover"
+    },
+    {
+     "id": "cover",
+     "type": "action",
+     "text": "**Cover with a clean non-stick dressing** or kitchen cling film laid loosely over the wound. Keep the person warm — large burns lose heat fast.",
+     "warning": "Do NOT pop blisters, or apply butter, toothpaste, oil, or grease — they trap heat and cause infection.",
+     "next": "critical"
+    },
+    {
+     "id": "critical",
+     "type": "decision",
+     "text": "**Check for a critical burn.** The victim's own palm (with fingers) is about 1% of their body surface — count palms to estimate size. Any of these present?\n\n- Burns to the **face, hands, genitals**, or over joints\n- **Airway burn** signs: singed nostrils, hoarse voice, soot in mouth\n- More than **10% of body surface**\n- **Painless, white, leathery, or charred** areas (full-thickness)\n- Smoke inhalation",
+     "options": [
+      {
+       "label": "Yes — any of these",
+       "goto": "evacuate",
+       "tone": "danger"
+      },
+      {
+       "label": "None of these",
+       "goto": "hydrate",
+       "tone": "ok"
+      }
+     ]
+    },
+    {
+     "id": "evacuate",
+     "type": "info",
+     "text": "**Treat as life-threatening — evacuate to the highest care available.** While waiting: keep the wound covered, keep them warm, and give frequent sips of water or oral rehydration solution if they are awake and able to drink — large burns leak enormous amounts of fluid and cause shock.",
+     "next": "END"
+    },
+    {
+     "id": "hydrate",
+     "type": "info",
+     "text": "Keep the dressing clean and the person warm. For any **large burn**, give frequent sips of water or oral rehydration solution to an awake person who can drink — large burns leak fluid and cause shock.",
+     "next": "END"
+    }
+   ]
+  },
+  {
+   "id": "anaphylaxis",
+   "title": "Anaphylaxis — Severe Allergic Reaction",
+   "short": "ALLERGY",
+   "icon": "bee",
+   "severity": "life-threat",
+   "keywords": [
+    "allergic reaction",
+    "epipen",
+    "bee sting",
+    "swelling face",
+    "hives",
+    "throat closing"
+   ],
+   "source_doc": "anaphylaxis-allergy.md",
+   "entry_warning": "Epinephrine first and fast — the dangerous mistake is giving it late.",
+   "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
+   "start": "epi",
+   "steps": [
+    {
+     "id": "epi",
+     "type": "action",
+     "text": "**Give epinephrine (adrenaline) NOW** into the muscle of the **outer mid-thigh**, through clothing if needed.\n\n- **Adult: 0.3 mg** auto-injector\n- **Child: 0.15 mg** (roughly under 25–30 kg / 55–66 lb)",
+     "detail": "Suspect anaphylaxis when, soon after a sting, food, or medicine: swelling of the lips, tongue, or throat; hoarse voice or wheeze; widespread hives or flushing; vomiting or cramps; dizziness or collapse. Epinephrine given early is very safe.",
+     "warning": "Antihistamines are NOT a substitute for epinephrine. They may ease itching but do nothing for the airway or blood pressure — never delay epinephrine to try them.",
+     "next": "position"
+    },
+    {
+     "id": "position",
+     "type": "decision",
+     "text": "**Position them — how are they?**",
+     "warning": "Do NOT stand the person up suddenly — a sudden upright move can cause fatal collapse when blood pressure is low.",
+     "options": [
+      {
+       "label": "Breathing is hard",
+       "goto": "sit"
+      },
+      {
+       "label": "Vomiting, or unconscious but breathing",
+       "goto": "recovery"
+      },
+      {
+       "label": "Visibly pregnant",
+       "goto": "left-side"
+      },
+      {
+       "label": "None of these",
+       "goto": "flat"
+      }
+     ]
+    },
+    {
+     "id": "sit",
+     "type": "action",
+     "text": "Let them **sit up** to ease breathing. Keep watching them.",
+     "next": "reassess"
+    },
+    {
+     "id": "recovery",
+     "type": "action",
+     "text": "Put them in the **recovery position** (on their side) so the airway stays clear.",
+     "next": "reassess"
+    },
+    {
+     "id": "left-side",
+     "type": "action",
+     "text": "Lay her on her **left side**.",
+     "next": "reassess"
+    },
+    {
+     "id": "flat",
+     "type": "action",
+     "text": "**Lie them flat and raise the legs.**",
+     "next": "reassess"
+    },
+    {
+     "id": "reassess",
+     "type": "action",
+     "text": "**Repeat the dose after 5–15 minutes if they are not clearly improving.** Keep a second epinephrine dose within reach.",
+     "timer": {
+      "kind": "countdown",
+      "label": "Reassess — repeat dose if not improving",
+      "seconds": 300
+     },
+     "next": "biphasic"
+    },
+    {
+     "id": "biphasic",
+     "type": "info",
+     "text": "**Watch them closely for at least 4–6 hours** — symptoms can return hours later with no new exposure (a biphasic reaction). Watch longer after a severe reaction. Remove any remaining stinger by scraping it out. **Evacuate to medical care even if they recover fully.**",
+     "next": "END"
+    }
+   ]
+  },
+  {
+   "id": "poisoning",
+   "title": "Poisoning",
+   "short": "POISON",
+   "icon": "poison",
+   "severity": "life-threat",
+   "keywords": [
+    "poison",
+    "swallowed chemical",
+    "overdose",
+    "carbon monoxide",
+    "mushrooms",
+    "chemical in eye",
+    "fumes",
+    "pesticide",
+    "button battery"
+   ],
+   "source_doc": "poisoning-first-aid.md",
+   "entry_warning": "Do NOT induce vomiting — for any poison. Make the scene safe first.",
+   "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
+   "start": "scene",
+   "steps": [
+    {
+     "id": "scene",
+     "type": "action",
+     "text": "**Make the scene safe before you touch anyone.** A poison that got one person can get you.",
+     "detail": "- **Gas, smoke, or fumes:** do NOT walk into it. Open doors/windows from outside, cut the source (stove, engine, generator) if you can reach it safely, and let it clear. A rescuer who collapses is now a second patient.\n- **Chemical spill / powder:** protect your skin and eyes — gloves, or hands wrapped in cloth or a bag.\n- Move the person to fresh, clean air only if it is safe for you to do so.",
+     "next": "abc"
+    },
+    {
+     "id": "abc",
+     "type": "decision",
+     "text": "**Check the person. How are they right now?**",
+     "options": [
+      {
+       "label": "Awake, breathing normally",
+       "goto": "route",
+       "tone": "ok"
+      },
+      {
+       "label": "Drowsy / unconscious, still breathing",
+       "goto": "recovery",
+       "tone": "danger"
+      },
+      {
+       "label": "Not breathing normally",
+       "goto": "cpr",
+       "tone": "danger"
+      },
+      {
+       "label": "Having a seizure / fitting",
+       "goto": "seizurelink",
+       "tone": "danger"
+      }
+     ]
+    },
+    {
+     "id": "recovery",
+     "type": "action",
+     "text": "**Put them on their side (recovery position)** so vomit drains and the tongue can't block the airway. Tilt the head back, keep checking they are breathing.",
+     "warning": "A drowsy or unconscious person can vomit and choke. Never give anything by mouth, and never leave them on their back.",
+     "next": "route"
+    },
+    {
+     "id": "cpr",
+     "type": "info",
+     "text": "**Not breathing normally = start CPR now.** Open the [CPR protocol](#/emergency/cpr) and follow it. Send someone to keep looking for the poison's container while you work.",
+     "next": "END"
+    },
+    {
+     "id": "seizurelink",
+     "type": "info",
+     "text": "**Protect them from injury** — clear hard objects away, cushion the head, do NOT restrain them or put anything in the mouth. Time it. See the [Seizure protocol](#/emergency/seizure). When it stops, put them on their side and go on.",
+     "next": "route"
+    },
+    {
+     "id": "route",
+     "type": "decision",
+     "text": "**How did the poison get in?**",
+     "options": [
+      {
+       "label": "Swallowed",
+       "goto": "swallowed-what"
+      },
+      {
+       "label": "Breathed in — gas, smoke, fumes",
+       "goto": "inhaled",
+       "tone": "danger"
+      },
+      {
+       "label": "On the skin",
+       "goto": "skin"
+      },
+      {
+       "label": "In the eyes",
+       "goto": "eyes"
+      }
+     ]
+    },
+    {
+     "id": "inhaled",
+     "type": "action",
+     "text": "**Get them into fresh air** (only if safe for you). Loosen tight clothing. Keep them still and calm — exertion worsens it. If you have oxygen, give it.",
+     "detail": "- **Carbon monoxide** (stove, heater, generator, engine, charcoal in an enclosed space) is invisible and has no smell. If everyone in the shelter has a headache, feels sick, or is dizzy, treat it as CO: get everyone out and ventilate before going back in. CO poisoning can need many hours of oxygen — evacuate toward help if you can.\n- **Smoke from a fire** can carry cyanide as well as CO — same first aid, get out and get air.\n- Some inhaled irritants (chlorine, ammonia, smoke) inflame the lungs **hours later** — watch breathing for 24 hours even if they seem fine.",
+     "next": "monitor"
+    },
+    {
+     "id": "skin",
+     "type": "action",
+     "text": "**Remove contaminated clothing** (protect your own hands). **Brush off any dry powder first**, then flush the skin with lots of clean water.",
+     "timer": {
+      "kind": "countdown",
+      "label": "Flush the skin",
+      "seconds": 900
+     },
+     "detail": "- Flush for **15–20 minutes**, longer for a corrosive (lye, acid, oven/drain cleaner). Let the water run off and away, not onto clean skin.\n- **Do not scrub** — it drives chemical in. Do not try to 'neutralise' with another chemical.\n- Cover any chemical burn loosely and clean afterward. Keep the product name/label.",
+     "next": "monitor"
+    },
+    {
+     "id": "eyes",
+     "type": "action",
+     "text": "**Flush the eye with clean water for 15–20 minutes**, lids held open, water running from the nose side outward so it doesn't cross to the other eye.",
+     "timer": {
+      "kind": "countdown",
+      "label": "Flush the eye (aim 20 min)",
+      "seconds": 1200
+     },
+     "detail": "Alkalis (lye, cement, ammonia) keep burning — flush even longer. Remove contact lenses once flushing has started. See [Eye Injuries](#/read/eye-injuries.md). Do not let them rub the eye.",
+     "next": "monitor"
+    },
+    {
+     "id": "swallowed-what",
+     "type": "decision",
+     "text": "**What did they swallow?** This changes everything you do next.",
+     "warning": "For ALL of them: do NOT make the person vomit. Vomiting a corrosive burns the throat twice; vomiting fuel floods the lungs.",
+     "options": [
+      {
+       "label": "Chemical — cleaner, fuel, pesticide",
+       "goto": "chem-which",
+       "tone": "danger"
+      },
+      {
+       "label": "Medicine, pills, or alcohol",
+       "goto": "meds-which",
+       "tone": "danger"
+      },
+      {
+       "label": "Plant, berry, or mushroom",
+       "goto": "plant"
+      },
+      {
+       "label": "Not sure / something else",
+       "goto": "unknown"
+      }
+     ]
+    },
+    {
+     "id": "chem-which",
+     "type": "decision",
+     "text": "**Which kind of chemical?**",
+     "options": [
+      {
+       "label": "Corrosive — drain/oven cleaner, lye, acid, bleach, button battery",
+       "goto": "caustic",
+       "tone": "danger"
+      },
+      {
+       "label": "Fuel or solvent — petrol, kerosene, lighter fluid, thinner",
+       "goto": "hydrocarbon",
+       "tone": "danger"
+      },
+      {
+       "label": "Pesticide / weedkiller",
+       "goto": "pesticide",
+       "tone": "danger"
+      }
+     ]
+    },
+    {
+     "id": "caustic",
+     "type": "action",
+     "text": "**Corrosives burn on the way down.** If they are **fully awake and swallowing normally**, give a few small sips of water or milk to dilute it. Wipe any chemical off the lips.",
+     "warning": "Do NOT make them vomit. Do NOT give acid for an alkali or alkali for an acid — it makes heat and more injury. Give nothing by mouth if they are drooling, have a hoarse/noisy voice, or trouble swallowing — that is airway swelling.",
+     "detail": "- **Button/coin battery swallowed = emergency.** It burns through the gullet in as little as 2 hours. If the person is over 1 year, awake, and can swallow, give **2 teaspoons (10 mL) of honey every 10 minutes** (up to 6 doses) while you move toward help — it buffers the burn. Do not delay evacuation for it.\n- Watch the airway like a hawk: drooling, a changed voice, or noisy breathing means the throat is swelling — this can close the airway.\n- Activated charcoal does NOT work on corrosives — skip it.",
+     "next": "monitor"
+    },
+    {
+     "id": "hydrocarbon",
+     "type": "action",
+     "text": "**Fuels and solvents are dangerous if breathed into the lungs.** Keep the person calm and upright. Rinse the mouth and spit. Do NOT induce vomiting.",
+     "warning": "Making them vomit fuel is worse than the swallow — even a little in the lungs causes a chemical pneumonia.",
+     "detail": "Watch breathing for 24 hours: coughing, fast breathing, wheeze, or blue lips means fuel reached the lungs — keep them upright, give oxygen if you have it, and evacuate. Activated charcoal does not help and raises the vomiting/aspiration risk — skip it.",
+     "next": "monitor"
+    },
+    {
+     "id": "pesticide",
+     "type": "action",
+     "text": "**Protect yourself — pesticide is on their skin and clothes and can poison you.** Wear gloves, remove their clothing, and wash the skin with soap and water.",
+     "detail": "**Organophosphate / carbamate** insecticides cause the body to flood: streaming eyes and mouth, drooling, sweating, vomiting and diarrhoea, tiny pupils, muscle twitching, and trouble breathing (remember 'SLUDGE'). This is life-threatening. The antidote is **atropine** — give it only if you have it and know how. Otherwise: decontaminate, keep the airway clear, support breathing (rescue breaths/CPR if needed), and evacuate urgently.",
+     "next": "monitor"
+    },
+    {
+     "id": "meds-which",
+     "type": "decision",
+     "text": "**What medicine or drug was taken?** Try to find the packet — get the name, strength, how many, and when.",
+     "options": [
+      {
+       "label": "Painkillers — paracetamol/acetaminophen, ibuprofen, aspirin",
+       "goto": "analgesic-od",
+       "tone": "danger"
+      },
+      {
+       "label": "Opioids / sedatives — very drowsy, slow breathing",
+       "goto": "opioid-od",
+       "tone": "danger"
+      },
+      {
+       "label": "Alcohol",
+       "goto": "alcohol-od"
+      },
+      {
+       "label": "Other / unknown medicine",
+       "goto": "charcoal"
+      }
+     ]
+    },
+    {
+     "id": "analgesic-od",
+     "type": "action",
+     "text": "**Note the exact drug, amount, and time.** A painkiller overdose can look fine for hours and still be deadly — this is one to take seriously and evacuate.",
+     "detail": "- **Paracetamol / acetaminophen** is the quiet killer: few symptoms at first, then **liver failure over 2–4 days**. The antidote (N-acetylcysteine) works best within 8 hours and you probably don't have it — **get to medical help fast**.\n- **Aspirin** overdose: ringing ears, fast deep breathing, vomiting, confusion.\n- **Ibuprofen/NSAIDs**: stomach pain, later kidney trouble.\n- If they are fully alert and it was within the last hour, activated charcoal (next step) can help.",
+     "next": "charcoal"
+    },
+    {
+     "id": "opioid-od",
+     "type": "action",
+     "text": "**Pinpoint pupils + slow or stopped breathing = opioid overdose. Breathing is the killer.** Give rescue breaths if breathing is inadequate. Give **naloxone** if you have it, and repeat as needed.",
+     "warning": "If breathing is absent or gasping, start [CPR](#/emergency/cpr). Naloxone wears off in 30–90 min and the opioid can outlast it — keep watching and re-dose.",
+     "detail": "Naloxone (Narcan) reverses opioids: give into the nose or muscle, repeat every 2–3 minutes until breathing returns. After it works, keep them on their side and watch — they can slip back under as it wears off. Keep breathing FOR them (rescue breaths) whenever their own breathing is too slow.",
+     "next": "monitor"
+    },
+    {
+     "id": "alcohol-od",
+     "type": "action",
+     "text": "**Put them on their side, keep them warm, and never leave them alone.** Watch breathing and be ready for vomiting.",
+     "detail": "- Danger signs: slow or irregular breathing, cannot be woken, cold/clammy or blue-tinged skin, repeated vomiting, seizures. Support breathing and evacuate.\n- **Cold and low blood sugar** kill drunk people — keep them warm; if they can swallow and are alert, sweet drinks help.\n- **Methanol / antifreeze** (homebrew spirits, windshield fluid, some solvents) causes blindness and death and needs hospital treatment — evacuate immediately if suspected.",
+     "next": "monitor"
+    },
+    {
+     "id": "plant",
+     "type": "action",
+     "text": "**Keep a sample** of the plant, berry, or mushroom (and any vomit) to identify it. Rinse the mouth. Support them and keep them hydrated with small sips if fully alert.",
+     "warning": "With mushrooms, symptoms that start LATE are the dangerous ones — do not be reassured by a slow start.",
+     "detail": "The deadliest mushrooms (Amanita species) cause vomiting and diarrhoea **6–24 hours** after eating, then a false 'recovery', then fatal liver failure days later. Any mushroom poisoning with delayed symptoms needs urgent evacuation. Note what was eaten, when, and by whom — others may have shared it. If fully alert and it was very recent, activated charcoal (next) can help.",
+     "next": "charcoal"
+    },
+    {
+     "id": "unknown",
+     "type": "action",
+     "text": "**Keep the container, label, or a sample** (and any vomit). Treat supportively and watch closely — you can still manage the person even without knowing the poison.",
+     "next": "charcoal"
+    },
+    {
+     "id": "charcoal",
+     "type": "decision",
+     "text": "**Do you have activated charcoal — and is it safe to give?** It only helps some poisons, and only soon after swallowing.",
+     "detail": "Activated charcoal binds many drugs and plant toxins if given within about an hour. It does **NOT** bind alcohols, fuels/solvents, corrosives, or metals (iron, lithium) — skip it for those. **Never** give it to a drowsy or unconscious person: they can breathe it into the lungs.",
+     "options": [
+      {
+       "label": "Yes — person fully alert, swallowed within ~1 hour, not a corrosive/fuel/alcohol",
+       "goto": "charcoal-give"
+      },
+      {
+       "label": "No / not safe to give",
+       "goto": "monitor"
+      }
+     ]
+    },
+    {
+     "id": "charcoal-give",
+     "type": "action",
+     "text": "**Give activated charcoal mixed in water** — about **1 gram per kilogram** of body weight (roughly 25–50 g for an adult). Only if they are fully alert and swallowing safely.",
+     "next": "monitor"
+    },
+    {
+     "id": "monitor",
+     "type": "loop",
+     "text": "**Reassess every few minutes.** Check: are they responding, breathing normally, a good colour? Any new drowsiness, vomiting, seizures, or trouble breathing? Keep them warm and, if fully alert, sipping water.",
+     "loop": {
+      "until": "they are fully recovered, or you have reached medical help",
+      "back_to": "monitor"
+     },
+     "next": "offgrid"
+    },
+    {
+     "id": "offgrid",
+     "type": "info",
+     "text": "**If no help is coming.** Many serious poisonings need antidotes or a hospital. Do the things that keep a person alive: **keep the airway open, keep them breathing (rescue breaths or CPR if needed), keep them warm and hydrated, treat seizures, and save the container or sample.** Read the full document for specifics.",
+     "detail": "**Start moving toward help early — before a crisis — if the exposure was any of these:** paracetamol/acetaminophen, methanol or antifreeze, an organophosphate pesticide, a swallowed button battery, a corrosive, a deadly mushroom, or an opioid you can't keep reversed. Trouble breathing, airway swelling (drooling, voice change, noisy breathing), repeated seizures, or a falling level of consciousness all mean: evacuate now if it is at all possible.",
+     "next": "END"
+    }
+   ]
+  },
+  {
+   "id": "snakebite",
+   "title": "Snakebite",
+   "short": "SNAKEBITE",
+   "icon": "snake",
+   "severity": "urgent",
+   "keywords": [
+    "snakebite",
+    "snake bit me",
+    "venom",
+    "fang marks",
+    "bite swelling",
+    "antivenom"
+   ],
+   "source_doc": "snakebite-treatment.md",
+   "entry_warning": "Move away from the snake. Treat every bite as venomous.",
+   "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
+   "start": "calm",
+   "steps": [
+    {
+     "id": "calm",
+     "type": "action",
+     "text": "**Keep the victim calm and still.** Have them sit or lie down; carry them if possible rather than letting them walk. Panic and exertion pump venom through the body faster — your first medicine is calm.",
+     "next": "immobilize"
+    },
+    {
+     "id": "immobilize",
+     "type": "action",
+     "text": "**Immobilize the bitten limb** with a splint or sling and keep it at about **heart level**.",
+     "next": "rings"
+    },
+    {
+     "id": "rings",
+     "type": "action",
+     "text": "**Remove rings, watches, and tight clothing NOW**, before swelling makes it impossible.",
+     "next": "mark"
+    },
+    {
+     "id": "mark",
+     "type": "action",
+     "text": "**Mark the edge of the swelling** with a pen and write the time next to it. Repeat every 15–30 minutes to track spread.",
+     "timer": {
+      "kind": "stamp",
+      "label": "Bite time",
+      "persist": true
+     },
+     "next": "wash"
+    },
+    {
+     "id": "wash",
+     "type": "action",
+     "text": "**Wash the bite gently** and cover with a clean dressing.",
+     "warning": "Do NOT cut the wound, suck out venom, apply a tourniquet, apply ice, or give alcohol. All of these worsen the injury or speed the venom, and none remove it.",
+     "next": "snake-type"
+    },
+    {
+     "id": "snake-type",
+     "type": "decision",
+     "text": "**Is the snake a known NEUROTOXIC type** — an Australian elapid, coral snake, or similar?",
+     "options": [
+      {
+       "label": "Yes — known neurotoxic elapid",
+       "goto": "pib"
+      },
+      {
+       "label": "No / unsure / viper or rattlesnake",
+       "goto": "evacuate"
+      }
+     ]
+    },
+    {
+     "id": "pib",
+     "type": "action",
+     "text": "**Apply a pressure-immobilization bandage**: a firm wrap of the whole limb (snug as for a sprain) plus a splint. This slows paralysing venom.",
+     "warning": "Do NOT use this for vipers or rattlesnakes — their venom destroys tissue, and trapping it in the limb concentrates that damage.",
+     "next": "evacuate"
+    },
+    {
+     "id": "evacuate",
+     "type": "info",
+     "text": "**Antivenom is the only definitive treatment — evacuate to medical care**, even if symptoms seem mild; envenomation can worsen over hours. Note the snake's colour, pattern, and size **from a safe distance** (a photo is ideal); do not try to catch or kill it. Some bites inject no venom (\"dry bites\"), but **never assume you got one**.",
+     "next": "END"
+    }
+   ]
+  },
+  {
+   "id": "seizure",
+   "title": "Seizure",
+   "short": "SEIZURE",
+   "icon": "brain",
+   "severity": "urgent",
+   "keywords": [
+    "seizure",
+    "convulsion",
+    "fit",
+    "shaking",
+    "epilepsy",
+    "foaming mouth"
+   ],
+   "source_doc": "seizure-response.md",
+   "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
+   "start": "clear",
+   "steps": [
+    {
+     "id": "clear",
+     "type": "action",
+     "text": "**Clear hard and sharp objects away** from the person. Most seizures stop on their own within 1–3 minutes — your job is to protect them from injury while it runs its course.",
+     "next": "cushion"
+    },
+    {
+     "id": "cushion",
+     "type": "action",
+     "text": "**Cushion the head** with something soft — a folded jacket, your hands. Loosen anything tight around the neck. **Do not restrain** the movements.",
+     "warning": "Put NOTHING in the mouth. They cannot swallow their tongue; forcing objects in breaks teeth and blocks the airway.",
+     "next": "time"
+    },
+    {
+     "id": "time",
+     "type": "action",
+     "text": "**Time the seizure from the moment it starts.**",
+     "timer": {
+      "kind": "countdown",
+      "label": "Seizure duration — over 5 min is an emergency",
+      "seconds": 300,
+      "auto": true
+     },
+     "next": "after"
+    },
+    {
+     "id": "after",
+     "type": "action",
+     "text": "**When the shaking stops, roll them into the recovery position** (on their side, head tilted slightly back) so saliva or vomit drains. Confusion and drowsiness afterward are normal. Stay with them until they are fully awake and speak calmly.",
+     "next": "emergency"
+    },
+    {
+     "id": "emergency",
+     "type": "decision",
+     "text": "**Any of these emergency signs?**\n\n- Seizure lasting **more than 5 minutes**\n- Seizures **back-to-back** without waking in between\n- The person's **first-ever seizure**\n- It happened **in water**, caused **injury**, or the person is **pregnant**\n- They do **not wake** within minutes of the shaking stopping",
+     "options": [
+      {
+       "label": "Yes — any of these",
+       "goto": "help",
+       "tone": "danger"
+      },
+      {
+       "label": "None of these",
+       "goto": "causes",
+       "tone": "ok"
+      }
+     ]
+    },
+    {
+     "id": "help",
+     "type": "info",
+     "text": "**Do everything you can to reach help.** A seizure lasting more than 5 minutes (status epilepticus) may not stop on its own and is life-threatening.",
+     "next": "END"
+    },
+    {
+     "id": "causes",
+     "type": "info",
+     "text": "**Think about the cause:** high fever in a child (cool gradually — remove layers, lukewarm cloth; do not plunge into cold water); a head injury in the last days; drinking only plain water without salt after heavy sweating (rehydrate with ORS, not plain water alone); alcohol or medication withdrawal; low blood sugar — **if they wake fully, give sugar**.",
+     "next": "END"
+    }
+   ]
+  },
+  {
+   "id": "drowning",
+   "title": "Drowning",
+   "short": "DROWNING",
+   "icon": "wave",
+   "severity": "life-threat",
+   "keywords": [
+    "drowning",
+    "pulled from water",
+    "fell in water",
+    "not breathing water",
+    "water rescue"
+   ],
+   "source_doc": "drowning-response.md",
+   "entry_warning": "Rescue from shore — do not become the second victim.",
+   "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
+   "start": "rescue",
+   "steps": [
+    {
+     "id": "rescue",
+     "type": "action",
+     "text": "**Reach, throw, row — don't go.** Reach with a stick, paddle, or clothing; throw a rope or anything that floats; row a boat to them. Enter the water only as a last resort, and bring something that floats.",
+     "warning": "A drowning person will climb on you and pull you under.",
+     "next": "check"
+    },
+    {
+     "id": "check",
+     "type": "action",
+     "text": "**Once out of the water, check breathing** — no more than 10 seconds. **Gasping is not breathing.**",
+     "timer": {
+      "kind": "countdown",
+      "label": "Breathing check",
+      "seconds": 10,
+      "auto": true
+     },
+     "next": "call"
+    },
+    {
+     "id": "call",
+     "type": "decision",
+     "text": "**Are they breathing normally?**",
+     "options": [
+      {
+       "label": "Breathing normally",
+       "goto": "hypothermia",
+       "tone": "ok"
+      },
+      {
+       "label": "Not breathing / only gasping",
+       "goto": "breaths",
+       "tone": "danger"
+      }
+     ]
+    },
+    {
+     "id": "breaths",
+     "type": "action",
+     "text": "**Give 5 initial rescue breaths BEFORE starting compressions.** Tilt head, lift chin, seal your mouth over theirs — mouth AND nose for a small child. Drowning arrest comes from lack of oxygen, so ventilation comes first — the opposite of typical adult cardiac arrest.",
+     "next": "cpr"
+    },
+    {
+     "id": "cpr",
+     "type": "action",
+     "text": "**Then continue CPR at 30 compressions to 2 breaths.** Open the CPR protocol and follow it: [CPR](#/emergency/cpr)",
+     "warning": "Do NOT waste time trying to \"drain water\" from the lungs with abdominal thrusts or by hanging them head-down. It does not work and delays CPR.",
+     "next": "vomit"
+    },
+    {
+     "id": "vomit",
+     "type": "action",
+     "text": "**Expect vomiting** — it happens in most drowning resuscitations. **Roll them to the side, clear the mouth, and continue.**",
+     "next": "hypothermia"
+    },
+    {
+     "id": "hypothermia",
+     "type": "action",
+     "text": "**Handle gently — cold water victims are often hypothermic too.** If they are breathing but not fully awake, put them in the **recovery position** (on their side) and keep checking breathing. Remove wet clothing, insulate from the ground, and warm gradually. Do not give up resuscitation early on a cold victim — **\"not dead until warm and dead.\"**",
+     "next": "watch"
+    },
+    {
+     "id": "watch",
+     "type": "info",
+     "text": "**Watch them for 24 hours.** Anyone who inhaled water can deteriorate over the next 24 hours — worsening cough, fast or laboured breathing, unusual tiredness. **Treat new breathing trouble as an emergency.**",
+     "next": "END"
+    }
+   ]
+  },
+  {
+   "id": "heat",
+   "title": "Heat Exhaustion and Heat Stroke",
+   "short": "HEAT",
+   "icon": "sun",
+   "severity": "urgent",
+   "keywords": [
+    "heat stroke",
+    "heat exhaustion",
+    "overheating",
+    "too hot",
+    "sunstroke",
+    "collapsed heat"
+   ],
+   "source_doc": "heat-illness.md",
+   "entry_warning": "The dividing line is the brain: confusion means heat stroke.",
+   "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
+   "start": "triage",
+   "steps": [
+    {
+     "id": "triage",
+     "type": "decision",
+     "text": "**What are you seeing?** Heat illness is a spectrum: cramps → exhaustion → stroke.",
+     "options": [
+      {
+       "label": "Confused, strange behaviour, stumbling, seizure, or collapse — hot skin (dry OR still sweaty)",
+       "goto": "stroke-cool",
+       "tone": "danger"
+      },
+      {
+       "label": "Heavy sweating, weak, nauseous, dizzy, pale clammy skin — but thinking clearly",
+       "goto": "exhaustion"
+      }
+     ]
+    },
+    {
+     "id": "stroke-cool",
+     "type": "action",
+     "text": "**HEAT STROKE — cool aggressively NOW. Cool first, transport second.** Whole-body immersion in cool water (stream, trough, tub) is the best treatment — keep the head supported above water.",
+     "next": "stroke-alt"
+    },
+    {
+     "id": "stroke-alt",
+     "type": "action",
+     "text": "**No immersion available?** Douse continuously with water and fan hard, and put cold packs at the **neck, armpits, and groin**.",
+     "next": "stroke-stop"
+    },
+    {
+     "id": "stroke-stop",
+     "type": "action",
+     "text": "**Stop active cooling once they become alert.** Give nothing by mouth while confused. Then get them to advanced medical care even if they seem recovered — heat stroke injures organs after the crisis passes.",
+     "warning": "Shivering alone is NOT a reason to stop — heat stroke victims often shiver while still dangerously hot.",
+     "next": "END"
+    },
+    {
+     "id": "exhaustion",
+     "type": "action",
+     "text": "**Stop all work.** Move to shade and loosen or remove clothing.",
+     "next": "lie"
+    },
+    {
+     "id": "lie",
+     "type": "action",
+     "text": "**Lie them flat with legs raised.**",
+     "next": "sip"
+    },
+    {
+     "id": "sip",
+     "type": "action",
+     "text": "**Sip water or oral rehydration solution steadily.** Cool with a wet cloth on the skin plus fanning. Recovery should come within 30 minutes.",
+     "timer": {
+      "kind": "countdown",
+      "label": "Recheck in 30 minutes",
+      "seconds": 1800
+     },
+     "next": "recheck"
+    },
+    {
+     "id": "recheck",
+     "type": "decision",
+     "text": "**Recovering within 30 minutes?**",
+     "options": [
+      {
+       "label": "Yes — recovering",
+       "goto": "done",
+       "tone": "ok"
+      },
+      {
+       "label": "No — or the mind is clouding",
+       "goto": "stroke-cool",
+       "tone": "danger"
+      }
+     ]
+    },
+    {
+     "id": "done",
+     "type": "info",
+     "text": "**Keep them at rest in the shade** and continue sips of fluid. Before returning to work: schedule hard work for dawn and dusk, and drink about 0.5–1 litre per hour **with electrolytes or salted food** — plain water alone for hours risks dangerously low sodium.",
+     "next": "END"
+    }
+   ]
+  },
+  {
+   "id": "cold",
+   "title": "Hypothermia and Frostbite",
+   "short": "COLD",
+   "icon": "snow",
+   "severity": "urgent",
+   "keywords": [
+    "frostbite",
+    "frozen fingers",
+    "numb hands",
+    "hypothermia",
+    "shivering",
+    "white skin cold"
+   ],
+   "source_doc": "frostbite-cold-injuries.md",
+   "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
+   "start": "which",
+   "steps": [
+    {
+     "id": "which",
+     "type": "decision",
+     "text": "**Whole body, or a body part?**",
+     "options": [
+      {
+       "label": "Whole body: shivering, clumsy, slurred speech, confused",
+       "goto": "shelter",
+       "tone": "danger"
+      },
+      {
+       "label": "A frozen part: skin hard, waxy, wooden",
+       "goto": "frost-first",
+       "tone": "danger"
+      },
+      {
+       "label": "Skin numb and white but still SOFT (frostnip)",
+       "goto": "frostnip",
+       "tone": "ok"
+      },
+      {
+       "label": "Wet, cold feet: numb, pale, swollen — but not frozen (trench foot)",
+       "goto": "trench"
+      }
+     ]
+    },
+    {
+     "id": "frostnip",
+     "type": "info",
+     "text": "**Frostnip — rewarm it skin-to-skin**: fingers in an armpit, a warm palm on a cheek. No harm done.",
+     "next": "END"
+    },
+    {
+     "id": "shelter",
+     "type": "action",
+     "text": "**Get them into shelter, out of the wind, and off the cold ground** — ground contact steals body heat, so insulate underneath at least as much as above. Remove wet clothing; insulate with dry layers and cover the head and neck.",
+     "next": "warm"
+    },
+    {
+     "id": "warm",
+     "type": "action",
+     "text": "**Apply gentle warmth to the core** — chest, neck, armpits, groin. Give warm sweet drinks **only if fully alert** and able to swallow. **No alcohol.**",
+     "warning": "Do not rub the limbs or apply sudden intense heat — harmful in severe cases. Handle a severely hypothermic person gently.",
+     "next": "shiver"
+    },
+    {
+     "id": "shiver",
+     "type": "info",
+     "text": "**Loss of shivering is a danger sign, not improvement.** Worsening hypothermia: shivering stops, confusion, drowsiness, slow weak pulse. Keep handling gently and seek advanced care.",
+     "next": "END"
+    },
+    {
+     "id": "frost-first",
+     "type": "action",
+     "text": "**Get out of the cold.** Remove wet clothing, and remove **rings and watches** before swelling. Protect the frozen part from bumps and pressure.",
+     "next": "refreeze"
+    },
+    {
+     "id": "refreeze",
+     "type": "decision",
+     "text": "**Could the part refreeze after thawing?** Choose the moment of rewarming deliberately.",
+     "options": [
+      {
+       "label": "No — refreezing is impossible",
+       "goto": "rewarm",
+       "tone": "ok"
+      },
+      {
+       "label": "Yes — it might refreeze",
+       "goto": "keep-frozen",
+       "tone": "danger"
+      }
+     ]
+    },
+    {
+     "id": "keep-frozen",
+     "type": "loop",
+     "text": "**Do NOT rewarm yet** — refreezing destroys tissue far worse than staying frozen a few hours longer. **Walking on frozen feet to reach shelter is acceptable; walking on thawed feet is not.**",
+     "loop": {
+      "until": "You are in shelter and refreezing is impossible — then rewarm.",
+      "back_to": "rewarm"
+     },
+     "next": "END"
+    },
+    {
+     "id": "rewarm",
+     "type": "action",
+     "text": "**Immerse the part in warm water at 37–39°C (99–102°F)** — comfortable to your own elbow, never hot. Keep it there **20–30 minutes**, topping up warm water, until the tissue is soft and red or purple. Severe pain during rewarming is expected — a sign of returning circulation. Give pain relief if available.",
+     "warning": "NEVER rub the part with snow, massage it, or hold it to direct dry heat — a fire or stove will burn tissue that cannot feel.",
+     "timer": {
+      "kind": "countdown",
+      "label": "Rewarm in 37–39°C water",
+      "seconds": 1500
+     },
+     "next": "after-rewarm"
+    },
+    {
+     "id": "after-rewarm",
+     "type": "info",
+     "text": "**Leave blisters intact.** Place dry gauze between fingers and toes, bandage loosely, and elevate. **Do not let the part refreeze** — do not walk on thawed feet.",
+     "next": "END"
+    },
+    {
+     "id": "trench",
+     "type": "action",
+     "text": "**Trench foot — wet and cold above freezing for hours to days.** Get the feet dry: remove wet boots and socks, air and gently dry the feet, and keep them clean. **Rewarm gradually** — body warmth or a warm room, not hot water. Elevate the feet and avoid walking on them where possible. Change into dry socks daily to prevent it coming back.",
+     "warning": "Do not rub the feet, and do not use hot water or direct dry heat — the tissue is fragile.",
+     "next": "END"
+    }
+   ]
+  },
+  {
+   "id": "childbirth",
+   "title": "Emergency Childbirth",
+   "short": "BIRTH",
+   "icon": "baby",
+   "severity": "serious",
+   "keywords": [
+    "baby coming",
+    "labor",
+    "birth",
+    "contractions",
+    "umbilical cord",
+    "bleeding after birth"
+   ],
+   "source_doc": "emergency-childbirth.md",
+   "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
+   "start": "prepare",
+   "steps": [
+    {
+     "id": "prepare",
+     "type": "action",
+     "text": "**Wash your hands thoroughly** and lay out clean cloths or plastic under the mother. Most births proceed normally with little intervention — your job is cleanliness, warmth, and calm support.",
+     "next": "labor"
+    },
+    {
+     "id": "labor",
+     "type": "action",
+     "text": "**Let labor progress at its own pace.** Do not push on the abdomen or tell her to push before she feels the urge.",
+     "next": "crown"
+    },
+    {
+     "id": "crown",
+     "type": "action",
+     "text": "**As the head crowns, support it gently with a clean hand** so it emerges slowly. **Do not pull on the head or body.** Check for the cord around the neck — if present, slip it gently over the head. The shoulders and body usually follow within a contraction or two; the baby will be slippery — hold securely.",
+     "next": "warm"
+    },
+    {
+     "id": "warm",
+     "type": "action",
+     "text": "**Dry the baby vigorously** and place it **skin-to-skin on the mother's chest**, covered with dry cloth. Warmth is critical.",
+     "timer": {
+      "kind": "stamp",
+      "label": "Baby born",
+      "persist": true
+     },
+     "next": "breathing"
+    },
+    {
+     "id": "breathing",
+     "type": "decision",
+     "text": "**Is the baby crying and breathing?** Most do within a minute.",
+     "options": [
+      {
+       "label": "Yes — crying / breathing",
+       "goto": "cord",
+       "tone": "ok"
+      },
+      {
+       "label": "No — not breathing",
+       "goto": "stimulate",
+       "tone": "danger"
+      }
+     ]
+    },
+    {
+     "id": "stimulate",
+     "type": "action",
+     "text": "**Rub the back firmly and flick the soles of the feet.** If the baby still does not breathe after about a minute of drying and stimulation, **start gentle rescue breaths**: cover the baby's mouth AND nose with your mouth and give small puffs — see the infant guidance in [CPR](#/emergency/cpr). Do not give up quickly.",
+     "next": "cord"
+    },
+    {
+     "id": "cord",
+     "type": "action",
+     "text": "**Do not cut the cord early.** Wait until it stops pulsing, then tie it tightly in two places with clean cord (about 5 and 10 cm from the baby) and cut between the ties with a clean blade.",
+     "next": "placenta"
+    },
+    {
+     "id": "placenta",
+     "type": "action",
+     "text": "**The placenta usually delivers within 30 minutes.** If it has not delivered within 30–60 minutes, **treat it as a danger sign** — retained placenta causes severe bleeding.",
+     "warning": "Never pull on the cord.",
+     "next": "massage"
+    },
+    {
+     "id": "massage",
+     "type": "action",
+     "text": "**After the placenta delivers, massage the mother's lower abdomen firmly** until the uterus feels like a hard ball — this limits bleeding. Put the baby to the breast; nursing helps the uterus contract.",
+     "next": "danger"
+    },
+    {
+     "id": "danger",
+     "type": "info",
+     "text": "**Danger signs — seek skilled help:** heavy bleeding, feet or cord appearing first, or labor lasting many hours without progress. These are emergencies beyond home care.",
+     "next": "END"
+    }
+   ]
+  }
+ ]
 }

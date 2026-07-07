@@ -1,6 +1,6 @@
 {
   "name": "Needfire \u2014 Seed Corpus",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "license": "CC0-1.0",
   "description": "Original starter reference documents bundled with Needfire so the system works end-to-end offline out of the box. This is a small demonstration set, NOT a substitute for the full downloadable corpus. Written for Needfire and released into the public domain (CC0).",
   "disclaimer": "General reference only. Not professional medical, legal, chemical, or engineering advice. For anything affecting health or safety, read the primary source and use trained judgement.",
@@ -434,8 +434,8 @@
       "title": "Poisoning First Aid",
       "domain": "medicine",
       "tier": "C1",
-      "bytes": 2219,
-      "sha256": "7f68fc0fe020d28656adfa1357965b7216003f25447b7af1458b267f510233e0"
+      "bytes": 6981,
+      "sha256": "2213d1c967adabf889eb6956b48b5a1122a126acb08f223625d453a22c2ec0bf"
     },
     {
       "file": "preparing-wild-game.md",
