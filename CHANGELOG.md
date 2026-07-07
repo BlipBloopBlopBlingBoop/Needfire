@@ -31,13 +31,26 @@ evacuate), and expands the underlying documents to match.
   red flags), an activated-charcoal decision, an ongoing-monitoring loop, and an
   explicit "if no help is coming / when to evacuate" step. Uses the collapsible
   "More detail" field to carry depth without cluttering each screen.
+- **Severe bleeding** rebuilt (7 → **12 steps**): direct pressure → *where is it*
+  (limb / junctional / torso / other), wound packing, tourniquet with improvised
+  windlass and second-tourniquet guidance, an **off-grid tourniquet-conversion**
+  step (swap to a pressure dressing when help is hours/days away), sucking-chest
+  and abdominal-evisceration handling, shock treatment, and multi-day aftercare.
+- **Anaphylaxis** rebuilt (8 → **11 steps**) with a **"do you have adrenaline?"**
+  branch — the off-grid reality many kits face — including real no-adrenaline
+  management (positioning, inhaler, airway, evacuate), correct dosing, position
+  branches, repeat-dose timer, and biphasic watch.
 
-### Documents
-- **poisoning-first-aid.md** expanded (~2 KB → ~7 KB) into a real off-grid
-  reference: universal rules, decontamination by route, and per-class management
-  (corrosives, hydrocarbons, pesticides, medicines incl. paracetamol/opioid/
-  alcohol, plants & mushrooms, gases/CO, botulism), activated-charcoal guidance,
-  and ongoing care / evacuation triggers.
+### Documents (expanded to real off-grid depth)
+- **poisoning-first-aid.md** (~2 KB → ~7 KB): universal rules, decontamination by
+  route, per-class management (corrosives, hydrocarbons, pesticides, medicines
+  incl. paracetamol/opioid/alcohol, plants & mushrooms, gases/CO, botulism),
+  activated-charcoal guidance, and ongoing care / evacuation triggers.
+- **control-bleeding.md** (~1.5 KB → ~5 KB): direct pressure, wound packing,
+  tourniquet + improvised windlass + conversion, junctional/torso wounds, shock,
+  and days-long aftercare/infection watch.
+- **anaphylaxis-allergy.md** expanded with an off-grid "no adrenaline available"
+  section, fuller recognition, and position/biphasic detail.
 
 ## 2.6.0 — 2026-07-07
 

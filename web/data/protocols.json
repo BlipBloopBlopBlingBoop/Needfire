@@ -171,78 +171,135 @@
     "hemorrhage",
     "cut",
     "wound",
-    "tourniquet"
+    "tourniquet",
+    "amputation",
+    "gunshot",
+    "stab",
+    "pressure dressing"
    ],
    "source_doc": "control-bleeding.md",
    "entry_warning": "Severe bleeding can be fatal in minutes. Act immediately.",
    "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
-   "start": "pressure",
+   "start": "press",
    "steps": [
     {
-     "id": "pressure",
+     "id": "press",
      "type": "action",
-     "text": "**Apply firm direct pressure** on the wound with a clean cloth or your hand. Press HARD and do not release to \"check\" — keep pressure constant.",
-     "detail": "Protect yourself from blood contact if possible (gloves, a barrier), but do not delay for a serious arterial bleed."
+     "text": "**Press HARD on the wound, right now.** Use a clean cloth or your bare hand. Put your weight into it and **do not lift off to look** — constant pressure is what clots the blood.",
+     "detail": "Kneel and use both hands and your body weight. Any cloth works — a shirt, a scarf. Protect yourself from blood contact (gloves, a plastic bag) if you can grab it in a second, but do not delay a spurting bleed to find a barrier. Hold pressure for a full 10 minutes before you even think about easing off.",
+     "next": "where"
     },
     {
-     "id": "deep",
-     "type": "action",
-     "text": "**Deep wound? Pack it.** Pack gauze or clean cloth firmly INTO the wound, then keep pressing on top."
-    },
-    {
-     "id": "working",
+     "id": "where",
      "type": "decision",
-     "text": "**Is the bleeding slowing after several minutes of hard, constant pressure?**",
+     "text": "**Where is the serious bleeding?** It decides whether a tourniquet is an option.",
      "options": [
       {
-       "label": "Yes — slowing",
-       "goto": "keep-on",
-       "tone": "ok"
+       "label": "An arm or a leg",
+       "goto": "limb"
       },
       {
-       "label": "No — still life-threatening (limb)",
-       "goto": "tourniquet",
+       "label": "Neck, armpit, or groin",
+       "goto": "junctional",
        "tone": "danger"
       },
       {
-       "label": "No — not on a limb",
-       "goto": "keep-pressing",
+       "label": "Chest or abdomen",
+       "goto": "torso",
+       "tone": "danger"
+      },
+      {
+       "label": "Scalp or elsewhere",
+       "goto": "packable"
+      }
+     ]
+    },
+    {
+     "id": "limb",
+     "type": "action",
+     "text": "**Pack a deep or gaping wound and press.** Push clean gauze or cloth firmly INTO the wound, down onto the bleeding point, then press hard on top for a solid 10 minutes.",
+     "detail": "Keep stuffing more material in if it fills with blood — do not pull the packing back out. Raising the limb can help a little, but pressure is what stops it. If a fracture is likely, avoid moving the limb more than you must.",
+     "next": "limb-working"
+    },
+    {
+     "id": "limb-working",
+     "type": "decision",
+     "text": "**After a solid few minutes of hard pressure — is the bleeding controlled?**",
+     "options": [
+      {
+       "label": "Yes — slowed or stopped",
+       "goto": "dress",
+       "tone": "ok"
+      },
+      {
+       "label": "No — still bleeding badly",
+       "goto": "tourniquet",
        "tone": "danger"
       }
      ]
     },
     {
-     "id": "keep-pressing",
-     "type": "loop",
-     "text": "**Keep maximum direct pressure.** For wounds where a tourniquet can't go (neck, torso, groin), packing + relentless pressure is the treatment.",
-     "loop": {
-      "until": "Bleeding controlled or trained help takes over.",
-      "back_to": "keep-pressing"
-     },
-     "next": "shock"
-    },
-    {
      "id": "tourniquet",
      "type": "action",
-     "text": "**Apply a tourniquet** 5–7 cm (2–3 in) ABOVE the wound — not on a joint. Tighten until the bleeding STOPS. It should hurt; that means it's working.",
-     "warning": "Once on, do NOT loosen or remove it. Note the time.",
+     "text": "**Apply a tourniquet — high and tight.** 5–7 cm (2–3 in) above the wound, **not over a joint**. Tighten until the bleeding STOPS and you cannot feel a pulse below it. It will hurt — that means it is working.",
+     "warning": "Once it is on and working, do NOT loosen it to peek. Write the time on their skin or forehead.",
      "timer": {
       "kind": "stamp",
       "label": "Tourniquet applied",
       "persist": true
      },
+     "detail": "- **No manufactured tourniquet?** Improvise: a band **at least 5 cm (2 in) wide** (a strip of cloth, a belt, a triangular bandage — never thin cord or wire, which cuts in) with a strong stick as a **windlass**. Tie the band, tie the stick over the knot, twist the stick to tighten until bleeding stops, then tie the stick in place so it can't unwind.\n- **Still bleeding?** Put a **second tourniquet** just above the first and tighten it too.\n- **Amputation or a mangled limb:** tourniquet and leave it — do not try to convert it.",
+     "next": "convert"
+    },
+    {
+     "id": "convert",
+     "type": "info",
+     "text": "**Off-grid: help hours or days away?** A tourniquet is meant for about 2 hours. If it has been on **under ~2 hours**, the bleeding is fully controlled, and the limb is not mangled or amputated, you can try to **swap it for a packed pressure dressing** so the limb survives.",
+     "detail": "How to convert: pack the wound and put a firm pressure bandage on it, then **slowly loosen** the tourniquet (leave it in place, just loose) and watch closely. If bleeding restarts, **re-tighten it at once and leave it on** — do not try again. Do NOT attempt a conversion if you cannot watch the limb constantly, if the tourniquet has already been on more than ~6 hours, or if the person is in shock — in those cases leave it on and evacuate. Releasing a long-applied tourniquet without medical support can be dangerous.",
      "next": "shock"
     },
     {
-     "id": "keep-on",
+     "id": "dress",
      "type": "action",
-     "text": "**Do not remove the soaked dressing** — add more on top. Bandage firmly to hold the pressure. Keep the wound covered and the person still.",
+     "text": "**Bandage firmly to hold the pressure.** Bind the packing/dressing tightly enough to keep pressure on the wound. If blood soaks through, **do NOT remove it — add more on top** and keep pressing.",
      "next": "shock"
+    },
+    {
+     "id": "junctional",
+     "type": "loop",
+     "text": "**Neck, armpit, and groin can't take a tourniquet — pack them HARD.** Shove gauze or clean cloth right into the wound, onto the bleeding point, and press with your full body weight. Keep pushing more packing in.",
+     "warning": "Never tie anything around the neck. For the neck, press directly on the wound only.",
+     "loop": {
+      "until": "the bleeding is controlled, or trained help takes over",
+      "back_to": "junctional"
+     },
+     "next": "shock"
+    },
+    {
+     "id": "torso",
+     "type": "info",
+     "text": "**You cannot stop bleeding inside the chest or belly with pressure.** Keep the person still and flat, treat for shock, and get moving toward help. Cover any open wound.",
+     "detail": "- **Chest wound that bubbles or sucks air** ('sucking chest wound'): cover it with something airtight (plastic, tape wrapper) taped down on **three sides only**, leaving one edge open to vent.\n- **Abdominal wound with organs showing:** do NOT push them back in — cover them with a clean cloth dampened with clean water and keep it moist.\n- Internal bleeding (belly, pelvis, thigh) shows as shock with no obvious external blood — handle gently and evacuate.",
+     "next": "shock"
+    },
+    {
+     "id": "packable",
+     "type": "action",
+     "text": "**Pack and press, then dress.** Pack the wound if it is deep, keep firm pressure at least 10 minutes, then bandage firmly. Scalp wounds bleed dramatically but usually stop with steady pressure.",
+     "next": "dress"
     },
     {
      "id": "shock",
+     "type": "action",
+     "text": "**Treat for shock.** Lay them flat and raise the legs (if no leg/spine injury). Keep them WARM — cover them and insulate from the ground. Reassure them and keep watching breathing and response.",
+     "detail": "Signs of shock from blood loss: pale, cold, clammy, grey skin; a fast weak pulse; fast breathing; thirst; restlessness then drowsiness. If they are fully alert and have no belly wound and may not reach care for a long time, small sips of water or oral rehydration solution help — stop if they feel sick. Nothing by mouth if drowsy or a belly injury is possible.",
+     "next": "aftercare"
+    },
+    {
+     "id": "aftercare",
      "type": "info",
-     "text": "**Watch for shock:** pale, cold, clammy skin; rapid weak pulse; rapid breathing; confusion; thirst. Lay them flat, raise the legs if no spinal or leg injury, keep them warm, keep monitoring. Seek the highest level of care available.",
+     "text": "**Ongoing care off-grid.** Keep the dressing on and the part still. Watch for re-bleeding and, over the next days, for **infection** (spreading redness, swelling, heat, pus, fever). Anyone who needed a tourniquet or wound packing must be evacuated to real care.",
+     "detail": "Clean around the wound (not into a fresh clot), immobilise the limb, and keep it slightly raised. Change the outer dressing if soaked or dirty, but leave a clot-holding packing undisturbed. Ensure tetanus protection. See *Wound Care and Infection* for cleaning, closure, and infection management over the following days.",
      "next": "END"
     }
    ]
@@ -478,31 +535,65 @@
    "icon": "bee",
    "severity": "life-threat",
    "keywords": [
+    "anaphylaxis",
     "allergic reaction",
     "epipen",
+    "epinephrine",
+    "adrenaline",
     "bee sting",
-    "swelling face",
+    "swelling throat",
     "hives",
-    "throat closing"
+    "no epipen"
    ],
    "source_doc": "anaphylaxis-allergy.md",
-   "entry_warning": "Epinephrine first and fast — the dangerous mistake is giving it late.",
+   "entry_warning": "Trouble breathing or throat swelling after a sting, food, or drug = act NOW.",
    "disclaimer": "If you can call your local emergency number (911 / 112), do it now. General reference only, not a substitute for trained medical care — hand over to a trained responder as soon as one is available.",
-   "start": "epi",
+   "start": "recognise",
    "steps": [
+    {
+     "id": "recognise",
+     "type": "info",
+     "text": "**Is this anaphylaxis?** Soon after a sting, food, or medicine, a severe allergic reaction shows as any of: swelling of the **lips, tongue, or throat**; a **hoarse voice, wheeze, or trouble breathing**; widespread **hives or flushing**; vomiting or belly cramps; **dizziness or collapse** (low blood pressure).",
+     "warning": "Trouble breathing or any throat/mouth swelling, or faintness, means a life-threatening reaction — act now.",
+     "next": "have-epi"
+    },
+    {
+     "id": "have-epi",
+     "type": "decision",
+     "text": "**Do you have adrenaline (an auto-injector / EpiPen, or a vial and syringe)?**",
+     "options": [
+      {
+       "label": "Yes — adrenaline available",
+       "goto": "epi",
+       "tone": "ok"
+      },
+      {
+       "label": "No adrenaline",
+       "goto": "no-epi",
+       "tone": "danger"
+      }
+     ]
+    },
     {
      "id": "epi",
      "type": "action",
-     "text": "**Give epinephrine (adrenaline) NOW** into the muscle of the **outer mid-thigh**, through clothing if needed.\n\n- **Adult: 0.3 mg** auto-injector\n- **Child: 0.15 mg** (roughly under 25–30 kg / 55–66 lb)",
-     "detail": "Suspect anaphylaxis when, soon after a sting, food, or medicine: swelling of the lips, tongue, or throat; hoarse voice or wheeze; widespread hives or flushing; vomiting or cramps; dizziness or collapse. Epinephrine given early is very safe.",
-     "warning": "Antihistamines are NOT a substitute for epinephrine. They may ease itching but do nothing for the airway or blood pressure — never delay epinephrine to try them.",
+     "text": "**Give adrenaline (epinephrine) NOW** into the muscle of the **outer mid-thigh**, through clothing if needed.\n\n- **Adult: 0.3 mg** (auto-injector, or 0.3 mL of 1 mg/mL)\n- **Child: 0.15 mg** (roughly under 25–30 kg / 55–66 lb)",
+     "warning": "Antihistamines are NOT a substitute for adrenaline — they do nothing for the airway or blood pressure. Never delay adrenaline to try them.",
+     "detail": "Adrenaline given early is very safe — when in doubt, give it. Hold the injector in the thigh for several seconds; massage the spot. Note the time. Keep a second dose within reach.",
+     "next": "position"
+    },
+    {
+     "id": "no-epi",
+     "type": "action",
+     "text": "**No adrenaline — do everything else, hard, and evacuate desperately.** There is no true substitute, but good positioning and airway care save lives while you get help.",
+     "detail": "- **Position** (next step) is critical — done wrong it kills.\n- If they have an **asthma-type wheeze and a reliever inhaler**, give it (up to 10 puffs) — it can ease the airways.\n- **Antihistamines** (if you have them) help itching and hives only, not the airway or blood pressure — give but do not rely on them.\n- Be ready to open the airway and give **rescue breaths / CPR** if breathing stops.\n- Send for help / adrenaline the instant symptoms appear — every minute counts.",
      "next": "position"
     },
     {
      "id": "position",
      "type": "decision",
-     "text": "**Position them — how are they?**",
-     "warning": "Do NOT stand the person up suddenly — a sudden upright move can cause fatal collapse when blood pressure is low.",
+     "text": "**Position them — how are they right now?**",
+     "warning": "Do NOT let them stand or sit up suddenly, and do not walk them — a sudden upright move can cause fatal collapse when blood pressure is low.",
      "options": [
       {
        "label": "Breathing is hard",
@@ -517,7 +608,7 @@
        "goto": "left-side"
       },
       {
-       "label": "None of these",
+       "label": "Faint / none of these",
        "goto": "flat"
       }
      ]
@@ -525,42 +616,43 @@
     {
      "id": "sit",
      "type": "action",
-     "text": "Let them **sit up** to ease breathing. Keep watching them.",
+     "text": "Let them **sit up** to ease breathing — but keep them from standing. Stay with them.",
      "next": "reassess"
     },
     {
      "id": "recovery",
      "type": "action",
-     "text": "Put them in the **recovery position** (on their side) so the airway stays clear.",
+     "text": "Put them in the **recovery position** (on their side) so the airway stays clear and vomit drains.",
      "next": "reassess"
     },
     {
      "id": "left-side",
      "type": "action",
-     "text": "Lay her on her **left side**.",
+     "text": "Lay her on her **left side** (takes the womb's weight off the big vein).",
      "next": "reassess"
     },
     {
      "id": "flat",
      "type": "action",
-     "text": "**Lie them flat and raise the legs.**",
+     "text": "**Lie them flat and raise the legs** to keep blood going to the heart and brain.",
      "next": "reassess"
     },
     {
      "id": "reassess",
      "type": "action",
-     "text": "**Repeat the dose after 5–15 minutes if they are not clearly improving.** Keep a second epinephrine dose within reach.",
+     "text": "**Reassess in 5 minutes.** If you have adrenaline and they are not clearly improving (or are worsening), **repeat the dose after 5–15 minutes**. Keep watching the airway and breathing.",
      "timer": {
       "kind": "countdown",
-      "label": "Reassess — repeat dose if not improving",
+      "label": "Reassess — repeat adrenaline if not improving",
       "seconds": 300
      },
+     "detail": "If breathing stops or they become unresponsive and are not breathing normally, start [CPR](#/emergency/cpr). Scrape out a bee stinger sideways (don't pinch it). A second adrenaline dose is common and expected — do not hold back if they are not improving.",
      "next": "biphasic"
     },
     {
      "id": "biphasic",
      "type": "info",
-     "text": "**Watch them closely for at least 4–6 hours** — symptoms can return hours later with no new exposure (a biphasic reaction). Watch longer after a severe reaction. Remove any remaining stinger by scraping it out. **Evacuate to medical care even if they recover fully.**",
+     "text": "**Even after they recover, watch closely for at least 4–6 hours** — symptoms can come back hours later with no new exposure (a biphasic reaction), and longer after a severe attack. **Evacuate to medical care even if they seem fully recovered**, and especially if adrenaline was needed or unavailable.",
      "next": "END"
     }
    ]

@@ -26,8 +26,8 @@
       "title": "Anaphylaxis and Severe Allergic Reactions",
       "domain": "medicine",
       "tier": "C1",
-      "bytes": 2031,
-      "sha256": "a78115d7946a628863aa0e01dc5ad9870492d58660a173242179425cf878e75a"
+      "bytes": 3876,
+      "sha256": "2bc683c60e7bba9d775d87b7df7eb9a4ab7063d5aae075cbdee366df6a1603c1"
     },
     {
       "file": "antibiotics-overview.md",
@@ -114,8 +114,8 @@
       "title": "Controlling Severe Bleeding",
       "domain": "medicine",
       "tier": "C1",
-      "bytes": 1497,
-      "sha256": "75a4d22d23692179107a877528450126efe5b34439dad19e67136ca06de88795"
+      "bytes": 4805,
+      "sha256": "fb36419019b2f8e91f7787efedf5d5f61871d20f5e4c6ee195b49f8a649bd613"
     },
     {
       "file": "cooking-methods-offgrid.md",
