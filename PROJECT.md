@@ -56,7 +56,8 @@ The web UI is built for the situations the Bothy is actually used in:
   document reader with **pin-to-kit** (pinned docs appear on the home screen).
 - **SYSTEM** — a hub for running the box: the old **Status** page plus
   **AI Models** (install/manage local models via Ollama from the UI — see
-  below), **Content** (paste the real URL for a catalog source, add any
+  below), **Content** (one-click **Download** for each catalog source — Needfire
+  finds the current Kiwix build automatically, no link to paste — plus add any
   download URL for a ZIM/PDF/text, import a file already on the machine, then
   **Reindex** to make it searchable), **Studio**, and a "build an appliance
   image" how-to.

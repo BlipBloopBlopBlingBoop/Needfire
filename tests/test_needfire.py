@@ -318,6 +318,82 @@ class TestUrlPolicy(unittest.TestCase):
         self.assertIsNone(entry.get("sha256"))
 
 
+class TestCorpusResolve(unittest.TestCase):
+    """One-click resolution: find the current dated Kiwix build from a directory
+    listing, no hand-pasted URL."""
+
+    @classmethod
+    def setUpClass(cls):
+        from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+        cls.sha = "ab" * 32
+        listing = (
+            b'<html><body>'
+            b'<a href="wikimed_en_all_maxi_2024-05.zim">may</a>'
+            b'<a href="wikimed_en_all_maxi_2024-11.zim">nov</a>'   # newest
+            b'<a href="wikimed_en_all_maxi_2023-01.zim">old</a>'
+            b'<a href="other_project_2025-01.zim">unrelated</a>'
+            b'</body></html>'
+        )
+        sha_body = (cls.sha + "  wikimed_en_all_maxi_2024-11.zim\n").encode()
+
+        class Handler(BaseHTTPRequestHandler):
+            def do_GET(self):
+                if self.path.endswith(".sha256"):
+                    body = sha_body
+                elif self.path.rstrip("/").endswith("/dir"):
+                    body = listing
+                else:
+                    self.send_response(404); self.end_headers(); return
+                self.send_response(200)
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+
+            def log_message(self, *a):
+                pass
+
+        cls.httpd = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        threading.Thread(target=cls.httpd.serve_forever, daemon=True).start()
+        cls.dir = f"http://127.0.0.1:{cls.httpd.server_address[1]}/dir"
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.httpd.shutdown()
+
+    def test_resolves_latest_dated_build(self):
+        url = corpus._resolve_kiwix_latest(self.dir, "wikimed_en_all_maxi")
+        self.assertTrue(url.endswith("wikimed_en_all_maxi_2024-11.zim"), url)
+
+    def test_resolve_download_url_returns_url_and_autopinned_sha(self):
+        src = {"id": "x", "dir": self.dir, "base": "wikimed_en_all_maxi", "url": None}
+        url, sha = corpus.resolve_download_url(src)
+        self.assertTrue(url.endswith("2024-11.zim"))
+        self.assertEqual(sha, self.sha)  # pulled from the .sha256 sidecar
+
+    def test_explicit_url_wins_over_lookup(self):
+        src = {"id": "x", "dir": self.dir, "base": "wikimed_en_all_maxi",
+               "url": "https://example.com/pinned.zim", "sha256": None}
+        url, _sha = corpus.resolve_download_url(src)
+        self.assertEqual(url, "https://example.com/pinned.zim")
+
+    def test_is_resolvable(self):
+        self.assertTrue(corpus.is_resolvable({"dir": self.dir, "base": "b"}))
+        self.assertTrue(corpus.is_resolvable({"url": "https://x/y.zim"}))
+        self.assertFalse(corpus.is_resolvable({"url": "https://x/<placeholder>"}))
+        self.assertFalse(corpus.is_resolvable({"url": None}))
+
+    def test_unresolvable_source_raises(self):
+        with self.assertRaises(ValueError):
+            corpus.resolve_download_url({"id": "x", "url": None})
+
+    def test_catalog_kiwix_sources_are_one_click(self):
+        # every shipped Kiwix source resolves with no pasting; only the
+        # region-specific map extract still needs a manual URL
+        need_url = [s["id"] for s in corpus.load_catalog()
+                    if not corpus.is_resolvable(s)]
+        self.assertEqual(need_url, ["osm-region"], need_url)
+
+
 class TestDownloadPinned(unittest.TestCase):
     """A pinned sha256 is enforced before the file lands in the library."""
 

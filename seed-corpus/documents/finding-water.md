@@ -31,3 +31,6 @@ purifying it early, before dehydration impairs judgement.
 - Do not drink seawater or urine; they worsen dehydration.
 - Stagnant, foul-smelling, or discoloured water is a last resort even after
   treatment.
+
+> General reference only, not professional advice. Treat all wild water as
+> unsafe until purified — see *Water Purification Methods*.

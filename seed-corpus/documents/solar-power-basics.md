@@ -37,3 +37,6 @@ Example: 600 Wh/day, 2 days autonomy → ~1,400 Wh battery; at 3.5 sun hours →
 - Do not charge LiFePO4 below 0 °C — it damages the cells. Insulate the battery.
 - Fuse every source line. Measure real consumption with an inline watt-meter and
   size from your own numbers, not estimates.
+
+> General reference only, not professional electrical advice. Wiring and
+> batteries carry real fire and shock risk — see *Electrical Safety*.

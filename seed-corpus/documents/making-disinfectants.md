@@ -19,7 +19,7 @@ surfaces, dishes, and sickroom spills. **Mix fresh** — diluted bleach loses
 strength within about a day, and full-strength bleach also degrades over months,
 especially warm.
 - **General surfaces / dishes:** about **1 part bleach to 100 parts water**
-  (roughly **2 teaspoons of 5–6% bleach per litre**, ~1 tablespoon per gallon).
+  (roughly **2 teaspoons of 5–6% bleach per litre**, ~2.5 tablespoons per US gallon).
   Wet the surface, leave it **at least 1–2 minutes** (longer is better), then air
   dry.
 - **Blood, vomit, faeces, or sickroom spills:** a strong **1 part bleach to 10

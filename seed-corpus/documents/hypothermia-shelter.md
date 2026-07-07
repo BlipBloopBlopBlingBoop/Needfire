@@ -31,3 +31,6 @@ shivering is a danger sign, not improvement.
 - Apply gentle warmth to the core (chest, neck, armpits, groin). Avoid rubbing
   limbs or sudden intense heat, which can be harmful in severe cases.
 - Handle a severely hypothermic person gently and seek advanced care.
+
+> General reference only, not a substitute for trained medical care. If you can
+> reach professional help or a trained responder, do so.

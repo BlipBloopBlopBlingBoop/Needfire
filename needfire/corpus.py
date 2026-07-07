@@ -46,6 +46,76 @@ def _check_url_policy(url, pinned_sha=None):
     raise ValueError("URL must start with http:// or https://")
 
 
+# ---- one-click URL resolution ----------------------------------------------
+# Kiwix ZIM filenames are dated (e.g. wikimed_en_all_maxi_2024-06.zim) and roll
+# forward over time, which is why the shipped catalog can't hard-code a link.
+# Instead each source names a Kiwix directory + base name, and we look up the
+# current dated file at download time — so the UI is one-click, not paste-a-link,
+# and keeps working as Kiwix publishes newer builds.
+
+_RESOLVE_TIMEOUT = 30
+
+
+def _http_get_text(url, timeout=_RESOLVE_TIMEOUT):
+    req = urllib.request.Request(url, headers={"User-Agent": "Needfire-corpus"})
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        charset = resp.headers.get_content_charset() or "utf-8"
+        return resp.read().decode(charset, "replace")
+
+
+def _resolve_kiwix_latest(dir_url, base, timeout=_RESOLVE_TIMEOUT):
+    """Find the newest dated ZIM (`<base>_YYYY-MM.zim`) in a Kiwix autoindex
+    directory listing. Returns the absolute download URL."""
+    if not dir_url.endswith("/"):
+        dir_url += "/"
+    html = _http_get_text(dir_url, timeout=timeout)
+    fname_re = re.compile(r"^" + re.escape(base) + r"_\d{4}-\d{2}(?:-\d{2})?\.zim$")
+    names = []
+    for href in re.findall(r'href="([^"]+)"', html):
+        name = urllib.parse.unquote(href.rsplit("/", 1)[-1])
+        if fname_re.match(name):
+            names.append(name)
+    if not names:
+        raise ValueError(f"no current build matching {base}_*.zim at {dir_url}")
+    return urllib.parse.urljoin(dir_url, max(names))  # YYYY-MM sorts chronologically
+
+
+def _fetch_sidecar_sha256(file_url, timeout=_RESOLVE_TIMEOUT):
+    """Best-effort fetch of a Kiwix `<file>.sha256` sidecar to auto-pin integrity
+    on a one-click download. Returns the lowercase hash or None."""
+    try:
+        text = _http_get_text(file_url + ".sha256", timeout=timeout)
+    except Exception:  # noqa: BLE001 - integrity pin is best-effort
+        return None
+    m = re.search(r"\b([a-fA-F0-9]{64})\b", text)
+    return m.group(1).lower() if m else None
+
+
+def is_resolvable(source):
+    """True when a source can be downloaded with no hand-pasted URL: it has a
+    real explicit URL, or a Kiwix directory + base name we can look up."""
+    url = (source.get("url") or "").strip()
+    if url and "<" not in url:
+        return True
+    return bool(source.get("dir") and source.get("base"))
+
+
+def resolve_download_url(source):
+    """Return (url, sha256) for a source, discovering the current Kiwix filename
+    when the catalog gives a `dir` + `base` instead of a fixed link. An explicit
+    (or user-overridden) real URL always wins. Raises if nothing resolves."""
+    url = (source.get("url") or "").strip()
+    if url and "<" not in url:
+        return url, ((source.get("sha256") or "").strip().lower() or None)
+    d, base = source.get("dir"), source.get("base")
+    if d and base:
+        resolved = _resolve_kiwix_latest(d, base)
+        sha = ((source.get("sha256") or "").strip().lower()
+               or _fetch_sidecar_sha256(resolved))
+        return resolved, sha
+    raise ValueError("no download URL for this source — set one below")
+
+
 def _overrides_path():
     return config.NEEDFIRE_HOME / "catalog-overrides.json"
 
@@ -185,9 +255,11 @@ def installed_status():
         entry = dict(s)
         entry["installed"] = present
         entry["installed_bytes"] = dest.stat().st_size if present else 0
-        # placeholder: the shipped catalog uses <angle-bracket> stand-ins for the
-        # dated Kiwix filenames; those need a real URL before they can download
-        entry["placeholder"] = "<" in (s.get("url") or "")
+        # resolvable: can download with one click (explicit URL, or a Kiwix
+        # dir+base we look up). placeholder: still needs a hand-pasted URL
+        # (e.g. the region-specific map extract).
+        entry["resolvable"] = is_resolvable(s)
+        entry["placeholder"] = not entry["resolvable"]
         # pinned: an expected hash ships with the source and is enforced at
         # download time (vs. sha256_recorded, which is trust-on-first-use)
         entry["pinned"] = bool(s.get("sha256"))
@@ -236,12 +308,14 @@ class DownloadJob:
             if not source:
                 self._set(sid, state="error", error="not in catalog")
                 continue
-            url = source.get("url", "")
-            if not url or "<" in url:  # placeholder stand-in, not a real URL
-                self._set(sid, state="skipped", error="placeholder URL — set a real one")
+            try:
+                self._set(sid, state="resolving")
+                url, sha = resolve_download_url(source)  # finds the current Kiwix file
+            except Exception as exc:  # noqa: BLE001 - no URL / offline / layout change
+                self._set(sid, state="skipped", error=str(exc))
                 continue
             try:
-                entry = self._download_one(sid, source)
+                entry = self._download_one(sid, source, url=url, sha256=sha)
                 manifest = _merge(manifest, entry)
                 save_manifest(manifest)
                 self._set(sid, state="done")
@@ -250,12 +324,15 @@ class DownloadJob:
         with self.lock:
             self.active = False
 
-    def _download_one(self, sid, source):
-        _check_url_policy(source["url"], pinned_sha=source.get("sha256"))
+    def _download_one(self, sid, source, url=None, sha256=None):
+        if url is None:  # standalone callers (and tests) resolve on demand
+            url, sha256 = resolve_download_url(source)
+        expected = (sha256 or source.get("sha256") or "").strip().lower()
+        _check_url_policy(url, pinned_sha=expected or None)
         dest = _dest_for(source)
         tmp = dest.with_suffix(dest.suffix + ".part")
         resume_from = tmp.stat().st_size if tmp.exists() else 0
-        req = urllib.request.Request(source["url"])
+        req = urllib.request.Request(url)
         if resume_from:
             req.add_header("Range", f"bytes={resume_from}-")
         sha = hashlib.sha256()
@@ -291,7 +368,6 @@ class DownloadJob:
                     written += len(block)
                     self._set(sid, bytes=written)
         digest = sha.hexdigest()
-        expected = (source.get("sha256") or "").strip().lower()
         if expected and digest != expected:
             # a corrupt .part would poison every resume attempt — discard it
             tmp.unlink(missing_ok=True)
@@ -306,7 +382,7 @@ class DownloadJob:
             "bytes": dest.stat().st_size,
             "sha256": digest,
             "license": source.get("license"),
-            "source": source["url"],
+            "source": url,
             "placement": "hot" if source.get("tier") == "C1" else "cold",
             "added": time.strftime("%Y-%m-%d"),
         }

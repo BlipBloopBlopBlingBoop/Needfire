@@ -1,7 +1,7 @@
 {
   "name": "Needfire — Corpus Catalog",
-  "version": "1.0.0",
-  "note": "Curated openly-licensed knowledge sources. Sizes are approximate and drift over time; verify against the live Kiwix library (https://library.kiwix.org) before large downloads. URLs marked with a <...> placeholder must be set to a current download link (the Kiwix filenames are dated). When you fill in a real URL, also set `sha256` to the publisher's hash if available (Kiwix publishes a .sha256 file next to each ZIM) — pinned hashes are enforced at download time; unpinned downloads are hashed on arrival and re-checkable with `python3 -m needfire verify`. Only download what you are licensed to use in your jurisdiction.",
+  "version": "1.1.0",
+  "note": "Curated openly-licensed knowledge sources. Kiwix ZIM filenames are dated and roll forward over time, so each source names a Kiwix directory (`dir`) plus a base name (`base`) instead of a fixed link; Needfire looks up the current build at download time, so the UI is one-click with nothing to paste. It also auto-pins the publisher's SHA-256 from the `.sha256` sidecar next to each ZIM when available. You can still override any source's URL by hand (a local mirror, a specific build) via the Content page or `set_source_url`. Sizes are approximate and drift; verify against the live Kiwix library (https://library.kiwix.org) before large downloads. Only download what you are licensed to use in your jurisdiction.",
   "sources": [
     {
       "id": "wikimed-en",
@@ -11,7 +11,9 @@
       "filename": "wikimed_en_all_maxi.zim",
       "dest": "zim/C1",
       "approx_bytes": 1900000000,
-      "url": "https://download.kiwix.org/zim/other/<wikimed_en_all_maxi_DATE.zim>",
+      "dir": "https://download.kiwix.org/zim/other/",
+      "base": "wikimed_en_all_maxi",
+      "url": null,
       "sha256": null
     },
     {
@@ -22,84 +24,9 @@
       "filename": "ifixit_en_all.zim",
       "dest": "zim/C1",
       "approx_bytes": 2500000000,
-      "url": "https://download.kiwix.org/zim/ifixit/<ifixit_en_all_DATE.zim>",
-      "sha256": null
-    },
-    {
-      "id": "wikipedia-en-maxi",
-      "title": "Wikipedia (English, full, with images)",
-      "domain": "reference", "tier": "C2",
-      "license": "CC-BY-SA-4.0",
-      "filename": "wikipedia_en_all_maxi.zim",
-      "dest": "zim/C2",
-      "approx_bytes": 100000000000,
-      "url": "https://download.kiwix.org/zim/wikipedia/<wikipedia_en_all_maxi_DATE.zim>",
-      "sha256": null
-    },
-    {
-      "id": "wikipedia-en-mini",
-      "title": "Wikipedia (English, mini, no images)",
-      "domain": "reference", "tier": "C2",
-      "license": "CC-BY-SA-4.0",
-      "filename": "wikipedia_en_all_mini.zim",
-      "dest": "zim/C2",
-      "approx_bytes": 12000000000,
-      "url": "https://download.kiwix.org/zim/wikipedia/<wikipedia_en_all_mini_DATE.zim>",
-      "sha256": null
-    },
-    {
-      "id": "gutenberg-en",
-      "title": "Project Gutenberg (English, public-domain books)",
-      "domain": "reference", "tier": "C2",
-      "license": "Public-Domain",
-      "filename": "gutenberg_en_all.zim",
-      "dest": "zim/C2",
-      "approx_bytes": 65000000000,
-      "url": "https://download.kiwix.org/zim/gutenberg/<gutenberg_en_all_DATE.zim>",
-      "sha256": null
-    },
-    {
-      "id": "wikibooks-en",
-      "title": "Wikibooks (English, open textbooks)",
-      "domain": "reference", "tier": "C3",
-      "license": "CC-BY-SA-4.0",
-      "filename": "wikibooks_en_all_maxi.zim",
-      "dest": "zim/C3",
-      "approx_bytes": 4500000000,
-      "url": "https://download.kiwix.org/zim/wikibooks/<wikibooks_en_all_maxi_DATE.zim>",
-      "sha256": null
-    },
-    {
-      "id": "stackexchange-chemistry",
-      "title": "Chemistry Stack Exchange",
-      "domain": "chemistry", "tier": "C3",
-      "license": "CC-BY-SA-4.0",
-      "filename": "chemistry.stackexchange.com_en_all.zim",
-      "dest": "zim/C3",
-      "approx_bytes": 700000000,
-      "url": "https://download.kiwix.org/zim/stack_exchange/<chemistry.stackexchange.com_en_all_DATE.zim>",
-      "sha256": null
-    },
-    {
-      "id": "stackexchange-physics",
-      "title": "Physics Stack Exchange",
-      "domain": "physics", "tier": "C3",
-      "license": "CC-BY-SA-4.0",
-      "filename": "physics.stackexchange.com_en_all.zim",
-      "dest": "zim/C3",
-      "approx_bytes": 1200000000,
-      "url": "https://download.kiwix.org/zim/stack_exchange/<physics.stackexchange.com_en_all_DATE.zim>",
-      "sha256": null
-    },
-    {
-      "id": "stackexchange-electronics",
-      "title": "Electronics Stack Exchange",
-      "domain": "electronics", "tier": "C3",
-      "license": "CC-BY-SA-4.0",
-      "filename": "electronics.stackexchange.com_en_all.zim",
-      "dest": "zim/C3",
-      "approx_bytes": 1500000000,
-      "url": "https://download.kiwix.org/zim/stack_exchange/<electronics.stackexchange.com_en_all_DATE.zim>",
+      "dir": "https://download.kiwix.org/zim/ifixit/",
+      "base": "ifixit_en_all",
+      "url": null,
       "sha256": null
     },
     {
@@ -110,7 +37,9 @@
       "filename": "zimgit-medicine_en.zim",
       "dest": "zim/C1",
       "approx_bytes": 300000000,
-      "url": "https://download.kiwix.org/zim/zimgit/<zimgit-medicine_en_DATE.zim>",
+      "dir": "https://download.kiwix.org/zim/zimgit/",
+      "base": "zimgit-medicine_en",
+      "url": null,
       "sha256": null
     },
     {
@@ -121,7 +50,9 @@
       "filename": "zimgit-water_en.zim",
       "dest": "zim/C1",
       "approx_bytes": 30000000,
-      "url": "https://download.kiwix.org/zim/zimgit/<zimgit-water_en_DATE.zim>",
+      "dir": "https://download.kiwix.org/zim/zimgit/",
+      "base": "zimgit-water_en",
+      "url": null,
       "sha256": null
     },
     {
@@ -132,7 +63,100 @@
       "filename": "zimgit-post-disaster_en.zim",
       "dest": "zim/C1",
       "approx_bytes": 600000000,
-      "url": "https://download.kiwix.org/zim/zimgit/<zimgit-post-disaster_en_DATE.zim>",
+      "dir": "https://download.kiwix.org/zim/zimgit/",
+      "base": "zimgit-post-disaster_en",
+      "url": null,
+      "sha256": null
+    },
+    {
+      "id": "wikipedia-en-mini",
+      "title": "Wikipedia (English, mini, no images)",
+      "domain": "reference", "tier": "C2",
+      "license": "CC-BY-SA-4.0",
+      "filename": "wikipedia_en_all_mini.zim",
+      "dest": "zim/C2",
+      "approx_bytes": 12000000000,
+      "dir": "https://download.kiwix.org/zim/wikipedia/",
+      "base": "wikipedia_en_all_mini",
+      "url": null,
+      "sha256": null
+    },
+    {
+      "id": "wikipedia-en-maxi",
+      "title": "Wikipedia (English, full, with images)",
+      "domain": "reference", "tier": "C2",
+      "license": "CC-BY-SA-4.0",
+      "filename": "wikipedia_en_all_maxi.zim",
+      "dest": "zim/C2",
+      "approx_bytes": 100000000000,
+      "dir": "https://download.kiwix.org/zim/wikipedia/",
+      "base": "wikipedia_en_all_maxi",
+      "url": null,
+      "sha256": null
+    },
+    {
+      "id": "gutenberg-en",
+      "title": "Project Gutenberg (English, public-domain books)",
+      "domain": "reference", "tier": "C2",
+      "license": "Public-Domain",
+      "filename": "gutenberg_en_all.zim",
+      "dest": "zim/C2",
+      "approx_bytes": 65000000000,
+      "dir": "https://download.kiwix.org/zim/gutenberg/",
+      "base": "gutenberg_en_all",
+      "url": null,
+      "sha256": null
+    },
+    {
+      "id": "wikibooks-en",
+      "title": "Wikibooks (English, open textbooks)",
+      "domain": "reference", "tier": "C3",
+      "license": "CC-BY-SA-4.0",
+      "filename": "wikibooks_en_all_maxi.zim",
+      "dest": "zim/C3",
+      "approx_bytes": 4500000000,
+      "dir": "https://download.kiwix.org/zim/wikibooks/",
+      "base": "wikibooks_en_all_maxi",
+      "url": null,
+      "sha256": null
+    },
+    {
+      "id": "stackexchange-chemistry",
+      "title": "Chemistry Stack Exchange",
+      "domain": "chemistry", "tier": "C3",
+      "license": "CC-BY-SA-4.0",
+      "filename": "chemistry.stackexchange.com_en_all.zim",
+      "dest": "zim/C3",
+      "approx_bytes": 700000000,
+      "dir": "https://download.kiwix.org/zim/stack_exchange/",
+      "base": "chemistry.stackexchange.com_en_all",
+      "url": null,
+      "sha256": null
+    },
+    {
+      "id": "stackexchange-physics",
+      "title": "Physics Stack Exchange",
+      "domain": "physics", "tier": "C3",
+      "license": "CC-BY-SA-4.0",
+      "filename": "physics.stackexchange.com_en_all.zim",
+      "dest": "zim/C3",
+      "approx_bytes": 1200000000,
+      "dir": "https://download.kiwix.org/zim/stack_exchange/",
+      "base": "physics.stackexchange.com_en_all",
+      "url": null,
+      "sha256": null
+    },
+    {
+      "id": "stackexchange-electronics",
+      "title": "Electronics Stack Exchange",
+      "domain": "electronics", "tier": "C3",
+      "license": "CC-BY-SA-4.0",
+      "filename": "electronics.stackexchange.com_en_all.zim",
+      "dest": "zim/C3",
+      "approx_bytes": 1500000000,
+      "dir": "https://download.kiwix.org/zim/stack_exchange/",
+      "base": "electronics.stackexchange.com_en_all",
+      "url": null,
       "sha256": null
     },
     {
@@ -143,7 +167,9 @@
       "filename": "wikiversity_en_all_maxi.zim",
       "dest": "zim/C4",
       "approx_bytes": 2000000000,
-      "url": "https://download.kiwix.org/zim/wikiversity/<wikiversity_en_all_maxi_DATE.zim>",
+      "dir": "https://download.kiwix.org/zim/wikiversity/",
+      "base": "wikiversity_en_all_maxi",
+      "url": null,
       "sha256": null
     },
     {
@@ -154,6 +180,7 @@
       "filename": "region-latest.osm.pbf",
       "dest": "maps",
       "approx_bytes": 1000000000,
+      "note": "Region-specific — paste your area's stable Geofabrik link, e.g. https://download.geofabrik.de/europe/monaco-latest.osm.pbf",
       "url": "https://download.geofabrik.de/<your-region-latest.osm.pbf>",
       "sha256": null
     }

@@ -17,10 +17,13 @@ This is the part that takes the longest and matters the most — do it **while y
 
 ## 0. How downloading works in Needfire
 
-- The **catalog** (`catalog/catalog.json`) lists each source: id, tier, license, destination, URL.
-  ZIM filenames on the Kiwix mirrors change with each dump, so several URLs ship as
-  `<PLACEHOLDER>` values — **edit them to the current filenames first**; placeholders are skipped
-  with a notice, never guessed.
+- The **catalog** (`catalog/catalog.json`) lists each source: id, tier, license, destination.
+  ZIM filenames on the Kiwix mirrors change with each dump, so instead of a fixed link each
+  Kiwix source ships a **directory (`dir`) + base name (`base`)**; Needfire looks up the current
+  dated build at download time (and auto-pins the publisher's SHA-256 from the `.sha256` sidecar),
+  so downloading is **one-click with nothing to paste**. You can still override any source's URL by
+  hand — a local mirror or a specific build — from the Content page. The only source that still needs
+  a manual link is the region-specific OpenStreetMap extract (pick your area's Geofabrik file).
 - Download from the **Corpus tab** in the web UI, or from the shell:
   ```
   python3 -m needfire download --tier C1          # or --id wikipedia-en-maxi
