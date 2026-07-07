@@ -1,6 +1,6 @@
 {
   "name": "Needfire \u2014 Seed Corpus",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "license": "CC0-1.0",
   "description": "Original starter reference documents bundled with Needfire so the system works end-to-end offline out of the box. This is a small demonstration set, NOT a substitute for the full downloadable corpus. Written for Needfire and released into the public domain (CC0).",
   "disclaimer": "General reference only. Not professional medical, legal, chemical, or engineering advice. For anything affecting health or safety, read the primary source and use trained judgement.",
@@ -38,6 +38,14 @@
       "sha256": "6a03dee483bae308cd5a4b4ad9841d777e66890218d3675dc40fa9a4a6d4c672"
     },
     {
+      "file": "carbon-monoxide-safety.md",
+      "title": "Carbon Monoxide \u2014 The Silent Killer",
+      "domain": "medicine",
+      "tier": "C1",
+      "bytes": 2534,
+      "sha256": "6294096c70dc520915499d8f6b65dd9d4db677cb9fe1dd53b6397458038a7968"
+    },
+    {
       "file": "chemical-safety-basics.md",
       "title": "Chemical Safety Basics",
       "domain": "chemistry",
@@ -58,8 +66,8 @@
       "title": "Navigation with Map and Compass",
       "domain": "navigation",
       "tier": "C1",
-      "bytes": 1681,
-      "sha256": "7440a87c3f98f49254f5a906c36ecfee4e5a84a90f378e5af1be2401141e3cb2"
+      "bytes": 2268,
+      "sha256": "4d8fcada54d8979963a77a93069ebd7274e2d9ca5d2a2c751997f2266d210dac"
     },
     {
       "file": "control-bleeding.md",
@@ -108,6 +116,14 @@
       "tier": "C3",
       "bytes": 2303,
       "sha256": "02c1c1c7a9de7491627810415d89686ee1b7c311794777ce44451ca7e8713b81"
+    },
+    {
+      "file": "eye-injuries.md",
+      "title": "Eye Injuries and Chemical Splashes",
+      "domain": "medicine",
+      "tier": "C1",
+      "bytes": 2670,
+      "sha256": "8088c8f64c2a18a31612a2c617246e4f5a7b24bc05b3788bc17b381968f63fd2"
     },
     {
       "file": "finding-water.md",
@@ -190,6 +206,14 @@
       "sha256": "87a31f30576355211d6f93a09a3e973f1574b7c8523c976923c4614186f995a9"
     },
     {
+      "file": "lightning-storm-safety.md",
+      "title": "Lightning and Severe-Storm Safety",
+      "domain": "reference",
+      "tier": "C1",
+      "bytes": 2487,
+      "sha256": "00127f03a38fa78ef66d56186fdddef417c5802d7223858a7e7d688c24312f20"
+    },
+    {
       "file": "mental-health-crisis.md",
       "title": "Mental Health in Crisis",
       "domain": "medicine",
@@ -230,6 +254,14 @@
       "sha256": "28c54a1eadc4fc1326ef8d866ba9d59edb61b263cc4b94298256ec8c2eb46e35"
     },
     {
+      "file": "rationing-supplies.md",
+      "title": "Rationing Food and Water",
+      "domain": "reference",
+      "tier": "C1",
+      "bytes": 2782,
+      "sha256": "dafaf0fe96658b8cb87fcaec60a29624f9e8f670eb04b83a8e7d5f7e03a8911e"
+    },
+    {
       "file": "safe-medication-use.md",
       "title": "Safe Medication Use",
       "domain": "pharma",
@@ -260,6 +292,14 @@
       "tier": "C1",
       "bytes": 2054,
       "sha256": "d14c66e43fd1a8d9989e3df6984ce910c1241770b93304938581d1692861e7e5"
+    },
+    {
+      "file": "shock-treatment.md",
+      "title": "Shock \u2014 Recognition and First Aid",
+      "domain": "medicine",
+      "tier": "C1",
+      "bytes": 2393,
+      "sha256": "f331a5eeba19c1d29cf1326c63ee8cf78fe3a641de34fbc9ebbe9897da1322ea"
     },
     {
       "file": "signaling-for-rescue.md",
@@ -316,6 +356,14 @@
       "tier": "C1",
       "bytes": 1599,
       "sha256": "c5ed53613dcfea88de0c178db3ce4a9422783a8fc96298925562b020e4d85840"
+    },
+    {
+      "file": "wind-chill-heat-index.md",
+      "title": "Wind Chill and Heat Index \u2014 What the Air Really Does to You",
+      "domain": "reference",
+      "tier": "C1",
+      "bytes": 2727,
+      "sha256": "3e647478587b63bbc3a58fd6a669184ff933df23560faa838deeec13e15fa8fd"
     },
     {
       "file": "wound-care-infection.md",

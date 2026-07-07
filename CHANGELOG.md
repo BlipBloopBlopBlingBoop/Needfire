@@ -6,11 +6,48 @@ The artifacts in this repository version independently, on purpose:
 
 | Number | Where | Meaning |
 |---|---|---|
-| App version (`2.2.0`) | `needfire/__init__.py` `__version__` | **The release number** — the only user-facing version. SemVer. The `docker-compose.yml` image tag tracks it; bump both together. |
+| App version (`2.3.0`) | `needfire/__init__.py` `__version__` | **The release number** — the only user-facing version. SemVer. The `docker-compose.yml` image tag tracks it; bump both together. |
 | Index schema (`2`) | `needfire/db.py` `SCHEMA_VERSION` | Integer. A mismatch with an existing index triggers the rebuild warning in the server; bump when the SQLite layout changes. |
-| Seed manifest (`2.0.0`) | `seed-corpus/seed-manifest.json` | Bumped when the bundled seed documents change (regenerate with `make seed-manifest`). |
+| Seed manifest (`2.3.0`) | `seed-corpus/seed-manifest.json` | Bumped when the bundled seed documents change (regenerate with `make seed-manifest`). |
 | Catalog (`1.0.0`) | `catalog/catalog.json` | Bumped when the download-source list changes. |
 | Protocols (`1`) | `web/data/protocols.json` | The emergency-protocol data format. |
+
+## 2.3.0 — 2026-07-07
+
+More tools and knowledge.
+
+### New seed documents (40 → 46)
+Six new CC0 reference documents, all offline-first and cited by the toolkit
+where relevant:
+- **Shock — Recognition and First Aid** (medicine): whole-body circulatory
+  shock — the picture, the causes, and the field priorities. Also closes the
+  gap behind the router's deliberately un-hinted bare "shock" query.
+- **Carbon Monoxide — The Silent Killer** (medicine): the leading killer after
+  storms and power cuts — never run generators/stoves/engines indoors,
+  recognition, and response.
+- **Lightning and Severe-Storm Safety** (reference): flash-to-bang ranging, the
+  30-30 rule, where to shelter, and the caught-in-the-open crouch.
+- **Wind Chill and Heat Index** (reference): the standard "feels-like" formulas
+  and frostbite/heat-illness danger bands that drive the new exposure tool.
+- **Rationing Food and Water** (reference): planning figures and survival floors
+  for water (~3 L/day plan, ~2 L floor) and food (~2,000 kcal/day, ~1,200 floor).
+- **Eye Injuries and Chemical Splashes** (medicine): flush-first for chemicals,
+  foreign bodies, and never-remove-embedded-objects.
+
+*Navigation:* added a "judging distance and travel time" section (pace count +
+Naismith's rule) to *Navigation with Map and Compass*.
+
+### New toolkit tools (8 → 13)
+All pure client-side, offline, and citing their source document:
+- **Feels-like temperature** — wind chill (cold) and heat index (heat) with
+  frostbite-time and heat-illness warnings.
+- **Lightning range** — flash-to-bang distance in km/mi with the 30-30 shelter
+  warning.
+- **Ration planner** — days of water and food from stores, people, and per-day
+  rates, flagging plans below the survival floor.
+- **Pace & travel time** — calibrate stride, estimate distance from a pace
+  tally, and estimate walking time (Naismith).
+- **Declination converter** — true ↔ magnetic bearing conversion.
 
 ## 2.2.0 — 2026-07-03
 

@@ -24,14 +24,15 @@ python3 -m needfire serve     # then open http://localhost:8848
 
 ## What it is
 
-- **A citable offline library** — 40 bundled CC0 reference docs (first aid, water, food, fire,
+- **A citable offline library** — 46 bundled CC0 reference docs (first aid, water, food, fire,
   chemistry, radiation, navigation…), extensible to full offline Wikipedia/WikiMed/iFixit archives.
 - **RAG with citations** — ask in plain language; every answer points at the source document.
   Works *sources-only* with no AI at all, or plugs into local models via [Ollama](https://ollama.com).
 - **12 guided emergency protocols** — CPR (with a compression metronome), bleeding, choking, burns,
   poisoning, and more: step-by-step, offline, phone-friendly.
 - **An offline field toolkit** — water disinfection doses, ORS mixer, field timers, SOS strobe,
-  solar sizing, Ohm's-law helpers.
+  solar sizing, Ohm's-law helpers, wind-chill/heat-index, lightning range, ration planner, and
+  pace/declination navigation aids.
 - **A buildable appliance** — BOMs, build runbook, systemd/firewall provisioning, and Pi/x86 image
   builders to turn a spare machine into a hardened, off-grid "Bothy."
 - **Degrades gracefully** — reasoning model → tiny model → sources-only; vector search → keyword →
@@ -164,7 +165,7 @@ field tools, and an appliance you can actually build.
 | `web/css/{system,studio}.css` | Styles for the System hub and the Studio workspace |
 | [`os/`](os/) | Appliance provisioning: `install.sh`, systemd units, Wi-Fi AP, firewall, image builders |
 | [`os/image/docker/`](os/image/docker/) | Dockerized image build — run the Linux imaging tools from Windows/Mac via Docker Desktop |
-| [`seed-corpus/`](seed-corpus/) | 40 bundled CC0 reference documents + `seed-manifest.json` (SHA-256 per doc) |
+| [`seed-corpus/`](seed-corpus/) | 46 bundled CC0 reference documents + `seed-manifest.json` (SHA-256 per doc) |
 | [`catalog/`](catalog/) | Catalog of openly-licensed corpus sources to download (`catalog.json`) |
 | [`scripts/`](scripts/) | Thin wrappers + maintenance tools: `download-corpus.sh`, `verify-integrity.sh`, `update-seed-manifest.py`, `make-icons.py` |
 | [`scripts/build-image.py`](scripts/build-image.py) | Build a Pi/x86 appliance image from Windows/Mac via Docker Desktop (`build-image.py pi`) |

@@ -33,6 +33,15 @@ accounted for when relating compass bearings to a map.
   Big Dipper's two "pointer" stars; Polaris marks true north.
 - **Southern Hemisphere**: use the Southern Cross to estimate south.
 
+## Judging distance and travel time
+- **Pace count.** Count every time the *same* foot hits the ground — that is one
+  "pace" (two steps). Calibrate on a known 100 m: most adults take **60–70 paces
+  per 100 m** on flat ground, more uphill or over rough terrain. Once you know
+  your count, tally paces as you walk to estimate distance covered.
+- **Travel time (Naismith's rule).** Allow about **1 hour per 5 km** on easy
+  ground, **plus 1 extra hour for every 600 m of climb**. Add time for heavy
+  loads, deep snow, darkness, or a tired party — this is a floor, not a promise.
+
 ## Staying found
 Note landmarks and your back-trail. Pick a distant feature on your bearing, walk
 to it, then sight the next — this keeps you straight over rough ground. Travel
