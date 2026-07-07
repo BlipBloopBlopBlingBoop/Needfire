@@ -42,7 +42,7 @@ chest**, covering both (especially the head). Warmth and drying are usually all 
 takes to start breathing. Note the time of birth.
 - **If not breathing after ~1 minute** of drying and rubbing: wipe the mouth and
   nose, then give **gentle puffs of air** — just enough to lift the chest, about
-  30–40 per minute.
+  **40–60 per minute** (roughly one a second).
 - **Still no breathing or heartbeat** after good inflation breaths: start infant
   CPR at **3 compressions to 1 breath** (two thumbs on the breastbone). **Keep the
   baby warm throughout** — cold babies don't respond. See *CPR for Adults,

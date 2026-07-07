@@ -1693,7 +1693,7 @@
     {
      "id": "resus",
      "type": "action",
-     "text": "**Stimulate, then breathe for the baby.** Rub the back firmly and flick the soles; wipe the mouth and nose clear. If still not breathing after about a minute, give **gentle puffs of air** (just enough to lift the chest, about 30–40/min).",
+     "text": "**Stimulate, then breathe for the baby.** Rub the back firmly and flick the soles; wipe the mouth and nose clear. If still not breathing after about a minute, give **gentle puffs of air** (just enough to lift the chest, about 40–60 per minute — roughly one a second).",
      "detail": "If there is still no breathing or heartbeat after good inflation breaths, start infant CPR at **3 compressions to 1 breath** (two thumbs on the breastbone). Keep the baby warm and dry throughout — cold babies don't respond. See *CPR for Adults, Children, and Infants*.",
      "next": "cord"
     },

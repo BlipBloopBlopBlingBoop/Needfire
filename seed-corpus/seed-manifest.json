@@ -170,8 +170,8 @@
       "title": "Emergency Childbirth",
       "domain": "medicine",
       "tier": "C3",
-      "bytes": 4119,
-      "sha256": "ea4cb58d1bfcee16891802678ee30d4d975e65dd0c918c811a704071504ccbe1"
+      "bytes": 4146,
+      "sha256": "4f016f1155c43e5b71c899155997655c72bfcf50d111b66fa3f4ea0cb555c4e8"
     },
     {
       "file": "emergency-preparedness-kit.md",
