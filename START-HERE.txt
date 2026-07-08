@@ -39,8 +39,11 @@ EVERY SYSTEM
     ".needfire-home" inside this folder. Copy this whole folder to
     back everything up.
 
-PHONES, OLD COMPUTERS, RASPBERRY PI, TROUBLESHOOTING
+PHONES (iPHONE / iPAD / ANDROID), OLD COMPUTERS, RASPBERRY PI, TROUBLESHOOTING
   Open QUICKSTART.md (double-click it - any text editor can show it).
-  It covers: using Needfire from phones on your Wi-Fi, turning a spare
-  computer into a dedicated always-on "Bothy" appliance, building a
-  bootable Raspberry Pi image, and fixes for common problems.
+  It covers: using Needfire from phones on your Wi-Fi and installing it as
+  an app ("Add to Home Screen") so Emergency mode works with no signal;
+  running it entirely on an iPhone/iPad with the free a-Shell app (no other
+  computer needed); turning a spare computer into a dedicated always-on
+  "Bothy" appliance; building a bootable Raspberry Pi image; and fixes for
+  common problems.

@@ -6,11 +6,28 @@ The artifacts in this repository version independently, on purpose:
 
 | Number | Where | Meaning |
 |---|---|---|
-| App version (`2.7.0`) | `needfire/__init__.py` `__version__` | **The release number** — the only user-facing version. SemVer. The `docker-compose.yml` image tag tracks it; bump both together. |
+| App version (`2.7.1`) | `needfire/__init__.py` `__version__` | **The release number** — the only user-facing version. SemVer. The `docker-compose.yml` image tag tracks it; bump both together. |
 | Index schema (`2`) | `needfire/db.py` `SCHEMA_VERSION` | Integer. A mismatch with an existing index triggers the rebuild warning in the server; bump when the SQLite layout changes. |
 | Seed manifest (`2.7.0`) | `seed-corpus/seed-manifest.json` | Bumped when the bundled seed documents change (regenerate with `make seed-manifest`). |
 | Catalog (`1.1.0`) | `catalog/catalog.json` | Bumped when the download-source list changes. |
 | Protocols (`1`) | `web/data/protocols.json` | The emergency-protocol data format. |
+
+## 2.7.1 — 2026-07-08
+
+Run Needfire on iOS (iPhone / iPad).
+
+- **Installable web app on iOS.** Added the iOS PWA meta tags
+  (`apple-mobile-web-app-capable`, status-bar style, app title, plus the standard
+  `mobile-web-app-capable`) so Safari's **Add to Home Screen** launches Needfire
+  full-screen with its own icon. The service worker already precaches the shell and
+  `protocols.json`, so **Emergency mode and the Toolkit work with no signal** once
+  installed. Bumped the SW cache (`v8 → v9`).
+- **Documented two iOS paths** in `QUICKSTART.md` (§4a) and `START-HERE.txt`:
+  (A) install from a Bothy/computer on your Wi-Fi; (B) run it **entirely on the
+  phone** — because Needfire is pure-stdlib with zero dependencies, `python3 -m
+  needfire serve` runs inside the free **a-Shell** (or **iSH**) app and you open
+  Safari to `localhost:8848`. Runs in sources-only mode (no on-device model).
+- Added a test guarding the iOS install meta tags in the served page.
 
 ## 2.7.0 — 2026-07-07
 
