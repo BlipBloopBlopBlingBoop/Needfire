@@ -112,12 +112,24 @@ runs inside a free on-device Python shell:
    (If you cloned without the folder name, it's `cd Needfire.git` instead.)
 4. Open **Safari** to `http://localhost:8848` and Add to Home Screen (as in A).
 
-Notes: keep a-Shell in the **foreground** while you use it — iOS pauses
-backgrounded apps, which stops the server (the Add-to-Home-Screen cache still
-serves Emergency mode offline regardless). **iSH** (Alpine Linux, free) works the
+**What works when — the important bit.** iOS suspends any app you leave, so the
+server only runs while **a-Shell is in the foreground**. That splits the app in two:
+
+- **Emergency (SOS) and the Toolkit work with no server at all** — they're cached in
+  the installed app, so they keep working when you switch to Safari, in airplane
+  mode, anywhere. If the header shows **NO LINK**, that's fine: tap SOS or TOOLKIT
+  and everything responds. This is the survival-critical core.
+- **The Ask box and Library search need the server live**, i.e. a-Shell in front.
+  To use them on-device, flip back to a-Shell (the server resumes), then to Safari
+  and search quickly. A message like "Could not reach the server" just means
+  a-Shell got backgrounded — it isn't broken.
+
+For a smooth searchable library and Ask on a phone, the best setup is **path A**:
+point the phone at a Bothy (or any computer running Needfire) on your Wi-Fi, where
+the server is always up. **iSH** (Alpine Linux, free) runs the on-device server the
 same way after `apk add python3`. There are no local AI models on iOS, so it runs
-in **sources-only mode** — which is exactly what the zero-dependency design is for:
-the cited library, all 12 emergency protocols, and the toolkit, in your pocket.
+in **sources-only mode** — the cited library, all 12 emergency protocols, and the
+toolkit, in your pocket.
 
 ## 5. Turn an old computer into a Bothy (dedicated appliance)
 
