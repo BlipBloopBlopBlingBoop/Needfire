@@ -1,49 +1,35 @@
-NEEDFIRE - offline survival computer
+NEEDFIRE — offline survival computer
 =====================================
-Everything runs on THIS computer. No internet is needed after you
-have this folder. No account, no installation wizard, no cost.
 
-IMPORTANT
-  * Needfire is a reference library - not a doctor and not an
-    emergency service. If a phone works, call your local emergency
-    number (911 / 112) FIRST.
-  * Use at your own risk. The plain-language details are in
-    DISCLAIMER.md (in this folder - any text editor opens it).
+Everything runs on THIS computer. No internet, no account, no cost.
 
-WINDOWS (10 or 11)
-  1. Double-click:  Start-Needfire-Windows.bat
-  2. If it says Python is missing, it opens the download page for you.
-     Install Python (click "Install Now"), then double-click the
-     .bat file again.
-  3. Your browser opens the app by itself.
 
-MAC
-  1. RIGHT-CLICK:  Start-Needfire-Mac.command  and choose "Open",
-     then click "Open" in the warning. (Only needed the first time.)
-  2. If macOS offers to install "command line developer tools",
-     click Install, wait a few minutes, then open the file again.
-  3. Your browser opens the app by itself.
+READ THIS FIRST
+  Needfire is a reference library — not a doctor and not an emergency
+  service. If a phone works, call your local emergency number (911 / 112)
+  FIRST. Use at your own risk; the plain-language details are in
+  DISCLAIMER.md (any text editor opens it).
 
-LINUX
-  1. Open a terminal in this folder (or double-click the file and
-     pick "Run in Terminal").
-  2. Run:  bash Start-Needfire-Linux.sh
-  3. Your browser opens the app by itself.
 
-EVERY SYSTEM
-  * The app lives at:  http://localhost:8848
-  * The FIRST start takes about a minute (it builds its library index).
-  * TO STOP: close the black window, or press Ctrl+C inside it.
-  * If your firewall asks, click "Allow" - nothing leaves your machine.
-  * Your data (downloads, index) lives in the hidden folder
-    ".needfire-home" inside this folder. Copy this whole folder to
-    back everything up.
+START IT — double-click the launcher for your system
+  Windows   Start-Needfire-Windows.bat
+  Mac       Start-Needfire-Mac.command   (the FIRST time: right-click → Open)
+  Linux     Start-Needfire-Linux.sh
 
-PHONES (iPHONE / iPAD / ANDROID), OLD COMPUTERS, RASPBERRY PI, TROUBLESHOOTING
-  Open QUICKSTART.md (double-click it - any text editor can show it).
-  It covers: using Needfire from phones on your Wi-Fi and installing it as
-  an app ("Add to Home Screen") so Emergency mode works with no signal;
-  running it entirely on an iPhone/iPad with the free a-Shell app (no other
-  computer needed); turning a spare computer into a dedicated always-on
-  "Bothy" appliance; building a bootable Raspberry Pi image; and fixes for
-  common problems.
+  Your browser opens the app by itself at  http://localhost:8848
+  The first start takes about a minute (it builds the library index).
+  To stop: close the window, or press Ctrl+C inside it.
+  If it says Python is missing, the launcher opens the download page —
+  install Python, then double-click the launcher again.
+
+
+THE FULL GUIDE — QUICKSTART.md (any text editor opens it)
+  Everything else, step by step: using Needfire from your phone and
+  installing it as an app so Emergency mode works with no signal; running
+  it right on an iPhone or iPad; turning a spare computer into a dedicated
+  always-on "Bothy" appliance; and fixes for common problems.
+
+
+YOUR DATA
+  Downloads and the search index live in the hidden ".needfire-home"
+  folder inside this folder. Copy this whole folder to back everything up.

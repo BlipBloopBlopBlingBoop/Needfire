@@ -6,11 +6,29 @@ The artifacts in this repository version independently, on purpose:
 
 | Number | Where | Meaning |
 |---|---|---|
-| App version (`2.7.1`) | `needfire/__init__.py` `__version__` | **The release number** — the only user-facing version. SemVer. The `docker-compose.yml` image tag tracks it; bump both together. |
+| App version (`2.7.2`) | `needfire/__init__.py` `__version__` | **The release number** — the only user-facing version. SemVer. The `docker-compose.yml` image tag tracks it; bump both together. |
 | Index schema (`2`) | `needfire/db.py` `SCHEMA_VERSION` | Integer. A mismatch with an existing index triggers the rebuild warning in the server; bump when the SQLite layout changes. |
 | Seed manifest (`2.7.0`) | `seed-corpus/seed-manifest.json` | Bumped when the bundled seed documents change (regenerate with `make seed-manifest`). |
 | Catalog (`1.1.0`) | `catalog/catalog.json` | Bumped when the download-source list changes. |
 | Protocols (`1`) | `web/data/protocols.json` | The emergency-protocol data format. |
+
+## 2.7.2 — 2026-07-08
+
+Documentation cleanup for a clean release — one clear doc per path.
+
+The getting-started docs overlapped and competed (`START-HERE.txt` and
+`QUICKSTART.md` both walked through per-OS launch; `PROJECT.md` re-explained "run
+in 30 seconds"). Each doc now has one job:
+- **`QUICKSTART.md`** is the single complete how-to-run guide (every OS, phones,
+  iPhone/iPad, appliance, troubleshooting).
+- **`START-HERE.txt`** is slimmed to a minimal plain-text launch card for the
+  downloadable package — double-click the launcher, then defer to QUICKSTART for
+  everything else (no more duplicated per-OS steps).
+- **`PROJECT.md`** is reframed as the developer/run-from-source reference (the
+  running app + field-console reference), pointing to QUICKSTART for install.
+- **`README.md`** "Who are you?" now gives exactly one doc per audience, and the
+  repo-layout map describes each entry doc distinctly.
+No broken links (all relative links verified); no code changes.
 
 ## 2.7.1 — 2026-07-08
 

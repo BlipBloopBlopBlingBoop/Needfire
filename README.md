@@ -40,21 +40,20 @@ python3 -m needfire serve     # then open http://localhost:8848
 - **Degrades gracefully** — reasoning model → tiny model → sources-only; vector search → keyword →
   LIKE scan. Every layer works when the one above it fails.
 
-## Who are you?
+## Who are you? — one doc for each path
 
-- 🚀 **Non-technical? Start here** → open [`START-HERE.txt`](START-HERE.txt) and double-click the
-  launcher for your system (`Start-Needfire-Windows.bat`, `Start-Needfire-Mac.command`, or
-  `Start-Needfire-Linux.sh`). Full plain-English guide incl. phones and appliances:
-  [`QUICKSTART.md`](QUICKSTART.md). To produce the shareable one-folder package: `make dist`.
-- 🖥️ **Developer / self-hoster?** → [`PROJECT.md`](PROJECT.md). Pure-stdlib app + no-build field
-  console. A **System** hub adds in-UI **AI model management** (install/manage local Ollama models),
-  **content download** (grow the library from URLs or local files, then reindex), and a
-  password-gated **Studio** workspace (web playground, file editor, terminal, and Python — a real
-  standalone computer).
-- 📐 **Want to build the Bothy (the hardware appliance)?** → keep reading. This document and the
-  numbered docs tell you what to buy, how to assemble it, what to load onto it, and how to harden
-  it. Everything uses **off-the-shelf hardware** and **open-source software** so it can be sourced,
-  repaired, and reproduced by one person.
+- 🚀 **Just want to use it?** → **[`QUICKSTART.md`](QUICKSTART.md)** is the complete, plain-English
+  guide for every system — Windows, Mac, Linux, phones, and iPhone/iPad. If you downloaded the
+  one-folder package, double-click the launcher and read the bundled [`START-HERE.txt`](START-HERE.txt),
+  the 10-second version. (Build that package with `make dist`.)
+- 🖥️ **Developer or self-hoster?** → **[`PROJECT.md`](PROJECT.md)** — how the pure-stdlib app and
+  no-build field console are built, plus the **System** hub (in-UI **AI model management** and
+  **content download**) and the password-gated **Studio** workspace (web playground, file editor,
+  terminal, and Python — a real standalone computer).
+- 📐 **Building the Bothy (the hardware appliance)?** → the numbered **build handbook**
+  ([`01-ARCHITECTURE.md`](01-ARCHITECTURE.md) → [`06-BUILD-RUNBOOK.md`](06-BUILD-RUNBOOK.md)): what to
+  buy, how to assemble it, what to load, and how to harden it — all **off-the-shelf hardware** and
+  **open-source software**, sourceable and repairable by one person.
 
 ## The names
 
@@ -151,8 +150,9 @@ field tools, and an appliance you can actually build.
 | [`06-BUILD-RUNBOOK.md`](06-BUILD-RUNBOOK.md) | Step-by-step build: assemble → install OS → `os/install.sh` → load corpus → validate |
 | [`07-CORPUS-ACQUISITION.md`](07-CORPUS-ACQUISITION.md) | What to download, sources, sizes, licenses, integrity verification |
 | [`08-ALTERNATIVE-STACK.md`](08-ALTERNATIVE-STACK.md) | *Advanced appendix:* kiwix-serve + llama.cpp + FAISS design sketch (NOT the shipped appliance) |
-| **[`START-HERE.txt`](START-HERE.txt)** / [`QUICKSTART.md`](QUICKSTART.md) | **Non-technical launch guide** + the three double-click launchers |
-| **[`PROJECT.md`](PROJECT.md)** | **How to run the real application** (start here to use the software) |
+| **[`QUICKSTART.md`](QUICKSTART.md)** | **The complete guide to running Needfire** — every OS, phones, iPhone/iPad, the appliance, and troubleshooting |
+| [`START-HERE.txt`](START-HERE.txt) | Plain-text launch card bundled in the downloadable package (the 10-second version) |
+| [`PROJECT.md`](PROJECT.md) | Developer reference — the running app, the field console, and dev workflow |
 | [`LICENSE`](LICENSE) | MIT (code) + CC0 (seed corpus) |
 | [`DISCLAIMER.md`](DISCLAIMER.md) | Plain-language liability + safety disclaimer — read it once |
 | [`SECURITY.md`](SECURITY.md) | Threat model, password/download integrity controls, how to report vulnerabilities |
