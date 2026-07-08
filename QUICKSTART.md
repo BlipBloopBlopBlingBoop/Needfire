@@ -104,10 +104,12 @@ runs inside a free on-device Python shell:
 
 1. Install **a-Shell** from the App Store (free) — it includes Python 3.
 2. Get the Needfire folder onto the phone. In a-Shell:
-   `lg2 clone https://github.com/BlipBloopBlopBlingBoop/Needfire.git`
-   (a-Shell's built-in git), **or** copy the folder in with the Files app / AirDrop
-   and `cd` into it.
+   `lg2 clone https://github.com/BlipBloopBlopBlingBoop/Needfire.git Needfire`
+   — a-Shell's built-in git. **The trailing `Needfire` is important**: without it
+   `lg2` names the folder `Needfire.git`. (Or copy the folder in with the Files
+   app / AirDrop.)
 3. Start it: `cd Needfire && python3 -m needfire serve`
+   (If you cloned without the folder name, it's `cd Needfire.git` instead.)
 4. Open **Safari** to `http://localhost:8848` and Add to Home Screen (as in A).
 
 Notes: keep a-Shell in the **foreground** while you use it — iOS pauses
