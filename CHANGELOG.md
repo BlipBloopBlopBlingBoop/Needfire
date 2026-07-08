@@ -6,11 +6,102 @@ The artifacts in this repository version independently, on purpose:
 
 | Number | Where | Meaning |
 |---|---|---|
-| App version (`2.6.0`) | `needfire/__init__.py` `__version__` | **The release number** — the only user-facing version. SemVer. The `docker-compose.yml` image tag tracks it; bump both together. |
+| App version (`2.7.1`) | `needfire/__init__.py` `__version__` | **The release number** — the only user-facing version. SemVer. The `docker-compose.yml` image tag tracks it; bump both together. |
 | Index schema (`2`) | `needfire/db.py` `SCHEMA_VERSION` | Integer. A mismatch with an existing index triggers the rebuild warning in the server; bump when the SQLite layout changes. |
-| Seed manifest (`2.6.0`) | `seed-corpus/seed-manifest.json` | Bumped when the bundled seed documents change (regenerate with `make seed-manifest`). |
+| Seed manifest (`2.7.0`) | `seed-corpus/seed-manifest.json` | Bumped when the bundled seed documents change (regenerate with `make seed-manifest`). |
 | Catalog (`1.1.0`) | `catalog/catalog.json` | Bumped when the download-source list changes. |
 | Protocols (`1`) | `web/data/protocols.json` | The emergency-protocol data format. |
+
+## 2.7.1 — 2026-07-08
+
+Run Needfire on iOS (iPhone / iPad).
+
+- **Installable web app on iOS.** Added the iOS PWA meta tags
+  (`apple-mobile-web-app-capable`, status-bar style, app title, plus the standard
+  `mobile-web-app-capable`) so Safari's **Add to Home Screen** launches Needfire
+  full-screen with its own icon. The service worker already precaches the shell and
+  `protocols.json`, so **Emergency mode and the Toolkit work with no signal** once
+  installed. Bumped the SW cache (`v8 → v9`).
+- **Documented two iOS paths** in `QUICKSTART.md` (§4a) and `START-HERE.txt`:
+  (A) install from a Bothy/computer on your Wi-Fi; (B) run it **entirely on the
+  phone** — because Needfire is pure-stdlib with zero dependencies, `python3 -m
+  needfire serve` runs inside the free **a-Shell** (or **iSH**) app and you open
+  Safari to `localhost:8848`. Runs in sources-only mode (no on-device model).
+- Added a test guarding the iOS install meta tags in the served page.
+
+## 2.7.0 — 2026-07-07
+
+Deeper emergency guides and expanded documents for real off-grid use.
+
+The guided protocols and their documents were accurate but shallow, and leaned on
+"call an ambulance" — the opposite of the situation Needfire is built for. This
+release rebuilds them into real decision trees with off-grid branches (identify
+the specific problem, manage it when no professional help is coming, know when to
+evacuate), and expands the underlying documents to match.
+
+### Emergency protocols (`web/data/protocols.json`)
+- **Poisoning** rebuilt from 10 shallow steps into a **24-step decision tree**:
+  scene safety → primary survey (recovery/CPR/seizure branches) → route in →
+  *what was swallowed* (corrosive / fuel / pesticide / painkillers / opioids /
+  alcohol / plants & mushrooms / unknown), each with its own correct management
+  (no-vomit rules, dilution, button-battery honey, naloxone, methanol/paracetamol
+  red flags), an activated-charcoal decision, an ongoing-monitoring loop, and an
+  explicit "if no help is coming / when to evacuate" step. Uses the collapsible
+  "More detail" field to carry depth without cluttering each screen.
+- **Severe bleeding** rebuilt (7 → **12 steps**): direct pressure → *where is it*
+  (limb / junctional / torso / other), wound packing, tourniquet with improvised
+  windlass and second-tourniquet guidance, an **off-grid tourniquet-conversion**
+  step (swap to a pressure dressing when help is hours/days away), sucking-chest
+  and abdominal-evisceration handling, shock treatment, and multi-day aftercare.
+- **Anaphylaxis** rebuilt (8 → **11 steps**) with a **"do you have adrenaline?"**
+  branch — the off-grid reality many kits face — including real no-adrenaline
+  management (positioning, inhaler, airway, evacuate), correct dosing, position
+  branches, repeat-dose timer, and biphasic watch.
+- **CPR** gained an off-grid **"when is it reasonable to stop?"** step — the
+  hardest question when no ambulance is coming: very low survival after ~20–30 min
+  with no signs of life, but keep going far longer for cold/drowning/avalanche/
+  lightning ("not dead until warm and dead").
+- **Burns** critical-burn list corrected to include **feet** (matching its doc).
+
+### Documents (expanded to real off-grid depth)
+- **poisoning-first-aid.md** (~2 KB → ~7 KB): universal rules, decontamination by
+  route, per-class management (corrosives, hydrocarbons, pesticides, medicines
+  incl. paracetamol/opioid/alcohol, plants & mushrooms, gases/CO, botulism),
+  activated-charcoal guidance, and ongoing care / evacuation triggers.
+- **control-bleeding.md** (~1.5 KB → ~5 KB): direct pressure, wound packing,
+  tourniquet + improvised windlass + conversion, junctional/torso wounds, shock,
+  and days-long aftercare/infection watch.
+- **anaphylaxis-allergy.md** expanded with an off-grid "no adrenaline available"
+  section, fuller recognition, and position/biphasic detail.
+- **snakebite-treatment.md** expanded: the two venom families and their signs,
+  and off-grid management without antivenom (breathe for the paralysed, no
+  aspirin/NSAIDs, limb/shock/infection watch) — most bites are survivable on
+  supportive care.
+- **burn-treatment.md** expanded: depth assessment, the fluid-loss that kills
+  large burns and oral-ORS resuscitation (keep urine pale), circumferential-burn
+  warning, and days-to-weeks wound care incl. honey dressings and infection watch.
+
+### More protocols + docs deepened
+- **Choking** rebuilt (8 → **13 steps**) with proper "did it clear?" branches, an
+  infant path, a **self-rescue-when-alone** branch, and aftercare (abdominal-thrust
+  injury check). Doc expanded to match.
+- **Drowning** rebuilt (8 → **9 steps**): reach-throw-row, keep-horizontal
+  extraction, spinal caveat, breaths-first CPR, expect-vomiting, prolonged cold-
+  water CPR, and 24-hour secondary-drowning watch. Doc expanded.
+- **Seizure** rebuilt (7 → **8 steps**) with a duration decision that surfaces
+  **status epilepticus**, a stamp timer, and an off-grid causes step (febrile,
+  low sugar, low salt, withdrawal, recurrent-without-help). Doc expanded.
+- **Heat illness** rebuilt (9 → **12 steps**): cramps/exhaustion/stroke triage, a
+  cool-by-immersion-vs-douse branch, stop-when-alert, and a recheck that escalates
+  to stroke. **Cold injury** rebuilt (11 → **12 steps**): hypothermia severity
+  branch (afterdrop, gentle handling, prolonged CPR) and the frostbite
+  refreeze/rewarm decision with fire-burn warning. **Emergency childbirth** rebuilt
+  (10 → **14 steps**) with nuchal-cord, shoulder-dystocia/breech detail, newborn
+  resuscitation (3:1), delayed cord clamping, and postpartum-haemorrhage management.
+  frostbite-cold-injuries.md and emergency-childbirth.md expanded to match.
+
+With this, **all 12 emergency protocols and their documents** have been rebuilt as
+real off-grid decision trees.
 
 ## 2.6.0 — 2026-07-07
 

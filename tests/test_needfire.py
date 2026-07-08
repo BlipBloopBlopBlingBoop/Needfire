@@ -523,6 +523,9 @@ class TestHTTPSmoke(unittest.TestCase):
         status, body = self._get("/")
         self.assertEqual(status, 200)
         self.assertIn(b"NEEDFIRE", body)
+        # iOS/Android installability (Add to Home Screen → offline emergency mode)
+        self.assertIn(b"apple-mobile-web-app-capable", body)
+        self.assertIn(b"manifest.webmanifest", body)
 
     def test_ask_sse_streams_sources_only(self):
         # No model in test env → meta + sources-only answer + done.

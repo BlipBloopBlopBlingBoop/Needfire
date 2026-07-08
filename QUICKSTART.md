@@ -82,6 +82,36 @@ Can't find the address? On the computer run `ipconfig` (Windows) or
 `ip addr` (Linux), or look in System Settings → Wi-Fi (Mac) — you want the
 number that starts with `192.168.` or `10.`.
 
+## 4a. Run it on an iPhone or iPad (iOS)
+
+There are two ways to use Needfire on iOS.
+
+**A — Install it from your Wi-Fi (recommended, easiest).**
+Do section 4, open the `http://192.168.…` address in **Safari**, then tap the
+**Share** button → **Add to Home Screen**. Needfire installs like a real app with
+its own icon and launches full-screen. **Emergency mode and the Toolkit are cached
+to keep working even with no signal** — open the app once every week or two so iOS
+doesn't clear the offline cache.
+
+**B — Run it entirely on the phone, no other computer.**
+Because Needfire is **pure Python standard library with zero dependencies**, it
+runs inside a free on-device Python shell:
+
+1. Install **a-Shell** from the App Store (free) — it includes Python 3.
+2. Get the Needfire folder onto the phone. In a-Shell:
+   `lg2 clone https://github.com/BlipBloopBlopBlingBoop/Needfire.git`
+   (a-Shell's built-in git), **or** copy the folder in with the Files app / AirDrop
+   and `cd` into it.
+3. Start it: `cd Needfire && python3 -m needfire serve`
+4. Open **Safari** to `http://localhost:8848` and Add to Home Screen (as in A).
+
+Notes: keep a-Shell in the **foreground** while you use it — iOS pauses
+backgrounded apps, which stops the server (the Add-to-Home-Screen cache still
+serves Emergency mode offline regardless). **iSH** (Alpine Linux, free) works the
+same way after `apk add python3`. There are no local AI models on iOS, so it runs
+in **sources-only mode** — which is exactly what the zero-dependency design is for:
+the cited library, all 12 emergency protocols, and the toolkit, in your pocket.
+
 ## 5. Turn an old computer into a Bothy (dedicated appliance)
 
 Any spare laptop or mini-PC can become an always-on Needfire box — "the

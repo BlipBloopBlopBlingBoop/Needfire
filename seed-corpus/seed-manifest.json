@@ -1,6 +1,6 @@
 {
   "name": "Needfire \u2014 Seed Corpus",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "license": "CC0-1.0",
   "description": "Original starter reference documents bundled with Needfire so the system works end-to-end offline out of the box. This is a small demonstration set, NOT a substitute for the full downloadable corpus. Written for Needfire and released into the public domain (CC0).",
   "disclaimer": "General reference only. Not professional medical, legal, chemical, or engineering advice. For anything affecting health or safety, read the primary source and use trained judgement.",
@@ -26,8 +26,8 @@
       "title": "Anaphylaxis and Severe Allergic Reactions",
       "domain": "medicine",
       "tier": "C1",
-      "bytes": 2031,
-      "sha256": "a78115d7946a628863aa0e01dc5ad9870492d58660a173242179425cf878e75a"
+      "bytes": 3876,
+      "sha256": "2bc683c60e7bba9d775d87b7df7eb9a4ab7063d5aae075cbdee366df6a1603c1"
     },
     {
       "file": "antibiotics-overview.md",
@@ -58,8 +58,8 @@
       "title": "Burn Treatment",
       "domain": "medicine",
       "tier": "C1",
-      "bytes": 2082,
-      "sha256": "6a03dee483bae308cd5a4b4ad9841d777e66890218d3675dc40fa9a4a6d4c672"
+      "bytes": 3983,
+      "sha256": "84b6fb7e0b140e9c3dbda4a84541a05b1828a68bdf985892082989fc8b362741"
     },
     {
       "file": "carbon-monoxide-safety.md",
@@ -90,8 +90,8 @@
       "title": "Choking and Blocked Airway",
       "domain": "medicine",
       "tier": "C1",
-      "bytes": 2122,
-      "sha256": "965072a0e04808f6304e07017265e3456ea68bc4c4f277c2f824d5b1d36f0ee6"
+      "bytes": 3103,
+      "sha256": "e107a94cdb9d61a81ba786fee7c3bd816606c9dd80da591f34d3528b26240771"
     },
     {
       "file": "compass-navigation.md",
@@ -114,8 +114,8 @@
       "title": "Controlling Severe Bleeding",
       "domain": "medicine",
       "tier": "C1",
-      "bytes": 1497,
-      "sha256": "75a4d22d23692179107a877528450126efe5b34439dad19e67136ca06de88795"
+      "bytes": 4805,
+      "sha256": "fb36419019b2f8e91f7787efedf5d5f61871d20f5e4c6ee195b49f8a649bd613"
     },
     {
       "file": "cooking-methods-offgrid.md",
@@ -130,8 +130,8 @@
       "title": "CPR for Adults, Children, and Infants",
       "domain": "medicine",
       "tier": "C1",
-      "bytes": 2042,
-      "sha256": "42ffc1bfb875d55fac4ea6e6cde8f84ec7a5e740693b3bf694efd764824f87bf"
+      "bytes": 3428,
+      "sha256": "cc9cb3999ce395fba77bfe2682f8d698ed423b501a09b3660a911a831ae195dc"
     },
     {
       "file": "dental-emergencies.md",
@@ -154,8 +154,8 @@
       "title": "Drowning Response",
       "domain": "medicine",
       "tier": "C1",
-      "bytes": 2098,
-      "sha256": "8b00a5b0864f751f7c6e828dabd4cce3183f7b736cb294223823e6220ca63998"
+      "bytes": 3010,
+      "sha256": "a1b7b7e47c6e9121a27ff713ce89c535eb4c6078a2ff632b7e99b416be8afb30"
     },
     {
       "file": "electrical-safety.md",
@@ -170,8 +170,8 @@
       "title": "Emergency Childbirth",
       "domain": "medicine",
       "tier": "C3",
-      "bytes": 2303,
-      "sha256": "02c1c1c7a9de7491627810415d89686ee1b7c311794777ce44451ca7e8713b81"
+      "bytes": 4146,
+      "sha256": "4f016f1155c43e5b71c899155997655c72bfcf50d111b66fa3f4ea0cb555c4e8"
     },
     {
       "file": "emergency-preparedness-kit.md",
@@ -242,8 +242,8 @@
       "title": "Frostbite and Cold Injuries",
       "domain": "medicine",
       "tier": "C1",
-      "bytes": 2085,
-      "sha256": "4d84996f1d05cb882d6fc96ea283183966b3b98359ce5255e86920da8fce129f"
+      "bytes": 3204,
+      "sha256": "fce61e50bf4120f3017b5288ea9159cd4c18b77b42a6ffb934fcc4d41d19e158"
     },
     {
       "file": "generators-and-fuel-safety.md",
@@ -434,8 +434,8 @@
       "title": "Poisoning First Aid",
       "domain": "medicine",
       "tier": "C1",
-      "bytes": 2219,
-      "sha256": "7f68fc0fe020d28656adfa1357965b7216003f25447b7af1458b267f510233e0"
+      "bytes": 6981,
+      "sha256": "2213d1c967adabf889eb6956b48b5a1122a126acb08f223625d453a22c2ec0bf"
     },
     {
       "file": "preparing-wild-game.md",
@@ -514,8 +514,8 @@
       "title": "Seizure Response",
       "domain": "medicine",
       "tier": "C1",
-      "bytes": 2054,
-      "sha256": "d14c66e43fd1a8d9989e3df6984ce910c1241770b93304938581d1692861e7e5"
+      "bytes": 3210,
+      "sha256": "b878ae6aefd85d4049f722f439b42d5241a340575e6640574ca314864a7ff4f6"
     },
     {
       "file": "sewing-and-mending.md",
@@ -554,8 +554,8 @@
       "title": "Snakebite Treatment",
       "domain": "medicine",
       "tier": "C1",
-      "bytes": 1914,
-      "sha256": "1a016ab6fd9547cdc3fc8099b7d5c9f2a5351de87b55d2fa77b3a26c069ea6ed"
+      "bytes": 4094,
+      "sha256": "d6d7eda7f9ad62e74c93e852fb0bb0761b8982b1fd0c06398f1959d9b89cfdbd"
     },
     {
       "file": "soap-saponification.md",
