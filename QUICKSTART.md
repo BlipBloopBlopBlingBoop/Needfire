@@ -1,8 +1,13 @@
-# Needfire Quickstart — from any computer to a dedicated appliance
+# Needfire Quickstart — the complete guide to running it
 
 Needfire is an offline survival knowledge computer: a searchable, citable
 library with guided emergency protocols, field tools, and (optionally) local
 AI — all served from your own machine, no internet required.
+
+This is **the one guide for running Needfire** — every system, phones, and the
+dedicated appliance. (If you downloaded the one-folder package, `START-HERE.txt`
+is the 10-second version; this page is everything else.) Jump to the section for
+your system below.
 
 **What you need:** any computer made in the last ~15 years, about 200 MB of
 free disk space, and 10 minutes. Everything below is free.

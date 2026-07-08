@@ -1,8 +1,10 @@
 # Needfire — the running application
 
-This folder is both the **design package** (architecture docs + BOM, see
-[`README.md`](README.md)) and the **real, runnable software**. This file is the
-entry point for actually running it.
+This is the **developer reference** for the software: what the app is, how the
+field console works, and how to work on it. For step-by-step install on any
+system (Windows, Mac, Linux, phones, Docker, the appliance), see
+**[QUICKSTART.md](QUICKSTART.md)** — this page assumes you just want to run it
+from a source checkout and understand how it's built.
 
 > **Completely standalone.** The app is **pure Python standard library** and a
 > **no-build vanilla web UI**. The only hard requirement is `python3` (3.8+).
@@ -12,23 +14,17 @@ entry point for actually running it.
 > not a substitute for calling your local emergency number when one works.
 > Full plain-language disclaimer: [DISCLAIMER.md](DISCLAIMER.md).
 
-## Run it in 30 seconds
+## Run from source
 
 ```bash
-cd Needfire
-python3 -m needfire serve      # first run auto-builds the seed index, then serves
-# open http://localhost:8848
+python3 -m needfire serve      # first run builds the seed index, then serves on :8848
+# open http://localhost:8848   (or: docker compose up)
 ```
 
-Or with Docker:
-
-```bash
-docker compose up         # then open http://localhost:8848
-```
-
-That's it — it works fully offline using the bundled **81-document seed
-library** and a stdlib hashing retriever. No AI model required (it answers in
-"sources-only" mode and shows you the cited documents).
+It works fully offline using the bundled **81-document seed library** and a
+stdlib hashing retriever — no AI model required (it answers in "sources-only"
+mode and shows you the cited documents). Add local models later for synthesized,
+cited answers (see below).
 
 ## The field console
 
