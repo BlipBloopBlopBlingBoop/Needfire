@@ -8,7 +8,7 @@ const Content = (function () {
     const wrap = el('div', {}, [
       el('a', { class: 'back-link', href: '#/system' }, [icon('arrowleft'), 'System']),
       C.sectionHead('Knowledge library'),
-      el('p', { class: 'muted-note' }, ['The bundled 81-document seed library works offline right now. The catalog below adds big reference archives (Wikipedia, medical manuals, how-to guides) — just press Download, no links to paste. Every download is checked by SHA-256.']),
+      el('p', { class: 'muted-note' }, ['The bundled 84-document seed library works offline right now. The catalog below adds big reference archives (Wikipedia, medical manuals, how-to guides) — just press Download, no links to paste. Every download is checked by SHA-256.']),
     ]);
 
     // one-click bulk download of the survival-critical tier

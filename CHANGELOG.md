@@ -6,11 +6,60 @@ The artifacts in this repository version independently, on purpose:
 
 | Number | Where | Meaning |
 |---|---|---|
-| App version (`2.7.2`) | `needfire/__init__.py` `__version__` | **The release number** — the only user-facing version. SemVer. The `docker-compose.yml` image tag tracks it; bump both together. |
+| App version (`2.8.0`) | `needfire/__init__.py` `__version__` | **The release number** — the only user-facing version. SemVer. The `docker-compose.yml` image tag tracks it; bump both together. |
 | Index schema (`2`) | `needfire/db.py` `SCHEMA_VERSION` | Integer. A mismatch with an existing index triggers the rebuild warning in the server; bump when the SQLite layout changes. |
-| Seed manifest (`2.7.0`) | `seed-corpus/seed-manifest.json` | Bumped when the bundled seed documents change (regenerate with `make seed-manifest`). |
+| Seed manifest (`2.8.0`) | `seed-corpus/seed-manifest.json` | Bumped when the bundled seed documents change (regenerate with `make seed-manifest`). |
 | Catalog (`1.1.0`) | `catalog/catalog.json` | Bumped when the download-source list changes. |
 | Protocols (`1`) | `web/data/protocols.json` | The emergency-protocol data format. |
+
+## 2.8.0 — 2026-07-08
+
+A full offline navigation package — stars, sun, charts, position, and grids.
+
+Everything is pure client-side math in `web/js/nav.js` (~28 KB source incl. a
+~2 KB catalog of 41 bright navigation stars), service-worker precached, so the
+whole package works with no server, no signal, and no GPS. The astronomy and
+geodesy are validated in node against published anchors (GMST at J2000, solstice/
+equinox solar declination, London solstice sunrise/sunset to the minute, Polaris
+altitude ≈ latitude, sun azimuth = 180° at solar noon, UTM round-trips < 1e-6°).
+
+### New toolkit tools (22 → 27)
+- **Sun & moon** — the sun's TRUE bearing and altitude for your position and time
+  (a working sun compass), sunrise/solar-noon/sunset with polar day/night
+  handling, day length, equation of time, and the moon's phase/illumination
+  (night-travel light). Comparing the computed true bearing with a compass
+  needle also measures your local magnetic declination in the field.
+- **Star chart** — a computed planisphere: 41 bright navigation stars with the
+  asterisms drawn (Big Dipper → Polaris pointers, Cassiopeia, Orion, Southern
+  Cross + Pointers, Summer Triangle) for any latitude/longitude and time,
+  rendered on canvas in the app's theme (night-vision mode included).
+- **Find position** — latitude from Polaris altitude or from the noon sun (solar
+  declination computed for the date, equator/pole-side handling), and longitude
+  from the UTC time of local solar noon with equation-of-time correction.
+- **Dead-reckoning log** — log each leg (true bearing + distance); it keeps the
+  running north/east offset, distance from start, and the bearing home, persisted
+  in localStorage so it survives closing the app.
+- **Grid converter** — latitude/longitude ↔ UTM (WGS-84) for paper-map grid work.
+
+### New seed documents (81 → 84)
+- **celestial-navigation.md** (navigation, C2) — measuring angles with hand/
+  quadrant, latitude from Polaris and the noon sun, longitude from time, and the
+  watch-as-compass method. Backs the sun & position tools.
+- **reading-topographic-maps.md** (navigation, C1) — scale, contours, symbols,
+  grid references (read right then up), orienting the map, terrain association.
+  Backs the grid converter.
+- **route-planning-dead-reckoning.md** (navigation, C1) — legs, attack points,
+  handrails, catching features, aiming off, boxing obstacles, leapfrogging in
+  fog, and lost procedure. Backs the dead-reckoning log.
+
+### UI
+- The toolkit home is now **grouped by category** (Medical, Navigation & sky,
+  Water & rations, Power & electrical, Timers & signals, Field reference) — 27
+  tools were outgrowing a flat grid. SW cache v9 → v10.
+
+### Router
+- Added navigation query words (bearing, latitude, longitude, sunrise, sunset,
+  stars, declination) so these route to the navigation domain.
 
 ## 2.7.2 — 2026-07-08
 

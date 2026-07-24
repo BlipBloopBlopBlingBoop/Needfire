@@ -6,7 +6,7 @@
    - shell assets: stale-while-revalidate, so UI updates ship on next load
    Bump CACHE whenever any shell file changes — old caches are deleted on
    activate. */
-const CACHE = 'needfire-shell-v9';
+const CACHE = 'needfire-shell-v10';
 const SHELL = [
   '/', '/index.html',
   '/css/tokens.css', '/css/shell.css', '/css/library.css',
@@ -14,7 +14,7 @@ const SHELL = [
   '/assets/icons.js', '/assets/logo.svg',
   '/assets/icon-192.png', '/assets/icon-512.png', '/assets/icon-maskable-512.png',
   '/js/api.js', '/js/prefs.js', '/js/components.js', '/js/markdown.js',
-  '/js/instruments.js', '/js/views.js', '/js/emergency.js', '/js/tools.js',
+  '/js/instruments.js', '/js/views.js', '/js/emergency.js', '/js/nav.js', '/js/tools.js',
   '/js/system.js', '/js/models.js', '/js/content.js', '/js/studio.js', '/js/app.js',
   '/data/protocols.json',
   '/manifest.webmanifest',

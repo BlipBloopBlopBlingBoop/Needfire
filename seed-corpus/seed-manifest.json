@@ -1,6 +1,6 @@
 {
   "name": "Needfire \u2014 Seed Corpus",
-  "version": "2.7.0",
+  "version": "2.8.0",
   "license": "CC0-1.0",
   "description": "Original starter reference documents bundled with Needfire so the system works end-to-end offline out of the box. This is a small demonstration set, NOT a substitute for the full downloadable corpus. Written for Needfire and released into the public domain (CC0).",
   "disclaimer": "General reference only. Not professional medical, legal, chemical, or engineering advice. For anything affecting health or safety, read the primary source and use trained judgement.",
@@ -76,6 +76,14 @@
       "tier": "C1",
       "bytes": 2888,
       "sha256": "ed1c5e0269e005e33d0db1a98817cb62398e8180c4e0efb01b298744fe50967a"
+    },
+    {
+      "file": "celestial-navigation.md",
+      "title": "Celestial Navigation \u2014 Position from Sun and Stars",
+      "domain": "navigation",
+      "tier": "C2",
+      "bytes": 4119,
+      "sha256": "3a159e7edd2b862108387c5c4b460c78a3509d4a9b101d7a5021f577ecf7c8e8"
     },
     {
       "file": "chemical-safety-basics.md",
@@ -484,6 +492,22 @@
       "tier": "C1",
       "bytes": 2782,
       "sha256": "dafaf0fe96658b8cb87fcaec60a29624f9e8f670eb04b83a8e7d5f7e03a8911e"
+    },
+    {
+      "file": "reading-topographic-maps.md",
+      "title": "Reading Topographic Maps",
+      "domain": "navigation",
+      "tier": "C1",
+      "bytes": 3479,
+      "sha256": "baaf31c110216eb204ca51e17dc8e997c34420552b52e6bf78b17e16b288986f"
+    },
+    {
+      "file": "route-planning-dead-reckoning.md",
+      "title": "Route Planning and Dead Reckoning",
+      "domain": "navigation",
+      "tier": "C1",
+      "bytes": 3676,
+      "sha256": "84857ef565cb2fe4533345f54603e297f13ed8b5d12ae3cec4a7eb366b82c483"
     },
     {
       "file": "safe-medication-use.md",

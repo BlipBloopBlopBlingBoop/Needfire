@@ -107,3 +107,24 @@ body.strobe-on .strip, body.strobe-on .tabbar { visibility: hidden; }
 }
 .assess-ol { margin: 0.4rem 0 0; padding-left: 1.4rem; line-height: 1.6; font-size: 0.9rem; }
 .assess-ol li { margin-bottom: 0.3rem; }
+
+/* grouped toolkit home */
+.tool-group-head {
+  margin: 1.3rem 0 0.5rem; font-size: 0.72rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.14em; color: var(--ink-mute);
+}
+
+/* navigation tools (nav.js) */
+.when-row { display: flex; gap: 0.4rem; align-items: center; }
+.when-row input { flex: 1; min-width: 0; }
+.sky-wrap { display: flex; justify-content: center; margin-top: 0.8rem; }
+.sky-canvas {
+  border: 1px solid var(--border-2); border-radius: 50%;
+  background: var(--bg-2); max-width: 100%;
+}
+.dr-list { display: flex; flex-direction: column; gap: 0.3rem; margin-top: 0.4rem; }
+.dr-leg {
+  display: flex; gap: 0.7rem; align-items: center;
+  border: 1px solid var(--border-2); border-radius: var(--radius-sm);
+  padding: 0.4rem 0.8rem; background: var(--bg-2); font-size: 0.9rem;
+}

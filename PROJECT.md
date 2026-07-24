@@ -21,7 +21,7 @@ python3 -m needfire serve      # first run builds the seed index, then serves on
 # open http://localhost:8848   (or: docker compose up)
 ```
 
-It works fully offline using the bundled **81-document seed library** and a
+It works fully offline using the bundled **84-document seed library** and a
 stdlib hashing retriever — no AI model required (it answers in "sources-only"
 mode and shows you the cited documents). Add local models later for synthesized,
 cited answers (see below).
@@ -38,16 +38,18 @@ The web UI is built for the situations the Bothy is actually used in:
   as a badge on every screen). Protocol data is service-worker precached, so
   emergency mode works even if the index or server hiccups. Every protocol
   links its full source document.
-- **TOOLKIT** — pure-offline field tools: water-disinfection calculator, ORS
-  mixer, solar/battery sizer, Ohm's-law + wire-gauge helper, field timers,
-  an SOS screen strobe, a wind-chill/heat-index "feels-like" calculator, a
-  lightning flash-to-bang range finder, a food/water ration planner, pace-count
-  and travel-time estimators, a magnetic-declination converter, a DR-ABC
-  casualty-assessment card, a no-instrument field estimator (distance, height,
-  daylight), a unit converter, a disinfectant-dilution mixer, a battery-bank
-  calculator, a mechanical-advantage (block-and-tackle) helper, a fallout-decay
-  projector, a wind/weather (Beaufort) card, a survival-priorities card, and a
-  signal reference card.
+- **TOOLKIT** — 27 pure-offline field tools, grouped on the home grid: medical
+  (DR-ABC casualty card, CPR metronome, ORS mixer, disinfectant dilution), a
+  full **navigation package** (`web/js/nav.js`: sun & moon compass with true
+  bearing + rise/set + phase, a computed bright-star sky chart for any
+  place/time, latitude/longitude from Polaris or the noon sun, a persistent
+  dead-reckoning leg log, lat/lon ↔ UTM grid converter, plus pace/travel,
+  declination, Beaufort weather, feels-like temperature, and lightning range),
+  water & rations calculators, power & electrical (solar sizer, battery bank,
+  Ohm's law + wire gauge), timers & signals (field timers, SOS strobe, signal
+  card), and field reference (estimator, unit converter, mechanical advantage,
+  fallout decay, survival priorities). The navigation math is validated against
+  published astronomical anchors (see `web/js/nav.js` header).
 - **LIBRARY** — search, ask (cited answers), browse by category, and a clean
   document reader with **pin-to-kit** (pinned docs appear on the home screen).
 - **SYSTEM** — a hub for running the box: the old **Status** page plus

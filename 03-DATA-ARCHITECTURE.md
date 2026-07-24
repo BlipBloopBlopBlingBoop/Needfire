@@ -24,7 +24,7 @@ Knowledge is organized into four criticality tiers. **Tier C1 is loaded first an
 including Personal.** C3/C4 fill out the Homestead and Community archives.
 
 ### C0, in effect — the bundled seed library
-The repo ships **81 original CC0 documents** (`seed-corpus/documents/`, hashed in
+The repo ships **84 original CC0 documents** (`seed-corpus/documents/`, hashed in
 `seed-manifest.json`) so the system answers real questions before you download anything: first aid
 (CPR, choking, bleeding control, burns, fractures, anaphylaxis, poisoning, snakebite, seizures, heat
 illness, frostbite, wound care, drowning, emergency childbirth, dental, mental-health crisis),
@@ -145,7 +145,7 @@ part of the software, verified separately (`python3 -m needfire verify --seed`),
 - **Selective sync:** copying a tier to a Personal device = filter the manifest by `tier` and `rsync`
   only those artifacts.
 
-**`seed-corpus/seed-manifest.json`** (v2.5.0) plays the same role for the 81 bundled documents:
+**`seed-corpus/seed-manifest.json`** (v2.8.0) plays the same role for the 84 bundled documents:
 per-file SHA-256 + size + domain/tier. `python3 -m needfire verify --seed` checks it; regenerate after
 editing seed docs with `make seed-manifest` (`scripts/update-seed-manifest.py`).
 

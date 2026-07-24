@@ -17,7 +17,10 @@ _CRIT_WORDS = re.compile(
 )
 _MED_WORDS = ("medical", "first aid", "doctor", "drug", "injury", "infection")
 _TECH_WORDS = ("how", "build", "make", "repair", "circuit", "reaction", "synthesize", "construct")
-_NAV_WORDS = ("where", "map", "route", "navigate", "direction", "coordinates")
+# substring-matched: "stars" not "star" (matches "start"), no "grid" ("off-grid")
+_NAV_WORDS = ("where", "map", "route", "navigate", "direction", "coordinates",
+              "bearing", "latitude", "longitude", "sunrise", "sunset", "stars",
+              "declination")
 
 # Domain hints, most specific first. The hint is only a soft retrieval boost
 # (see rag.py) — a wrong or missing hint can never hide documents — so bare

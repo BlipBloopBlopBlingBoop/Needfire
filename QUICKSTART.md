@@ -194,7 +194,7 @@ models and pick which one fills the tiny / reason / embed role.
 
 ## 9. Download more of the library
 
-The bundled 81-document library is a starter set. Open **System → Content** to
+The bundled 84-document library is a starter set. Open **System → Content** to
 grow it: press **Download** on any shipped catalog source (Needfire finds the
 current Kiwix build for you — nothing to paste — and there's a one-click
 **Download all C1** button for the survival-critical set), **add any download
@@ -239,7 +239,7 @@ for it; Library, Emergency, and Toolkit stay open to everyone on the Wi-Fi.
 
 ---
 
-*Stopping Needfire never loses data. The bundled 81-document library, the
+*Stopping Needfire never loses data. The bundled 84-document library, the
 emergency protocols, and the toolkit all work with zero setup beyond the
 steps above; downloading the full reference corpus (encyclopedias, manuals)
 is optional and covered in [07-CORPUS-ACQUISITION.md](07-CORPUS-ACQUISITION.md).*

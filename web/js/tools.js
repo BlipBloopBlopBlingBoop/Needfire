@@ -5,40 +5,51 @@ const Tools = (function () {
   const el = C.el, icon = C.icon;
 
   const TOOLS = [
-    { id: 'water', name: 'WATER DISINFECT', sub: 'bleach drops per litre', icon: 'water' },
-    { id: 'ors', name: 'ORS MIXER', sub: 'rehydration recipe', icon: 'medical' },
-    { id: 'metronome', name: 'CPR METRONOME', sub: '110 BPM guide', icon: 'metronome' },
-    { id: 'timers', name: 'FIELD TIMERS', sub: 'boil · burn-cool · custom', icon: 'timer' },
-    { id: 'sos', name: 'SOS STROBE', sub: 'screen morse beacon', icon: 'strobe' },
-    { id: 'solar', name: 'SOLAR SIZER', sub: 'panel + battery math', icon: 'energy' },
-    { id: 'ohm', name: 'OHM / WIRE', sub: "ohm's law + gauge", icon: 'chip' },
-    { id: 'exposure', name: 'FEELS-LIKE TEMP', sub: 'wind chill · heat index', icon: 'snow' },
-    { id: 'lightning', name: 'LIGHTNING RANGE', sub: 'flash-to-bang distance', icon: 'spark' },
-    { id: 'rations', name: 'RATION PLANNER', sub: 'water + food days', icon: 'food' },
-    { id: 'pace', name: 'PACE & TRAVEL', sub: 'distance + walk time', icon: 'compass' },
-    { id: 'declination', name: 'DECLINATION', sub: 'true ↔ magnetic bearing', icon: 'compass' },
-    { id: 'assess', name: 'CASUALTY CHECK', sub: 'DR-ABC · AVPU · recovery', icon: 'pulse' },
-    { id: 'estimate', name: 'FIELD ESTIMATOR', sub: 'distance · height · daylight', icon: 'grid' },
-    { id: 'units', name: 'UNIT CONVERTER', sub: 'temp · length · mass · volume', icon: 'refresh' },
-    { id: 'disinfect', name: 'DISINFECTANT MIX', sub: 'bleach dilution ratios', icon: 'flask' },
-    { id: 'battery', name: 'BATTERY BANK', sub: 'capacity · runtime', icon: 'energy' },
-    { id: 'haul', name: 'MECHANICAL ADVANTAGE', sub: 'pulley pull + safe load', icon: 'wrench' },
-    { id: 'fallout', name: 'FALLOUT DECAY', sub: '7-10 rule dose projection', icon: 'atom' },
-    { id: 'weather', name: 'WIND & WEATHER', sub: 'Beaufort + storm signs', icon: 'wave' },
-    { id: 'priorities', name: 'SURVIVAL PRIORITIES', sub: 'rule of threes · STOP', icon: 'book' },
-    { id: 'signals', name: 'SIGNAL CARD', sub: 'morse + ground-to-air', icon: 'compass' },
+    { id: 'assess', name: 'CASUALTY CHECK', sub: 'DR-ABC · AVPU · recovery', icon: 'pulse', cat: 'Medical' },
+    { id: 'metronome', name: 'CPR METRONOME', sub: '110 BPM guide', icon: 'metronome', cat: 'Medical' },
+    { id: 'ors', name: 'ORS MIXER', sub: 'rehydration recipe', icon: 'medical', cat: 'Medical' },
+    { id: 'disinfect', name: 'DISINFECTANT MIX', sub: 'bleach dilution ratios', icon: 'flask', cat: 'Medical' },
+    { id: 'sun', name: 'SUN & MOON', sub: 'true bearing · rise/set · phase', icon: 'sun', cat: 'Navigation & sky' },
+    { id: 'starfinder', name: 'STAR CHART', sub: 'tonight’s sky, any location', icon: 'moon', cat: 'Navigation & sky' },
+    { id: 'latitude', name: 'FIND POSITION', sub: 'latitude + longitude from sky', icon: 'compass', cat: 'Navigation & sky' },
+    { id: 'deadreckon', name: 'DEAD RECKON LOG', sub: 'track legs · bearing home', icon: 'pin', cat: 'Navigation & sky' },
+    { id: 'grid', name: 'GRID CONVERTER', sub: 'lat/lon ↔ UTM', icon: 'grid', cat: 'Navigation & sky' },
+    { id: 'pace', name: 'PACE & TRAVEL', sub: 'distance + walk time', icon: 'compass', cat: 'Navigation & sky' },
+    { id: 'declination', name: 'DECLINATION', sub: 'true ↔ magnetic bearing', icon: 'compass', cat: 'Navigation & sky' },
+    { id: 'weather', name: 'WIND & WEATHER', sub: 'Beaufort + storm signs', icon: 'wave', cat: 'Navigation & sky' },
+    { id: 'exposure', name: 'FEELS-LIKE TEMP', sub: 'wind chill · heat index', icon: 'snow', cat: 'Navigation & sky' },
+    { id: 'lightning', name: 'LIGHTNING RANGE', sub: 'flash-to-bang distance', icon: 'spark', cat: 'Navigation & sky' },
+    { id: 'water', name: 'WATER DISINFECT', sub: 'bleach drops per litre', icon: 'water', cat: 'Water & rations' },
+    { id: 'rations', name: 'RATION PLANNER', sub: 'water + food days', icon: 'food', cat: 'Water & rations' },
+    { id: 'solar', name: 'SOLAR SIZER', sub: 'panel + battery math', icon: 'energy', cat: 'Power & electrical' },
+    { id: 'battery', name: 'BATTERY BANK', sub: 'capacity · runtime', icon: 'energy', cat: 'Power & electrical' },
+    { id: 'ohm', name: 'OHM / WIRE', sub: "ohm's law + gauge", icon: 'chip', cat: 'Power & electrical' },
+    { id: 'timers', name: 'FIELD TIMERS', sub: 'boil · burn-cool · custom', icon: 'timer', cat: 'Timers & signals' },
+    { id: 'sos', name: 'SOS STROBE', sub: 'screen morse beacon', icon: 'strobe', cat: 'Timers & signals' },
+    { id: 'signals', name: 'SIGNAL CARD', sub: 'morse + ground-to-air', icon: 'compass', cat: 'Timers & signals' },
+    { id: 'estimate', name: 'FIELD ESTIMATOR', sub: 'distance · height · daylight', icon: 'grid', cat: 'Field reference' },
+    { id: 'units', name: 'UNIT CONVERTER', sub: 'temp · length · mass · volume', icon: 'refresh', cat: 'Field reference' },
+    { id: 'haul', name: 'MECHANICAL ADVANTAGE', sub: 'pulley pull + safe load', icon: 'wrench', cat: 'Field reference' },
+    { id: 'fallout', name: 'FALLOUT DECAY', sub: '7-10 rule dose projection', icon: 'atom', cat: 'Field reference' },
+    { id: 'priorities', name: 'SURVIVAL PRIORITIES', sub: 'rule of threes · STOP', icon: 'book', cat: 'Field reference' },
   ];
+  const CATS = ['Medical', 'Navigation & sky', 'Water & rations',
+    'Power & electrical', 'Timers & signals', 'Field reference'];
 
   function home() {
-    return el('div', {}, [
-      C.sectionHead('Field toolkit — works fully offline'),
-      el('div', { class: 'grid tools' }, TOOLS.map((t) =>
+    const root = el('div', {}, [C.sectionHead('Field toolkit — works fully offline')]);
+    CATS.forEach((cat) => {
+      const group = TOOLS.filter((t) => t.cat === cat);
+      if (!group.length) return;
+      root.appendChild(el('div', { class: 'tool-group-head' }, [cat]));
+      root.appendChild(el('div', { class: 'grid tools' }, group.map((t) =>
         el('a', { class: 'tool-card', href: '#/toolkit/' + t.id }, [
           icon(t.icon),
           el('span', { class: 'tool-name' }, [t.name]),
           el('span', { class: 'tool-sub' }, [t.sub]),
-        ]))),
-    ]);
+        ]))));
+    });
+    return root;
   }
 
   function panel(title, note, children) {
@@ -856,10 +867,16 @@ const Tools = (function () {
     ]);
   }
 
+  // UI helper bundle handed to the navigation tools (nav.js) so they render
+  // exactly like the tools defined in this file.
+  const H = { panel, numField, readout, sourceLink };
   const VIEWS = { water, ors, metronome, timers, sos, solar, ohm,
     exposure, lightning, rations, pace, declination,
     assess, estimate, units: units_tool,
-    disinfect, battery, haul, fallout, weather, priorities, signals };
+    disinfect, battery, haul, fallout, weather, priorities, signals,
+    sun: () => NavTools.sun(H), starfinder: () => NavTools.starfinder(H),
+    latitude: () => NavTools.latitude(H), deadreckon: () => NavTools.deadreckon(H),
+    grid: () => NavTools.grid(H) };
   function view(id) {
     return (VIEWS[id] ? VIEWS[id]() : C.empty('Unknown tool.'));
   }

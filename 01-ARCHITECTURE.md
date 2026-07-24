@@ -35,7 +35,7 @@ working if the layers above it fail.** That "fail-down" property is the whole de
 │     • Citation resolver → full source document via /api/source       │
 ├─────────────────────────────────────────────────────────────────────┤
 │ L2  KNOWLEDGE CORPUS (read-mostly data in NEEDFIRE_HOME)                  │
-│     • Bundled seed library (81 CC0 docs, works out of the box)       │
+│     • Bundled seed library (84 CC0 docs, works out of the box)       │
 │     • Downloaded ZIMs + plain-text/markdown docs + offline map files │
 │     • manifest.json (SHA-256, license, tier per artifact)            │
 ├─────────────────────────────────────────────────────────────────────┤
